@@ -1172,10 +1172,11 @@ The statistics includes input partitions,
 range pairs, number of API calls made, and total iterations 
 observed in each phase. 
 
-About 1 million partitions were initially derived for 10Q, and roughly 110 million partitions for 20Q. 
+About 1 million partitions were initially derived for 10Q, and roughly 110 million partitions for 20Q (Item \#1). 
 Although the workload size doubled from 10Q to 20Q, the total number of partitions increased exponentially. 
 Much more predicates with different bindings produced about 110x more ranges in 20Q than those of 10Q. 
-While a huge number of input partitions were made, the number of range pairs collected per field was relatively small. 
+While a huge number of input partitions were made, the number of range pairs collected per field was relatively small 
+(Item \#2). 
 
 The total number of iterations in the initial phase 
 tended to be proportional to the input partitions 
@@ -1184,20 +1185,26 @@ Note that the optimized phase ran only once for those two workloads.
 Since the partitions produced by the initial phase were customized enough,
 no more iterations were necessary for further optimization. 
 
-As mentioned in Section~\ref{sec:analysis}, for each workload the number of the total calls made to 
-the database server were extremely small, compared to that of the theoretical worst calls shown in the parentheses. 
+As mentioned in Section~\ref{sec:analysis}, for each workload the number of the total calls 
+to the server were extremely small, compared to that of the theoretical worst calls shown in the parentheses (Item \#3). 
 The worst call counts were calculated regarding the number of queries and range pairs observed in each phase. 
-Furthermore, the average number of calls per range pair (was limited within 10 across the workloads and phases. 
+Furthermore, the average number of calls per range pair (was limited within 10 across the workloads and phases (Item \#4). 
+
+Finally,  the per-iteration numbers of the average, minimum, and maximum range pairs proportionally 
+increased along with the growing workload size (Items \#5$\sim$\#7), while 
+the per-iteration numbers of the average, minimum, and maximum API calls 
+increased more than the scale factor (of 2x) (Items \#8$\sim$\#10). 
+But empirically the number of invoked API calls were much fewer than that of the theoretical bound.
 
 \begin{figure*}[t]
 \vspace{-.2in}
 \centering
 \subfigure[1TB]{
-	\includegraphics[scale=0.6]{1T_total_time}
+	\includegraphics[scale=0.59]{1T_total_time}
 	\label{fig:1T_eval_res}
 }
 \subfigure[3TB]{
-	\includegraphics[scale=0.6]{3T_total_time}
+	\includegraphics[scale=0.59]{3T_total_time}
 	\label{fig:3T_eval_res}
 }
 \vspace{-0.1in}
@@ -1208,11 +1215,11 @@ Furthermore, the average number of calls per range pair (was limited within 10 a
 \vspace{-.2in}
 \centering
 \subfigure[1TB]{
-	\includegraphics[scale=0.6]{1T_quality}
+	\includegraphics[scale=0.59]{1T_quality}
 	\label{fig:1T_quality}
 }
 \subfigure[3TB]{
-	\includegraphics[scale=0.6]{3T_quality}
+	\includegraphics[scale=0.59]{3T_quality}
 	\label{fig:3T_quality}
 }
 \vspace{-0.1in}
@@ -1222,9 +1229,9 @@ Furthermore, the average number of calls per range pair (was limited within 10 a
 
 \subsection{Performance Evaluation}
 
-The main focus of our demonstration is to see the performance (quality) 
+The main focus of our experiments is to see the performance (quality) 
 of MLPPI recommendations made by the MLPPI wizard (WIZARD), 
-compared with the performance of no partitioning (NO PPI) and EXP (partitioning 
+compared with the performance of NO PPI (no partitioning) and EXP (partitioning 
 by a human expert). 
 
 %Our evalution results are exhibited in Figures ~\ref{fig:eval_res} 
@@ -1237,7 +1244,8 @@ by a human expert).
 
 Figures~\ref{fig:total_elapsed_time} and \ref{fig:recomm_qual} exhibit our evaluation results.
 Figure~\ref{fig:total_elapsed_time} shows the times (in seconds) taken 
-to run the 10Q and 20Q workloads over the 1TB and 3TB fact tables. 
+to run the 10Q and 20Q workloads over the 1TB and 3TB fact tables that we populated 
+into the database server.
 Based on the run results, Figure~\ref{fig:recomm_qual} shows 
 how much improvement was gained by the EXP and WIZARD solutions, compared with the NO PPI solution. 
 
@@ -1256,10 +1264,10 @@ the performance improvement of the WIZARD solution stayed the same in Figure~\re
 and got almost negligibly decreased in Figure~\ref{fig:3T_quality}. 
 This result showed that our WIZARD \hbox{solution} was scalable over increasing workload size.
 
-We also increased the table scale from 1TB to 3TB. 
+We also increased the table scale from 1TByte to 3TBbytes. 
 For 10Q the performance improvement (about 77\%) was almost the same over the increasing scales, 
 and for 20Q it was decreased from 76\% to 74\%, which was \hbox{almost} negligible.
-The WIZARD partitioning \hbox{recommendation} scaled well with increasing table size.
+The WIZARD partitioning \hbox{recommendation} scaled well with the increasing table size.
 
 In sum, our experiment results attest the effectiveness of the proposed algorithms for WIZARD 
 and show the superiority of the recommendations of WIZARD.
@@ -1278,11 +1286,12 @@ and show the superiority of our recommendations.}
 \section{Related Work}
 \label{sec:related_work}
 
-Physical database design~\cite{finkelstein1988physical,labio1997physical,rozen1991framework,Zilio1998} 
+%Physical database design~\cite{finkelstein1988physical,labio1997physical,rozen1991framework,Zilio1998} 
+Physical database design~\cite{finkelstein1988physical,labio1997physical,rozen1991framework} 
 has been discussed in \hbox{academic} research and industrial sectors in the past years.
 The major DBMS vendors (e.g., IBM, MS, and Oracle) have driven much of the work. 
 Their specific interests have been in automating the physical design for table 
-partitioning~\cite{agrawal04:integrating,Lightstone04:db2auto,nehme2011automated,sheet2009oracle,saa2007oracle,rao2002automating}, indexes/materialized views~\cite{agrawal2000automated,Agrawal04:sqlserver,dash2011cophy,Kimura11,itwsqlserver,valentin2000db2,zilio2004recommending}, 
+partitioning~\cite{agrawal04:integrating,Lightstone04:db2auto,nehme2011automated,sheet2009oracle,saa2007oracle,rao2002automating}, indexes/materialized views~\cite{Agrawal04:sqlserver,agrawal2000automated,dash2011cophy,Kimura11,itwsqlserver,valentin2000db2,zilio2004recommending}, 
 and integration~\cite{Zilio04:db2design}.
 
 %Lightstone's work~\cite{Lightstone04:db2auto} introduces the MDC (Multidimensional 
