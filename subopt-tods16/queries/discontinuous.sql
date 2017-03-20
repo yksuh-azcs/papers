@@ -89,12 +89,27 @@ CREATE TABLE DiscontOp_S1_Stat AS
 		t0.opID,
 		t0.opname,
 		t0.oporder,
+		min(t0.slope) as slp_min,
+		max(t0.slope) as slp_max,
 		avg(t0.slope) as slp_avg,
 		stddev(t0.slope) as slp_std
 	FROM DiscontOp_S1 t0
 	GROUP BY DBMS,runid, querynum,PLANID,opID,opname,oporder 
 	ORDER BY DBMS,runid, querynum,PLANID,oporder,opname;
 ALTER TABLE DiscontOp_S1_Stat ADD PRIMARY KEY (runid,querynum,PLANID,opID);
+
+-- select planid,opname, oporder, slp_avg,slp_std from DiscontOp_S1_Stat 
+DROP TABLE DiscontOp_S2;
+CREATE TABLE DiscontOp_S2 AS 
+	SELECT	t0.DBMS,
+		t0.runid,
+		t0.opname,
+		min(t0.slp_min) as slp_min,
+		max(t0.slp_max) as slp_max,
+		avg(slp_std) as slp_std
+	FROM 	DiscontOp_S1_Stat t0
+	GROUP BY DBMS,opname
+ALTER TABLE DiscontOp_S2 ADD PRIMARY KEY (runid,querynum,high_card,PLANID,opID,slope);
 
 -- select planid,opname, oporder, slp_avg,slp_std from DiscontOp_S1_Stat 
 DROP TABLE DiscontOp_S2;
