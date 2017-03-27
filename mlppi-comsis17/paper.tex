@@ -1035,7 +1035,7 @@ as shown in Figure~\ref{fig:mlppi}.
 \vspace{-.2in}
 \end{figure}
 
-\section{Analysis}
+\section{Complexity Analysis}
 \label{sec:analysis}
 
 In this section we analyze the time complexity of 
@@ -1200,26 +1200,27 @@ But empirically the number of invoked API calls were much fewer than that of the
 \vspace{-.2in}
 \centering
 \subfigure[1TB]{
-	\includegraphics[scale=0.59]{1T_total_time}
+	\includegraphics[scale=0.58]{1T_total_time}
 	\label{fig:1T_eval_res}
 }
 \subfigure[3TB]{
-	\includegraphics[scale=0.59]{3T_total_time}
+	\includegraphics[scale=0.58]{3T_total_time}
 	\label{fig:3T_eval_res}
 }
 \vspace{-0.1in}
 \caption{Total Elapsed Time\label{fig:total_elapsed_time}}
+\vspace{-0.2in}
 \end{figure*}
 
 \begin{figure*}[t]
 \vspace{-.2in}
 \centering
 \subfigure[1TB]{
-	\includegraphics[scale=0.59]{1T_quality}
+	\includegraphics[scale=0.58]{1T_quality}
 	\label{fig:1T_quality}
 }
 \subfigure[3TB]{
-	\includegraphics[scale=0.59]{3T_quality}
+	\includegraphics[scale=0.58]{3T_quality}
 	\label{fig:3T_quality}
 }
 \vspace{-0.1in}
@@ -1234,43 +1235,36 @@ of MLPPI recommendations made by the MLPPI wizard (WIZARD),
 compared with the performance of NO PPI (no partitioning) and EXP (partitioning 
 by a human expert). 
 
-%Our evalution results are exhibited in Figures ~\ref{fig:eval_res} 
-%and ~\ref{fig:improvement}.
-%Figure~\ref{fig:eval_res} shows the times (in seconds) taken 
-%to run the 10Q or 20Q workloads over the 1TB or 3TB fact tables. 
-%Based on the run results, Figure~\ref{fig:improvement} displays 
-%how much improvement could be achieved by the EXP or the WIZARD 
-%recommendations against the NO PPI one. 
-
 Figures~\ref{fig:total_elapsed_time} and \ref{fig:recomm_qual} exhibit our evaluation results.
-Figure~\ref{fig:total_elapsed_time} shows the times (in seconds) taken 
+Figure~\ref{fig:total_elapsed_time} shows the times taken 
 to run the 10Q and 20Q workloads over the 1TB and 3TB fact tables that we populated 
 into the database server.
 Based on the run results, Figure~\ref{fig:recomm_qual} shows 
-how much improvement was gained by the EXP and WIZARD solutions, compared with the NO PPI solution. 
+how much improvement was gained by the EXP and WIZARD solutions, compared with that of NO~PPI. 
 
 Overall, the WIZARD recommendations were very effective at partitioning 
-the fact tables by leveraging the predicates in the workloads. 
-On average, the \hbox{total} execution time of the workloads on the WIZARD solutions was 
-about 3.5 and 2 times faster than those of NO PPI and EXP, respectively. 
-Also, the quality of the \hbox{WIZARD} solutions outperformed that of the EXP solutions; 
-the WIZARD solutions yielded an average of about 77\% improvement on the NO PPI solutions.  
+the fact table via the predicates in the given workloads. 
+As shown in Figure~\ref{fig:total_elapsed_time}, the 
+total execution times of the 10Q and 20Q on the WIZARD recommendations was 
+on average about 3.5 and 2 times faster than those of NO PPI and EXP, respectively. 
+The quality of the \hbox{WIZARD} solutions also outperformed that of the EXP solutions; 
+the WIZARD solutions yielded an average of about 77\% improvement on the NO PPI solutions.
 
-Furthermore, the WIZARD recommendations 
-scaled very well with growing workload size and table size, 
+In addition, the WIZARD recommendations 
+scaled very well with the combination of growing workload/table size, 
 as illustrated in Figure~\ref{fig:recomm_qual}. 
-Although we doubled the workload scale from 10Q to 20Q, 
-the performance improvement of the WIZARD solution stayed the same in Figure~\ref{fig:1T_quality} 
-and got almost negligibly decreased in Figure~\ref{fig:3T_quality}. 
+Even though we doubly increased the workload size from 10Q to 20Q, 
+the performance improvement of our solution (\hbox{WIZARD}) retained the same in Figure~\ref{fig:1T_quality}. 
+Also, for the 3T table the performance gain of WIZARD was almost unchanged (at around 80\%) as shown in Figure~\ref{fig:3T_quality}. 
 This result showed that our WIZARD \hbox{solution} was scalable over increasing workload size.
 
 We also increased the table scale from 1TByte to 3TBbytes. 
-For 10Q the performance improvement (about 77\%) was almost the same over the increasing scales, 
-and for 20Q it was decreased from 76\% to 74\%, which was \hbox{almost} negligible.
-The WIZARD partitioning \hbox{recommendation} scaled well with the increasing table size.
+For 10Q the performance improvement (about 77\%) was almost the same over the increasing scales.
+For 20Q the gain was reduced from 76\% to 74\%, but it was almost negligible.
+Hence, the WIZARD partitioning \hbox{recommendation} scaled well with the increasing table size.
 
 In sum, our experiment results attest the effectiveness of the proposed algorithms for WIZARD 
-and show the superiority of the recommendations of WIZARD.
+and demonstrate the superiority of the recommendations of WIZARD.
 
 \shorten{Regarding the scale of 1TB in Figure~\ref{fig:1T_quality}, 
 although we doubled the workload scale (from 10Q to 20Q) 
@@ -1278,90 +1272,47 @@ the performance improvement of the WIZARD solution compared with that of NO PPI 
 In Figure~\ref{fig:3T_quality}, for the 3TB scale the improvement of WIZARD was slightly decreased, but it was negligible.
 In sum, the performance of the WIZARD solution was scalable over increasing workload and table scale. 
 
-%Also, we scaled up the table from 1TB to 3TB on the fixed workload, but 
-%the \hbox{recommendation} quality was not degraded at all. 
 These results attest the effectiveness of our algorithms, 
 and show the superiority of our recommendations.}
 
 \section{Related Work}
 \label{sec:related_work}
 
-%Physical database design~\cite{finkelstein1988physical,labio1997physical,rozen1991framework,Zilio1998} 
 Physical database design~\cite{finkelstein1988physical,labio1997physical,rozen1991framework} 
-has been discussed in \hbox{academic} research and industrial sectors in the past years.
-The major DBMS vendors (e.g., IBM, MS, and Oracle) have driven much of the work. 
-Their specific interests have been in automating the physical design for table 
-partitioning~\cite{agrawal04:integrating,Lightstone04:db2auto,nehme2011automated,sheet2009oracle,saa2007oracle,rao2002automating}, indexes/materialized views~\cite{Agrawal04:sqlserver,agrawal2000automated,dash2011cophy,Kimura11,itwsqlserver,valentin2000db2,zilio2004recommending}, 
-and integration~\cite{Zilio04:db2design}.
-
-%Lightstone's work~\cite{Lightstone04:db2auto} introduces the MDC (Multidimensional 
-%Clustering) Advisor that automates the selection of MDC 
-%keys customized for a specific workload on DB2 Universal Databases to use MDC structure. 
-%DB2 Advisor~\cite{Zilio04:db2design} is an integrated commercial 
-%tool that captures a variety of aspects of physical database design 
-%by automation in a comprehensive way. 
-%Oracle Partitioning Advisor~\cite{sheet2009oracle} for recommending 
-%table partitionings is  integrated into 
-%the SQL Access Advisor~\cite{saa2007oracle}. 
-
-%Since data clustering significantly influences on the performance of 
-%multidimensional queries, the MDC advisor helps DBAs that may have 
-%nontrivial troubles in finding proper clustering dimensions and 
-%granularity. 
-%To enumerate and determine possible clustering dimensions, 
-%his work relies on {\it what-if} query cost modeling, data sampling and a search algorithm. 
-
-%DB2 Advisor~\cite{Zilio04:db2design} is an integrated commercial 
-%tool that captures a variety of aspects of physical database design 
-%by automation in a comprehensive way. 
-%It makes an attempt to cover a variety of design choices-partitioning, 
-%MDC, materialized views and indexes. 
-%DB2 Advisor leverages the DB2 query optimizer for yielding a recommendation, and 
-%takes a hybrid searching approach for considering different features.
-
-%Oracle has a tool, called Partitioning Advisor~\cite{sheet2009oracle}, 
-%to make a partitioning recommendation for tables. 
-%The tool is now integrated into 
-%the SQL Access Advisor~\cite{saa2007oracle} that recommends indexes and materialized 
-%views. 
-%However, its technical details are not yet released in public. 
-%
-%Also, MS SQL Server provides some similar, automated tools~\cite{agrawal2000automated,agrawal04:integrating,
-%itwsqlserver} for table partitioning, materialized views or indexes fitting to a given workload.
-%The optimizer cost model is exploited to acquire estimates for 
-%candidate materialized views or indexes. 
-%In particular, Agrawal's work~\cite{agrawal04:integrating} presents 
-%an approach of integrating vertical and horizontal partitioning schemes 
-%into their physical database design, considering scalability.
+has been discussed in \hbox{academic} research and industrial communities in the past decades.
+The major DBMS vendors have led much of the work. 
+Their specific interests have been around automating the physical design for table 
+partitioning~\cite{agrawal04:integrating,Lightstone04:db2auto,nehme2011automated,sheet2009oracle,saa2007oracle,rao2002automating}, indexes/materialized views~\cite{Agrawal04:sqlserver,agrawal2000automated,dash2011cophy,Kimura11,itwsqlserver,valentin2000db2,zilio2004recommending}, and integration~\cite{Zilio04:db2design}.
 
 Some of the tools in IBM DB2~\cite{Lightstone04:db2auto}, 
 Oracle~\cite{sheet2009oracle}, and MS SQL Server~\cite{agrawal04:integrating} 
 appear to be similar to our MLPPI wizard. 
-However, in light of problem scope and approach, the wizard 
-is fundamentally different from the existing tools excluding Oracle Partitioning \hbox{Advisor}~\cite{sheet2009oracle} 
-providing no published technical details. 
+But with respect to problem scope and approach the wizard 
+is {\em fundamentally different} from the existing tools, 
+except Oracle Partitioning \hbox{Advisor}~\cite{sheet2009oracle} that provides no published technical details. 
 
-DB2 MDC Advisor~\cite{Lightstone04:db2auto} actually tackles 
+First, DB2 MDC Advisor~\cite{Lightstone04:db2auto} actually tackles 
 a different problem of automatically recommending the most well-suited MDC 
 keys for a given workload. 
 Agrawal's work~\cite{agrawal04:integrating} 
 discusses another problem of merging \hbox{single-level} range partitionings on objects such as tables and indexes. 
-This article addresses the multi-level \hbox{partitioning} problem. 
+On the other hand, we address the multi-level \hbox{partitioning} problem. 
 Hence, the existing solutions cannot be directly applied to our MLPPI wizard.   
 
 Regarding the approach, DB2 MDC Advisor~\cite{Lightstone04:db2auto} uses 
-the search space driven by {\em fields}. In contrast, our search 
-space is driven by query-predicates, which is superior because 
-predicates are more customized and specific to a workload than fields. 
+the search space driven by fields. In contrast, our search 
+space is driven by {\em query-predicates}, of which the use is superior to 
+that of the fields, as utilizing predicates can be more customized and specific to a given workload. 
 
 Agrawal's horizontal partitioning scheme~\cite{agrawal04:integrating} 
 also uses the search space driven by simple range predicates, but 
-his technique has a shortcoming as follows. 
-His work produces a solution for each individual query and attempt 
+his technique has a shortcoming. 
+Specifically, his work produces a solution for each individual query and attempt 
 to merge the solutions. But this approach cannot reach 
 an optimized solution in a global perspective.
-Our wizard generates the whole search space upfront and in turn merges partitions, leading to a \hbox{globally-optimized} solution. 
-While his work considers a single column only, we deal with multiple fields.
+We generate the whole search space upfront and in turn merges partitions, 
+leading to a \hbox{globally-optimized} solution. 
+While his work considers a single column only, our wizard deals with {\em multiple} fields.
 
 Implementations of previous tools~\cite{agrawal04:integrating,Lightstone04:db2auto,nehme2011automated} \hbox{required} instrumentation for optimizer code.
 These instrumentations are needed to facilitate the required 
@@ -1416,7 +1367,7 @@ Database cracking~\cite{idreoskm07}
 assumes a single node environment, but 
 it does not address our multi-level partitioning problem. 
 
-\section{Summary}
+\section{Conclusion}
 \label{sec:conclusion}
 %We verified the effectiveness of the tool by running it on a workload based
 
@@ -1433,16 +1384,15 @@ the MLPPI \hbox{recommendation} can be very optimized, customized to the workloa
 We proposed the wizard's algorithms consisting of the three phases. 
 The wizard incrementally reduced its search space by merging 
 the range pair with the least scan or query cost, and eventually reached an MLPPI recommendation. 
-In addition, we analyzed the running complexity for the initial and optimized phases. 
-Despite the theoretically high bound, in practice, the wizard made much fewer calls in the phases.
+We also analyzed the running complexity for the initial and optimized phases. 
+Despite the theoretically high bound, the wizard in practice invoked much fewer calls in these phases.
 
-We measured the performance of the recommendation by the wizard using 
-our workloads.  
+Using synthetic workloads, we evaluated the performance of the recommendation produced by the wizard.  
 We demonstrated that the produced MLPPI solutions by 
-the wizard could reduce the total elapsed time by more than a factor of two, 
+the wizard reduced the total elapsed time by more than a factor of two, 
 compared with those of no partitioning approach and partitioning 
 done by a human expert. 
-
+%We believe our algorithm can be applied to any clustering and partitioning algorithm.
 %\section*{Acknowledgments} 
 %This work was carried out while the first author visited Teradata. 
 %The first author is now at Korea Institute of Science and Technology Information (yksuh@kisti.re.kr).
