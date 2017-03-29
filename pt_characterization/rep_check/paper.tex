@@ -1,0 +1,68 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+ \usepackage{auto-pst-pdf}
+\usepackage{graphicx}
+%\usepackage{arydshln}
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage{epstopdf}
+\fi
+\usepackage{multirow}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{url}
+\usepackage{color}
+\usepackage{subfigure}
+
+%\newcommand\solidrule[1][1cm]{\rule[0.5ex]{#1}{.4pt}}
+%\newcommand\dashedrule{\mbox{%
+%  \solidrule[2mm]\hspace{2mm}\solidrule[2mm]\hspace{2mm}\solidrule[2mm]}}
+  
+%\usepackage{hyperref}
+
+\begin{document}
+\title{Repeatability Test}
+
+\author{
+Young-Kyoon Suh\\
+}
+\maketitle
+
+\section{Description}
+This document presents two sets of histograms based on the two runs 
+of a program under test, called {\em INC}, with a set of increasing task lengths 
+from 1 second to 4096 seconds.
+We would like to see if both of the sets have the same shape for the same task length.
+If so then, we can say that run repeatability is satisfied in our experiment setting.
+
+\section{Experiment Notes}
+Table~\ref{tab:exp_notes} provides a short description of our experimental runs, 
+on which the following histograms are based.
+
+%% done
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{2cm}|p{3cm}|p{5cm}|p{5cm}|} \hline
+Machine & Task Length (sec) & Description & Experiment Period\\ \hline
+{\tt sodb9} &  INC1$\sim$INC64 & Two runs with 1000 samples & 2017-03-02 $\sim$ 2017-03-?? / 2017-03-?? $\sim$ 2017-03-??\\ \hline
+{\tt sodb9} &  INC128$\sim$INC1024 & Two runs with 300 samples & 2017-03-02 $\sim$ 2017-03-?? / 2017-03-?? $\sim$ 2017-03-??\\ \hline
+{\tt sodb10} & INC2048 & Two runs of 300 samples & 2017-03-02 $\sim$ 2017-03-09 / 2017-03-13 $\sim$ 2017-03-20\\ \hline
+{\tt sodb12} & INC4096 & Two runs of 300 samples & 2017-02-13 $\sim$ 2017-02-27 / 2017-03-02 $\sim$ 2017-03-17\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Notes on experiment runs used for histograms\label{tab:exp_notes}}
+\end{table}
+
+Now we show histograms of elapsed time (ET) and process time (PT) of INC. 
+
+\pagebreak
+
+\input{res1.tex}
+
+\pagebreak
+\newpage
+
+\input{res2.tex}
+
+\end{document}
