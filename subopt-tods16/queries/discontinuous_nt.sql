@@ -94,6 +94,19 @@ CREATE TABLE DiscontOpNt_S1_Stat AS
 	GROUP BY DBMS,runid, querynum,PLANID,opID,opname,oporder 
 	ORDER BY DBMS,runid, querynum,PLANID,oporder,opname;
 ALTER TABLE DiscontOpNt_S1_Stat ADD PRIMARY KEY (runid,querynum,PLANID,opID);
+DROP TABLE DiscontOp_S1_Stat2;
+CREATE TABLE DiscontOpNt_S1_Stat2 AS 
+	SELECT	t0.DBMS,
+		t0.opname,
+		min(t0.slope) as slp_min,
+		max(t0.slope) as slp_max,
+		round(avg(t0.slope),3) as slp_avg,
+		round(stddev(t0.slope),4) as slp_std
+	FROM 	DiscontOpNt_S1 t0
+	GROUP BY DBMS,opname
+	ORDER BY DBMS,opname;
+ALTER TABLE DiscontOpNt_S1_Stat2 ADD PRIMARY KEY (DBMS,opname);
+-- select * from DiscontOpNt_S1_Stat2;
 
 -- select planid,opname, oporder, slp_avg,slp_std from DiscontOpNt_S1_Stat 
 DROP TABLE DiscontOpNt_S2;
