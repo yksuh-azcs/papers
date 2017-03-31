@@ -1,0 +1,122 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{algorithmic}
+\usepackage{alltt}
+\usepackage{array}
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+%\usepackage[caption=false]{caption}
+\usepackage[dvipsnames]{color}
+%\usepackage{colortbl}
+%\usepackage{enumitem}
+%\usepackage{eqparbox}
+%\usepackage{fixltx2e}
+%\usepackage{float}
+%\usepackage{floatflt}
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+%\usepackage{multirow}
+\usepackage{stfloats}
+%\usepackage[font=footnotesize]{subfig}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+%\usepackage[tight,normalsize,sf,SF]{subfigure}
+%\usepackage{subfigure} 
+\usepackage{times}
+\usepackage{url}
+\usepackage{verbatim} 
+\usepackage{wrapfig}
+\usepackage{xspace}
+\usepackage{color}
+
+\definecolor{grey}{RGB}{200,200,200}
+\newcommand{\hilite}[1]{\colorbox{yellow}{#1}}
+\newcommand{\hiliting}[1]{\colorbox{grey}{#1}}
+\long\def\todo#1{\hilite{{\bf TODO:} {\em #1}}}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+
+
+% new commands: from file -- to permit re-use
+%\input{newcommands.tex}
+
+%Hyphenation problems
+\hyphenation{name-space}
+\hyphenation{schema-location}
+\hyphenation{xml-lint}
+\hyphenation{time-stamp}
+\hyphenation{time-stamps}
+\hyphenation{time-stamped}
+
+
+\urlstyle{rm}
+\graphicspath{{./figures/}}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\newcommand{\rev}[1]{\textcolor{blue}{#1}}
+%\newcommand{\quo}[1]{\textcolor{gray}{#1}}
+%\newcommand{\rev}[1]{\vspace{3mm} \noindent {\em {\color{blue}{#1}}}}
+
+
+\newenvironment{myindentpar}[1]%
+{\begin{list}{}
+         {\vspace{10pt}
+					\setlength{\leftmargin}{#1}}
+          \item[]
+}
+{\end{list}}
+\newcommand{\rev}[1]{\begin{myindentpar}{.25in} {\em {\color{blue}{#1}}}\end{myindentpar}}
+
+\newenvironment{myindentparQ}[1]%
+{\begin{list}{}
+         {\setlength{\leftmargin}{#1}}
+          \item[]
+}
+{\end{list}}
+\newcommand{\quo}[1]{\begin{myindentparQ}{.25in} {{\color{gray}{#1}}}\end{myindentparQ}}
+
+\begin{document}
+
+\title{Author's Reply}
+\author{}
+\maketitle
+
+\section*{Overview}\label{sec:overview}
+I appreciate your review and address your remaining question below. 
+Note that my response to your question is 
+incorporated into the revision and marked in {\color{blue}blue}.
+
+\newcounter{RP}
+
+\clearpage
+\section*{Reviewer}\label{sec:rev1}
+
+% 1
+\rev{
+$<<$ Reviewer's comments to the author(s) $>>$
+
+The manuscript is well revised.
+
+However, I have a question how to estimate each daemon's influence as time.
+The estimation is important for accuracy of your proposed method.
+
+For acceptance, please clarify the estimation method and its validity.
+
+}
+
+If I understand your question correctly, 
+the proposed {\em cutoff} method addresses your question. 
+We elaborate on deriving the cutoffs for each infrequent, long-running daemon 
+from Steps~2 to~9 in Figure~3, which is marked in blue 
+with a provided one-line comment above Step~2, for better clarification.
+
+Here is the summarized procedure of the cutoff estimation. 
+We first collect all the daemon processes 
+while running PUT128 800 times enough to fit in one day. 
+
+For more details, please see the prose in Section~2 marked in blue. 
+
+
+\end{document}
