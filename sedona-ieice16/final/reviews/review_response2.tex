@@ -1,0 +1,159 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{algorithmic}
+\usepackage{alltt}
+\usepackage{array}
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+%\usepackage[caption=false]{caption}
+\usepackage[dvipsnames]{color}
+%\usepackage{colortbl}
+%\usepackage{enumitem}
+%\usepackage{eqparbox}
+%\usepackage{fixltx2e}
+%\usepackage{float}
+%\usepackage{floatflt}
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+%\usepackage{multirow}
+\usepackage{stfloats}
+%\usepackage[font=footnotesize]{subfig}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+%\usepackage[tight,normalsize,sf,SF]{subfigure}
+%\usepackage{subfigure} 
+\usepackage{times}
+\usepackage{url}
+\usepackage{verbatim} 
+\usepackage{wrapfig}
+\usepackage{xspace}
+\usepackage{color}
+
+\definecolor{grey}{RGB}{200,200,200}
+\newcommand{\hilite}[1]{\colorbox{yellow}{#1}}
+\newcommand{\hiliting}[1]{\colorbox{grey}{#1}}
+\long\def\todo#1{\hilite{{\bf TODO:} {\em #1}}}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+
+
+% new commands: from file -- to permit re-use
+%\input{newcommands.tex}
+
+%Hyphenation problems
+\hyphenation{name-space}
+\hyphenation{schema-location}
+\hyphenation{xml-lint}
+\hyphenation{time-stamp}
+\hyphenation{time-stamps}
+\hyphenation{time-stamped}
+
+
+\urlstyle{rm}
+\graphicspath{{./figures/}}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\newcommand{\rev}[1]{\textcolor{blue}{#1}}
+%\newcommand{\quo}[1]{\textcolor{gray}{#1}}
+%\newcommand{\rev}[1]{\vspace{3mm} \noindent {\em {\color{blue}{#1}}}}
+
+
+\newenvironment{myindentpar}[1]%
+{\begin{list}{}
+         {\vspace{10pt}
+					\setlength{\leftmargin}{#1}}
+          \item[]
+}
+{\end{list}}
+\newcommand{\rev}[1]{\begin{myindentpar}{.25in} {\em {\color{blue}{#1}}}\end{myindentpar}}
+
+\newenvironment{myindentparQ}[1]%
+{\begin{list}{}
+         {\setlength{\leftmargin}{#1}}
+          \item[]
+}
+{\end{list}}
+\newcommand{\quo}[1]{\begin{myindentparQ}{.25in} {{\color{gray}{#1}}}\end{myindentparQ}}
+
+\begin{document}
+
+\title{Author's Reply}
+\author{}
+\maketitle
+
+\section*{Overview}\label{sec:overview}
+I appreciate your review and address your remaining question below. 
+Note that my response to your question is 
+incorporated into the revision and marked in {\color{blue}blue}.
+
+\newcounter{RP}
+
+\clearpage
+\section*{Reviewer}\label{sec:rev1}
+
+% 1
+\rev{
+$<<$ Reviewer's comments to the author(s) $>>$
+
+The manuscript is well revised.
+
+However, I have a question how to estimate each daemon's influence as time.
+The estimation is important for accuracy of your proposed method.
+
+For acceptance, please clarify the estimation method and its validity.
+
+}
+
+If I interpret your question correctly,
+(1)~the identification process of infrequent, long-running daemons 
+and (2)~the proposed {\em cutoff} method address your question. 
+The cutoff is used as a criterion to determine whether to discard a sample, to improve measurement quality. 
+Both are elaborated from Steps~2 through~9 in Figure~3, augmented with a one-line comment (above Step~2), 
+for better clarification.
+
+%Here is the summary of how to estimate each daemon's influence as time via the cutoffs. 
+To estimate each daemon's influence, we do the following. 
+\begin{itemize}
+\item We run a program-under-test with 128 seconds, termed PUT128, 800 times 
+enough to experience an infrequent, long-running daemon 
+that may run every few hours or even once a day (Step~2).
+
+\item From the 800 samples, we render a scatter-plot of pairs of successive samples of elapsed time (ET) of PUT128
+as illustrated in Fig.~4~(b) and see if that scatter-plot has an $L$-shape (Step~3). 
+
+\item We check if the central cluster emerges (Step~4) by zooming into the scatter-plot (Step~4). 
+
+\item For each daemon in the central cluster, we compute the maximum and standard deviation 
+of the process time (PT) of that daemon (Step~5). (As specified in the Characteristics paragraph, PT is defined as 
+the sum of user and system time, supplied from the kernel via the Netlink interface, before and after each run.) 
+
+\item (1)~We identify, for each daemon in the samples in the $L$-shape (or $L$-sample), 
+which daemon has its PT greater than two standard deviations above the maximum PT 
+of that daemon. (2)~We also collect some extra processes (e.g. {\tt bash}, {\tt rhn\_check}) 
+that are not in the cluster but only in the $L$-sample (Step~6). 
+The identified processes are treated as infrequent, long-running. 
+
+\item For each so-identified infrequent, long-running daemon, we compute the minimum time 
+in the $L$-samples (Step~7). (This computation provides the valley between the maximum PT from 
+the central cluster and the minimum PT from the $L$-shape.)
+
+\item We repeat Steps 2---6 with the much-longer running of PUT16384, to confirm if 
+any of the identified daemons is actually not infrequent at the much larger task length of 16384 seconds (Step~8).
+This step is required to prevent the false positive case in our identification process, 
+as some daemons with a periodicity of hours are infrequent for a ``short'' program time like 128 seconds.  
+
+\item We now compute the {\em cutoff} for each of those identified infrequent, long-running daemons, 
+based on the PUT128 and PUT16384 runs. 
+\end{itemize}
+ 
+%(The user- and system-time measures of captured processes are supplied by the kernel, via the Netlink interface.)
+
+
+
+
+For more details, please see the prose in Section~2 marked in blue. 
+
+
+\end{document}
