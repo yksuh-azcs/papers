@@ -191,15 +191,14 @@ early eliminating dirty executions infected with such a daemon
 and eventually contributing to enhancing the overall measurement-quality}. 
 }
 
-{\color{blue}
+{\color{green}
 %\item We present an algorithm to identify infrequent, long-running daemons impacting 
 %the timing of a compute-bound program.
 %
 %\item We propose a more accurate and precise protocol based on the identification variance 
 %variance for that program.
 
-\item We present an algorithm to identify and eliminate such infrequent and long-running 
-daemons.
+\item We present an algorithm to identify and eliminate such daemons that are infrequent, long-running.
 
 \item We propose a novel timing protocol that can considerably 
 reduce variance via the elimination. 
@@ -232,7 +231,7 @@ Note that this protocol (algorithm) is applicable to any arbitrary Linux system.
 \STATE Step 1. Set up the timing environment.
 
 {\color{blue}
-\tcc{{\scriptsize Steps 2---9 produce cutoffs for each identified daemon.}}
+\tcc{{\color{green}{\scriptsize Daemon-cutoff times are derived from Steps~2 through~9.}}}
 \STATE Step 2. Perform a single PUT run (specifically, PUT128) for many samples (specifically, 800).
 \STATE Step 3. Consider each pair of elapsed time measurements to be a dual-PUT measurement 
 and examine a scatter-plot to see if it it displays an $L$-shape.
@@ -256,7 +255,6 @@ consisting of a small number of executions (specifically, 40) of PUT16384.
 {\bf A Running Example.} 
 First, we set up the same measurement environment as described earlier in \hbox{Section}~\ref{sec:intro}, 
 to eliminate known timing factors (Step~1).
-
 {\color{blue}
 We then run a program-under-test (called PUT) of 
 Fig.~\ref{alg:put} with a task length of 128~sec, 
@@ -420,9 +418,10 @@ We also include daemons that (a)~were identified as infrequent and
 \hbox{$L$-samples}, but may have in the \hbox{dual-PUT32768} central cluster.
 We then take the {\em maximum} of the two cutoffs for the final cutoff PT 
 (the last column of Tab.~\ref{tab:final_infrequent_cutoff}). 
+({\color{green}Note that different cutoff data from Tab.~\ref{tab:final_infrequent_cutoff} may be yielded on a different kernel.})
 }
 
-\vspace{-0.2in}
+\vspace{-0.3in}
 \begin{table}[ht]
 \centering
 {\tiny
@@ -541,8 +540,8 @@ than the ET-based existing method.
 The experimental results demonstrate 
 the general applicability of SEDONA to timing any CPU-bound program.
 
-%\vspace{-0.in}
-\begin{table}[htp!]
+\vspace{-0.in}
+\begin{table}[t]
 \centering
 {
 \tiny
@@ -597,8 +596,8 @@ it is more precise and accurate than the extant method.
 
 \balance
 
-\vspace{-0.03in}
 {\tiny 
+%\vspace{-0.05in}
 \bibliographystyle{ieicetr} 
 \bibliography{paper}
 %\vspace{-0.2in}
