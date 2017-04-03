@@ -191,7 +191,7 @@ early eliminating dirty executions infected with such a daemon
 and eventually contributing to enhancing the overall measurement-quality}. 
 }
 
-{\color{green}
+{\color{blue}
 %\item We present an algorithm to identify infrequent, long-running daemons impacting 
 %the timing of a compute-bound program.
 %
@@ -231,7 +231,7 @@ Note that this protocol (algorithm) is applicable to any arbitrary Linux system.
 \STATE Step 1. Set up the timing environment.
 
 {\color{blue}
-\tcc{{\color{green}{\scriptsize Daemon-cutoff times are derived from Steps~2 through~9.}}}
+\tcc{{\color{blue}{\scriptsize Daemon-cutoff times are derived from Steps~2 through~9.}}}
 \STATE Step 2. Perform a single PUT run (specifically, PUT128) for many samples (specifically, 800).
 \STATE Step 3. Consider each pair of elapsed time measurements to be a dual-PUT measurement 
 and examine a scatter-plot to see if it it displays an $L$-shape.
@@ -418,10 +418,10 @@ We also include daemons that (a)~were identified as infrequent and
 \hbox{$L$-samples}, but may have in the \hbox{dual-PUT32768} central cluster.
 We then take the {\em maximum} of the two cutoffs for the final cutoff PT 
 (the last column of Tab.~\ref{tab:final_infrequent_cutoff}). 
-({\color{green}Note that different cutoff data from Tab.~\ref{tab:final_infrequent_cutoff} may be yielded on a different kernel.})
+({\color{blue}A different Linux distribution may yield different cutoff data than Tab.~\ref{tab:final_infrequent_cutoff}.})
 }
 
-\vspace{-0.3in}
+\vspace{-0.2in}
 \begin{table}[ht]
 \centering
 {\tiny
@@ -451,9 +451,10 @@ We then take the {\em maximum} of the two cutoffs for the final cutoff PT
   \vspace{-0.3in}
 \end{table}
 
+{\color{blue}
 Based on Tab.~\ref{tab:final_infrequent_cutoff}, 
-we discard any \hbox{sample} \hbox{containing} an infrequent, long-running daemon execution
-over the corresponding cutoff. We thus end up dropping just fifteen of the 800
+we discarded any \hbox{sample} \hbox{containing} an infrequent, long-running daemon execution
+over the corresponding cutoff.} We thus ended up dropping just fifteen of the 800
 PUT128 samples and only two of the forty PUT16384 samples. 
 As a result, the \hbox{overall} \hbox{measurement} quality---the standard deviation and \hbox{relative} error 
 ---for PUT128 was improved 
@@ -487,9 +488,11 @@ HDD & Western Digital Caviar Black 1TB 7200rpm SATA Drive\\ \hline
 First, we compared the performance of the two approaches 
 using real-world programs such as insertion sort, termed SORT and 
 matrix multiplication (in column major), termed MM. 
-In this comparison SEDONA outperformed ORG, as can be seen in Fig.~\ref{fig:synprog_test}. 
+{\color{blue}
+In this comparison SEDONA bettered ORG, as can be seen in Fig.~\ref{fig:synprog_test}. 
 As workload size increased, the performance gap between the two 
 were increasingly widened, reaching up to by 6x.
+}
 
 \vspace{-.2in}
 \begin{figure}[h]
@@ -513,9 +516,11 @@ benchmarks~\cite{specCpu2006}, providing various \linebreak
 Note that in the table the results for {\tt 481} and {\tt 483} \hbox{benchmarks} 
 are omitted because of some runtime error and incurred I/O, respectively.
 
+{\color{blue}
 Table~\ref{tab:spec_real} shows that 
-SEDONA bettered ORG,
-on the standard deviation and relative error across the very different SPEC benchmarks. 
+SEDONA outperformed ORG,
+on the standard deviation and relative error across the very different SPEC benchmarks.
+}
 To be more specific, all the benchmarks revealed a smaller standard deviation 
 from SEDONA as compared to that of ORG. 
 Our timing protocol quite effectively filtered out infrequent daemon executions 
@@ -523,8 +528,10 @@ in the industrial workloads. The relative error of SEDONA was also
 lower than that of ORG for almost every benchmark.
 For example, about a 10x \hbox{margin} between the two resulted from {\tt 434}.
 
+{\color{blue}
 SEDONA also scaled well for the SPEC workloads, 
 with regard to growth of relative error as the execution time lengthened.
+}
 For the short benchmarks 
 (e.g. {\tt 400}, {\tt 403}, {\tt 410}, 
 {\tt 434}, {\tt 445}, and {\tt 999}: those taking \hbox{under} 100 sec), 
