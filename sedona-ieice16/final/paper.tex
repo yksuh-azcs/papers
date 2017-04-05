@@ -75,18 +75,20 @@ The goal of this paper is to propose
 a better timing protocol that can significantly reduce such variability 
 and thus enable better timing results without a doubt of their validity.
 
+{\color{blue}
 Fig.~\ref{fig:synprog_test} compared the performance of 
 the existing timing scheme, termed {\em ORG} using \hbox{end-to-end} (elapsed) time 
 and our timing protocol, termed {\em \hbox{SEDONA}} 
 (\hbox{Selective} Elimination through Detection of infrequent, \hbox{lOng-ruNning} dAemons), 
 to be proposed shortly. 
-In this comparison we used 
+For this comparison we used 
 two kinds of real-world programs such as insertion sort, termed SORT and 
 matrix multiplication (in column major), termed MM. 
-In this comparison SEDONA outperformed ORG in terms of measurement quality 
-gauged via standard deviation. 
-To be more specific, the performance gap between the two schemes over growing workload
-were increasingly widened, reaching up to by 6x.
+As illustrated in Fig.~\ref{fig:synprog_test}, 
+SEDONA outperformed ORG with regard to measurement quality by standard deviation. 
+To be more specific, we observed that as workload size increased the performance gap between the two methods 
+was increasingly bigger, reaching up to by six~times. 
+}
 
 \begin{figure}[t]
 	\centering
@@ -100,9 +102,10 @@ were increasingly widened, reaching up to by 6x.
 	}
 	%\vspace{-.1in}
 	\caption{Performance Comparison on Real-world Programs~\label{fig:synprog_test}}
-\vspace{-.1in}
+\vspace{-.3in}
 \end{figure}
 
+\vspace{-0.15in}
 {\bf Characteristics.} There are several important specifics of our protocol. 
 First, we utilize {\em process time} (PT) rather than on elapsed time (ET). 
 The use of PT is preferred, as it takes into account 
@@ -113,7 +116,7 @@ These tick measures are obtainable via {\tt taskstats} C struct,
 provided by the Linux NetLink facility~\cite{Netlink}. 
 Second, the protocol throws out some executions that involve
 {\em infrequent, \hbox{long-running} daemon processes}. 
-We observe that such daemon processes substantially impact 
+We witness that such daemon processes substantially impact 
 the execution time of the process.  
 By eliminating those executions, the protocol greatly improves
 the overall measurement quality, which would otherwise be biased by them.
@@ -134,16 +137,17 @@ Commercial software tools measure execution time~\cite{VTune,TimeSys,WindView}.
 Since the tools' source code is not disclosed, there is no way of figuring out 
 whether they can prevent such a daemon from timing. 
 
-%\vspace{0.05in}
+%\vspace{0.02in}
 {\bf Contribution.} 
 Our contributions are following.
-%\vspace{-0.05in}
+\vspace{-0.1in}
 \begin{itemize}
 
 \item We show empirical evidence that 
 measuring execution time 
 can be seriously affected by daemons.
 
+{\color{blue}
 %\item We present an algorithm to identify infrequent, long-running daemons impacting 
 %the timing of a compute-bound program.
 
@@ -155,9 +159,10 @@ reduce variance via the elimination.
 
 \item The evaluation results on real-world programs 
 show a support for the effectiveness of the protocol. 
+}
 
 \end{itemize}
-%\vspace{-0.2in}
+\vspace{-0.2in}
 
 \noindent
 The rest is organized as follows. 
@@ -166,50 +171,58 @@ We next elaborate on the proposed timing protocol. In turn we evaluate the perfo
 \section{Proposed Scheme}
 \label{sec:prop_appach}
 
-In this section we propose our SEDONA timing protocol. 
-SEDONA (1) utilizes PT (process time) to avoid absorbing timing noise from other co-running processes and (2)~identifies and eliminates executions including daemon processes that are infrequent and \hbox{long-running} via a {\em cutoff} measure. 
+{\color{blue}
+In this section we propose our timing protocol. 
+The protocol (1) utilizes PT (process time) to avoid absorbing timing noise from other co-running processes and (2)~identifies and eliminates executions including daemon processes that are infrequent and \hbox{long-running} via a {\em cutoff} measure. 
 
-Our SEDONA protocol consists of a total of ten steps, as described in Fig.~\ref{alg:find}.
-Note that this protocol (algorithm) is applicable to any arbitrary Linux system.
+Our SEDONA protocol consists of the three major steps, as described in Fig.~\ref{alg:find}. 
+Note that this protocol (algorithm) is applicable to any arbitrary Linux system and to any compute-bound program.
+}
 
+\vspace{-0.2in}
 \begin{figure}[h]
 \begin{center}
 \begin{algorithmic}
 {\bf Algorithm} The SEDONA Timing Protocol: \\
-\STATE Step 1. Set up the timing environment.
-\STATE Step 2. Perform a single PUT run (specifically, PUT128) for many samples (specifically, 800).
-\STATE Step 3. Consider each pair of elapsed time measurements to be a dual-PUT measurement 
-and examine a scatter-plot to see if it it displays an $L$-shape.
-\STATE Step 4. Zoom into the central cluster to ensure that it is symmetric (roughly circular).
-\STATE Step 5. Compute the maximum and standard deviation of the process time 
-for each daemon encountered within the central cluster samples.
-\STATE Step 6. Identify for each sample in the $L$-shape infrequent, long-running daemon executions. 
-\STATE Step 7. Determine potentially periodic daemons based on the $L$-executions 
-and for each daemon compute the minimum process time from those executions identified. 
-\STATE Step 8. Perform Steps 1--6 above for a single run 
-consisting of a small number of executions (specifically, 40) of PUT16384.  
-\STATE Step 9. Compute the cutoffs for each identified daemon. 
-\STATE Step 10. Discard an execution including a daemon of which process time is greater than the respective cutoff time.
+{\color{blue}
+\STATE {\bf Step~A. Set up the timing environment.}
+\STATE {\bf Step~B. Determine the cutoffs.}
+\STATE  \ B-1. Perform a single run of a simple program-under-test (PUT) (specifically, PUT128) for many samples (specifically, 800).
+\STATE  \ B-2. Consider each pair of elapsed time measurements to be a dual-PUT measurement and examine a scatter-plot to see if it it displays an $L$-shape.
+\STATE  \ B-3. Zoom into the central cluster to ensure that it is symmetric (roughly circular).
+\STATE  \ B-4. Compute the maximum and standard deviation of the process time for each daemon encountered within the central cluster samples.
+\STATE  \ B-5. Identify for each sample in the $L$-shape infrequent, long-running daemon executions. 
+\STATE  \ B-6. Determine potentially periodic daemons based on the $L$-executions and for each daemon compute the minimum process time from those executions identified. 
+\STATE  \ B-7. Perform Steps 1--6 above for a single run consisting of a small number of executions (specifically, 40) of PUT16384.  
+\STATE  \ B-8. Compute the cutoffs for each identified daemon. 
+\STATE {\bf Step~C. Time an arbitrary compute-bound program.}
+\STATE  \ C-1. Run the program ten times, collecting all the process times (PTs). 
+\STATE  \ C-2. Discard any run involving daemon executions over the cutoffs.
+\STATE  \ C-3. Compute the average to get the PT of that program.
+}
 \end{algorithmic}
 \end{center}
-\caption{Summary of the SEDONA Timing Protocol\label{alg:find}}
+\caption{The SEDONA Timing Protocol\label{alg:find}}
 \end{figure}
 
-{\bf A Running Example.} 
-In Step~1 we configure the same timing environment as used in our prior work~\cite{Currim}, 
+%\vspace{-0.2in}
+%{\color{blue}
+%{\bf Determining the Cutoffs.} 
+In Step~A we configure the same timing environment as used in our prior work~\cite{Currim}, 
 to eliminate known timing factors. 
 The environment requires (i)~deactivating non-critical daemons, 
 (ii)~switching on the Network Timing Protocol daemon,  
 (iii)~turning off particular CPU features~\cite{intel15,intelSpeed15}, 
 and (iv)~getting an up-to-date kernel installed.
 
-We then run a simple program-under-test (called PUT) many times, as shown in Fig.~\ref{alg:put} (Step~2). 
+Step~B consists of eight sub-steps, resulting in determining 
+the cutoffs for each identified infrequent, long-running daemon. 
+In Step~B-1, we run a simple program-under-test (called PUT) many times, as shown in Fig.~\ref{alg:put}. 
 PUT runs a nested for-loop with a specified task length ($tl$) (in seconds). 
 The $tl$ value is used to compute 
 the number of iterations ($t$) for which that for-loop is performed 
 to reach the specified task length.
 
-\vspace{-.2in}
 \begin{figure}[h]
 \begin{center}
 \begin{algorithmic}
@@ -223,7 +236,7 @@ to reach the specified task length.
 \end{algorithmic}
 \end{center}
 \caption{Computation by a Program-Under-Test (PUT)\label{alg:put}}
-\vspace{-.2in}
+%\vspace{-.2in}
 \end{figure}
 
 The run of Step~2 assigns a task length of 128~sec to PUT, termed {\em PUT128}, and repeats executing PUT128 800~times.
@@ -262,7 +275,7 @@ some ``infrequent, \hbox{long-running} daemons'' on PT (\hbox{process} time) of 
         }
     \caption{Successive Scatter Plots of PUT128 with 800 samples 
     (equivalent to Dual-PUT256 with 400 samples) in Steps~2---4~\label{fig:put128_plot}} 
-    %\vspace{-0.3in}     
+    \vspace{-0.3in}     
 \end{figure} 
 
 To identify such daemons, we use a novel \hbox{scatter} plot: 
@@ -418,13 +431,13 @@ The following section presents the evaluation results of SEDONA via a popular co
 \section{Evaluation}
 \label{sec:eval}
 %\vspace{-0.07in}
-We now evaluate the \hbox{performance} of SEDONA 
-compared to that of the original timing scheme, termed ORG, based on 
-elapsed time.
-Our experiments were conducted on a \hbox{machine}
+{\color{blue}
+We now evaluate the \hbox{performance} of SEDONA, 
+compared to that of the original timing scheme (ORG) based on elapsed time.
+Our experiments were conducted on a commodity \hbox{machine}
 described in Table~\ref{tab:machine_config}. 
 \begin{table}[h]
-\vspace{-0.1in}
+\vspace{-0.2in}
 \begin{center}
 {%\tiny
 \begin{tabular}{|l|p{7cm}|}\hline
@@ -439,23 +452,29 @@ HDD & Western Digital Caviar Black 1TB 7200rpm SATA Drive\\ \hline
 \vspace{-0.2in}
 \end{table}
 
-The validity of our protocol was evaluated with SPEC CPU2006 
-benchmarks~\cite{specCpu2006}, providing various 
-\hbox{compute-bound} real applications (as well as the real-world programs 
-as shown in Fig.~\ref{fig:synprog_test}).
-The results are \hbox{provided} in Table~\ref{tab:spec_real}. 
-Note that in the table the results for {\tt 481} and {\tt 483} \hbox{benchmarks} 
-are omitted because of some runtime error and incurred I/O, respectively.
+As already mentioned in Section~\ref{sec:intro}, we first 
+confirmed the validity of our protocol with two 
+real \hbox{CPU-bound} programs---insertion sort and \hbox{column-major} matrix multiplication---with heavy memory references.
 
-Table~\ref{tab:spec_real} shows that 
-SEDONA outperformed ORG,
+To further assess the performance of the protocol, 
+we proceeded with SPEC CPU2006 benchmarks~\cite{specCpu2006}, providing various 
+\hbox{compute-bound} real applications.
+%The results are \hbox{provided} in Table~\ref{tab:spec_real}. 
+%Note that in the table the results for {\tt 481} and {\tt 483} \hbox{benchmarks} 
+%are omitted because of some runtime error and incurred I/O, respectively.
+Note that in this evaluation we could not obtain the results for {\tt 481} and {\tt 483} \hbox{benchmarks}. 
+{\tt 481} threw some runtime error that we could not resolve, and {\tt 483} incurred I/O, which was out of scope of this article.
+Hence, those two results are omitted in Table~\ref{tab:spec_real}.
+
+We reaffirmed from Table~\ref{tab:spec_real} that SEDONA outperformed ORG,
 on the standard deviation and relative error across the very different SPEC benchmarks.
-To be more specific, all the benchmarks revealed a smaller standard deviation 
-from SEDONA as compared to that of ORG. 
+Specifically, all the benchmarks revealed a smaller standard deviation 
+from SEDONA as compared to that of ORG.
 Our timing protocol quite effectively filtered out infrequent daemon executions 
 in the industrial workloads. The relative error of SEDONA was also 
 lower than that of ORG for almost every benchmark.
-For example, about a 10x \hbox{margin} between the two resulted from {\tt 434}.
+Roughly a 10x margin between the two schemes resulted from the {\tt 434} benchmark, for instance.
+}
 
 SEDONA also scaled well for the SPEC workloads, 
 with regard to growth of relative error as the execution time lengthened.
@@ -516,25 +535,29 @@ the general applicability of SEDONA to timing any CPU-bound program.
 \end{tabular}
 }
 \caption{Performance Evaluation on the SPEC Benchmarks\label{tab:spec_real}}
-\vspace{-0.25in}
+\vspace{-0.3in}
 \end{table}
+
+%\vspace\fill
 
 \section{Conclusion}
 \label{sec:conclusion}
-%\vspace{-0.07in}
+\vspace{-0.1in}
+
 We proposed a novel timing protocol called {\em SEDONA}, and 
 performed an empirical evaluation to show that 
-it is more precise and accurate than the extant method.
+it is more precise and accurate than the extant method. 
+This protocol is generic, in that {\em any} arbitrary \hbox{CPU-bound} program 
+can be timed with reduced variance on {\em any} Linux distribution, via the protocol. 
 
+\balance
 
-%\balance
-
-%{\tiny 
-%\vspace{-0.05in}
+{\scriptsize
+%\vspace{-0.2in}
 \bibliographystyle{ieicetr} 
 \bibliography{paper}
-%\vspace{-0.2in}
-%}
+%\vspace{-0.1in}
+}
 
 \vspace\fill
 \end{document}
