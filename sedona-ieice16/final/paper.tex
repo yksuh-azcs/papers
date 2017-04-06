@@ -191,9 +191,9 @@ Note that this protocol (algorithm) is applicable to any arbitrary Linux system 
 \STATE  \ B-2. Consider each pair of elapsed time measurements to be a dual-PUT measurement and examine a scatter-plot to see if it it displays an $L$-shape.
 \STATE  \ B-3. Zoom into the central cluster to ensure that it is symmetric (roughly circular).
 \STATE  \ B-4. Compute the maximum and standard deviation of the process time for each daemon encountered within the central cluster samples.
-\STATE  \ B-5. Identify for each sample in the $L$-shape infrequent, long-running daemon executions. 
-\STATE  \ B-6. Determine potentially periodic daemons based on the $L$-executions and for each daemon compute the minimum process time from those executions identified. 
-\STATE  \ B-7. Perform Steps 1--6 above for a single run consisting of a small number of executions (specifically, 40) of PUT16384.  
+\STATE  \ B-5. Identify for each sample in the $L$-shape infrequent, \hbox{long-running} daemon executions. 
+\STATE  \ B-6. Determine potentially periodic daemons based on the \hbox{$L$-executions} and for each daemon compute the minimum process time from those executions identified. 
+\STATE  \ B-7. Perform Steps 1--B-6 above for a single run consisting of a small number of executions (specifically, 40) of PUT16384.  
 \STATE  \ B-8. Compute the cutoffs for each identified daemon. 
 \STATE {\bf Step~C. Time an arbitrary compute-bound program.}
 \STATE  \ C-1. Run the program ten times, collecting all the process times (PTs). 
@@ -202,26 +202,31 @@ Note that this protocol (algorithm) is applicable to any arbitrary Linux system 
 }
 \end{algorithmic}
 \end{center}
+\vspace{-0.05in}
 \caption{The SEDONA Timing Protocol\label{alg:find}}
+\vspace{-0.2in}
 \end{figure}
 
 %\vspace{-0.2in}
-%{\color{blue}
-%{\bf Determining the Cutoffs.} 
-In Step~A we configure the same timing environment as used in our prior work~\cite{Currim}, 
+{\color{blue}
+{\bf Timing configuration.} 
+Step~A sets up the same timing environment as used in our prior work~\cite{Currim}, 
 to eliminate known timing factors. 
 The environment requires (i)~deactivating non-critical daemons, 
 (ii)~switching on the Network Timing Protocol daemon,  
 (iii)~turning off particular CPU features~\cite{intel15,intelSpeed15}, 
 and (iv)~getting an up-to-date kernel installed.
 
+{\bf Determining the Cutoffs}
 Step~B consists of eight sub-steps, resulting in determining 
 the cutoffs for each identified infrequent, long-running daemon. 
+
 In Step~B-1, we run a simple program-under-test (called PUT) many times, as shown in Fig.~\ref{alg:put}. 
 PUT runs a nested for-loop with a specified task length ($tl$) (in seconds). 
 The $tl$ value is used to compute 
 the number of iterations ($t$) for which that for-loop is performed 
 to reach the specified task length.
+}
 
 \begin{figure}[h]
 \begin{center}
@@ -236,13 +241,14 @@ to reach the specified task length.
 \end{algorithmic}
 \end{center}
 \caption{Computation by a Program-Under-Test (PUT)\label{alg:put}}
-%\vspace{-.2in}
+\vspace{-0.25in}
 \end{figure}
 
-The run of Step~2 assigns a task length of 128~sec to PUT, termed {\em PUT128}, and repeats executing PUT128 800~times.
-We use 128 seconds because that is long enough to perhaps experience an infrequent daemon. 
-We run it 800 times to capture infrequent daemons that perhaps run every few hours or even 
-once a day. 
+{\color{blue}
+We assign a task length of 128~sec to PUT, termed {\em PUT128} and run PUT128 800~times.
+We use 128~seconds because that is long enough to perhaps experience an infrequent daemon. 
+We execute PUT128 800~times to capture infrequent daemons that perhaps run every few hours or even 
+once a day.} 
 Note that we collect all daemon processes as well as the PUT and their measures 
 through the Netlink interface from the kernel before and after each 
 timing.
@@ -255,7 +261,8 @@ We will now drill down into these outliers to
 show how to reliably eliminate the indirect influence of 
 some ``infrequent, \hbox{long-running} daemons'' on PT (\hbox{process} time) of the PUT.
 
-\begin{figure}[t]
+\begin{figure}[h]
+	\vspace{-0.3in} 
 	\centering
 	\subfigure[PUT128 with 800 Samples]{
 		\includegraphics[width=0.224\textwidth]{put128_empv4_new.eps}
@@ -274,8 +281,8 @@ some ``infrequent, \hbox{long-running} daemons'' on PT (\hbox{process} time) of 
 		\label{fig:dual_et_put256_cluster}
         }
     \caption{Successive Scatter Plots of PUT128 with 800 samples 
-    (equivalent to Dual-PUT256 with 400 samples) in Steps~2---4~\label{fig:put128_plot}} 
-    \vspace{-0.3in}     
+    (equivalent to Dual-PUT256 with 400 samples) in {\color{blue}Steps~B-1--3}~\label{fig:put128_plot}} 
+    \vspace{-0.25in}     
 \end{figure} 
 
 To identify such daemons, we use a novel \hbox{scatter} plot: 
@@ -291,7 +298,7 @@ to samples~\#{1} and~\#{2} of PUT128.
 
 Fig.~\ref{fig:raw_put128} presents such a scatter plot 
 of 400 samples of a run of \hbox{dual-PUT256} constructed 
-from a run of the 800 PUT128 samples (Step~3). 
+from a run of the 800 PUT128 samples ({\color{blue}Step~B-2}). 
 The $xy$-plane corresponds to the dual-PUT samples. 
 For example, \hbox{sample}~\#{2} of a run of dual-PUT256 
 is plotted as a point with samples~\#{3} and~\#{4} of a run of PUT128 
@@ -312,18 +319,18 @@ the ``$L$'', and again no samples in the upper right portion of the
 scatter plot.
 
 We continue zooming until we get to Figure~\ref{fig:dual_et_put256_cluster},
-which shows a central cluster (Step 4). 
+which shows a central cluster ({\color{blue}Step~B-3}). 
 We confirm the symmetry of the ET measurements in the central cluster: there
 is no $L$-shape, and thus no $L$-samples, and thus no obvious infrequent
 long-running daemons.
 
-We then perform Step~5, which computes 
+We then perform {\color{blue}Step~B-4}, which computes 
 the maximum process time and standard deviation 
 of PT (process time, note the switch in emphasis from ET to PT) of the daemon processes
 (i.e. {\tt flush-9:0}) 
 observed in the central cluster samples in Fig.~\ref{fig:dual_et_put256_cluster}. 
 
-In Step~6 we identify, for each daemon in the \hbox{$L$-samples}, 
+{\color{blue}Step~B-5} identifies, for each daemon in the \hbox{$L$-samples}, 
 those that are actual long-running daemon
 executions.  We define such executions as those whose PT 
 is over two standard deviations above the maximum PT for
@@ -346,7 +353,7 @@ all occur together and have a periodicity of about every 559 samples
 (5x longer, or just about 20 hours). 
 
 Next, we can compute for each so-identified infrequent, long-running daemon its
-minimum time in the \hbox{$L$-samples} (Step 7). 
+minimum time in the \hbox{$L$-samples} ({\color{blue}Step~B-6}). 
 This computation provides a rough, initial distinction of a ``long-running''
 daemon, or the valley between the maximum PT from the central cluster 
 and the minimum PT from the $L$-samples, to differentiate ``short-running'' 
@@ -354,7 +361,7 @@ from ``\hbox{long-running}'' executions of the daemon.
 For those daemons (i.e. {\tt grep}) never appearing in the central cluster,
 this initial \hbox{analysis} concludes only that they are infrequent.
 
-In Step 8 we repeat Steps 1--6, but instead with the much-longer running
+In {\color{blue}Step~B-7} we repeat {\color{blue}Steps~1--B-6}, but instead with the much-longer running
 PUT16384 (4.5 hours per \hbox{sample} versus 2 minutes), to see 
 if any of our identified \hbox{infrequent} daemons are actually frequent 
 at that much longer PUT execution time. 
@@ -373,7 +380,7 @@ hours are \hbox{infrequent}. But with PUT16384
 with a ``long'' program time (or, 4.5 hours),
 some of those daemons are now frequent, and appear in the central cluster.
 
-In Step~9 we compute 
+In {\color{blue}Step~B-8} we compute 
 the cutoff for each of those infrequent, long-running daemons so
 identified, based on the runs of PUT128 and 
 PUT16384 as collected in Tab.~\ref{tab:final_infrequent_cutoff}. 
@@ -390,9 +397,9 @@ We also include daemons that (a)~were identified as infrequent and
 \hbox{$L$-samples}, but may have in the \hbox{dual-PUT32768} central cluster.
 We then take the {\em maximum} of the two cutoffs for the final cutoff PT 
 (the last column of Tab.~\ref{tab:final_infrequent_cutoff}). 
-(Note that a different distribution than RedHat Enterprise Linux may yield different cutoff data from those of Tab.~\ref{tab:final_infrequent_cutoff}, but this cutoff idea is applicable to any Linux distribution and arbitrary program.)
+%(Note that a different distribution than RedHat Enterprise Linux may yield different cutoff data from those of Tab.~\ref{tab:final_infrequent_cutoff}, but this cutoff idea is applicable to any Linux distribution and arbitrary program.)
 
-\vspace{-0.1in}
+\vspace{-0.2in}
 \begin{table}[h]
 \centering
 {\scriptsize
@@ -418,29 +425,34 @@ We then take the {\em maximum} of the two cutoffs for the final cutoff PT
 \end{tabular}
 }
 \caption{Collected Infrequent, Long-running Daemons and Their Final Cutoff
-  Process Time \hbox{(Step~9)}\label{tab:final_infrequent_cutoff}}
-  \vspace{-0.15in}
+  Process Time \hbox{({\color{blue}Step~B-8})}\label{tab:final_infrequent_cutoff}}
+  \vspace{-0.25in}
 \end{table}
 
-Based on Tab.~\ref{tab:final_infrequent_cutoff}, 
-SEDONA discards any \hbox{sample} \hbox{containing} an infrequent, long-running daemon execution
-over the corresponding cutoff. 
+{\color{blue}
+{\bf Time an arbitrary compute-bound program.} 
+Step~C measures the execution time of a given program. 
+In Step~C-1, we execute that program ten times~\cite{Currim}, collecting all the process times (PTs).
+We then drop any execution involving daemons of which PTs are over 
+their respective cutoffs in Tab.~\ref{tab:final_infrequent_cutoff} (Step~C-2).
+Finally, \hbox{Step~C-3} calculates the PT of that program as the average among the retained executions' PTs.
 
-The following section presents the evaluation results of SEDONA via a popular compute-bound benchmark suite.
+%Now, we report the evaluation results of SEDONA. 
+}
 
 \section{Evaluation}
 \label{sec:eval}
-%\vspace{-0.07in}
+\vspace{-0.07in}
 {\color{blue}
 We now evaluate the \hbox{performance} of SEDONA, 
 compared to that of the original timing scheme (ORG) based on elapsed time.
 Our experiments were conducted on a commodity \hbox{machine}
 described in Table~\ref{tab:machine_config}. 
+\vspace{-0.3in}
 \begin{table}[h]
-\vspace{-0.2in}
 \begin{center}
-{%\tiny
-\begin{tabular}{|l|p{7cm}|}\hline
+{\tiny
+\begin{tabular}{|l|p{6.8cm}|}\hline
 OS & Red Hat Ent. Linux (RHEL) 6.4 with a kernel of 2.6.32 \\ \hline
 CPU & Intel Core i7-870 Lynnfield 2.93GHz quad-core \hbox{processor}\\ \hline
 RAM & 4GB of DDR3 1333 dual-channel memory\\ \hline
@@ -449,7 +461,7 @@ HDD & Western Digital Caviar Black 1TB 7200rpm SATA Drive\\ \hline
 }
 \end{center}
 \caption{Machine Configurations\label{tab:machine_config}}
-\vspace{-0.2in}
+\vspace{-0.3in}
 \end{table}
 
 As already mentioned in Section~\ref{sec:intro}, we first 
@@ -466,7 +478,7 @@ Note that in this evaluation we could not obtain the results for {\tt 481} and {
 {\tt 481} threw some runtime error that we could not resolve, and {\tt 483} incurred I/O, which was out of scope of this article.
 Hence, those two results are omitted in Table~\ref{tab:spec_real}.
 
-We reaffirmed from Table~\ref{tab:spec_real} that SEDONA outperformed ORG,
+Consequently, we reaffirmed from Table~\ref{tab:spec_real} that \hbox{SEDONA} bettered ORG,
 on the standard deviation and relative error across the very different SPEC benchmarks.
 Specifically, all the benchmarks revealed a smaller standard deviation 
 from SEDONA as compared to that of ORG.
@@ -542,7 +554,7 @@ the general applicability of SEDONA to timing any CPU-bound program.
 
 \section{Conclusion}
 \label{sec:conclusion}
-\vspace{-0.1in}
+\vspace{-0.05in}
 
 We proposed a novel timing protocol called {\em SEDONA}, and 
 performed an empirical evaluation to show that 

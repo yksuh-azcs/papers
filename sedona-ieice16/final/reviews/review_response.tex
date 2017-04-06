@@ -85,8 +85,9 @@
 
 \section*{Overview}\label{sec:overview}
 I appreciate your review and address the last question below. 
-Note that my response to that question is 
-reflected into the revision and marked in {\color{blue}blue}. 
+Note that I mark all the changes made to this revision to respond to your concern are marked in {\color{blue}blue}. 
+I hope that these changes helped you better read the flow of the paper. 
+
 
 \newcounter{RP}
 
@@ -106,34 +107,55 @@ For acceptance, please clarify the estimation method and its validity.
 
 }
 
-If I understand your question right, 
-we actually *measure* each daemon's process time (PT) for each timing (sample) of a program-under-test, 
-rather than estimate the influence of that daemon as time. 
-Remind that PT is computed based on the measures of user and system time received from the kernel via 
-the Netlink socket. To check whether the influence (in your terminology) was significant on each sample, 
-we came up with an idea of the {\em cutoff} method by 
-which we could eliminate a certain sample containing a daemon that ran over the respective cutoff time. 
+If I understood your question right, 
+each daemon's influence is translated to its respective cutoff, which I proposed and derived in this paper. 
+For the detailed cutoffs, please refer to Tab.~1 and for computation process (estimation method in your term), the second paragraph in the right column on page~3.
+As mentioned in the paper, the cutoffs are used to drop any execution (sample) involving daemon executions 
+over their respective cutoffs. This drop indicates that such an execution was *significantly influenced* by infrequent, long-running daemons and thus we cannot include 
+that execution in the computation of the execution time of a given program.
 
-To determine the cutoff associated with each daemon, we first identify infrequent, long-running daemons (\hbox{Steps~2---8}). 
-We then compute the cutoff of each so-identified daemon (Step~9). 
-The detailed cutoff computation is specified in the second paragraph in the right column on page~3. 
-The final cutoff data that we obtained for our identified daemon are exhibited in Table~1. 
-For more details about the identification and cutoff calculation, please revisit the blue text in Section~2. 
+To assess the validity of my protocol using the cutoffs, I used the SPEC CPU2006 benchmark suite and observed that the protocol 
+outperformed the extant method using elapsed time, as exhibited in Tab.~3 on page~4 (as already indicated by the previous revision). 
+Note also that I took out Fig.~1 and instead moved Fig.~5 in the former revision (now Fig.~1) upfront (on page~1) in this revision, 
+to early draw the attention of the protocol's effectiveness on two real programs (insertion sort and matrix multiplication) with increasing workloads.
 
-We applied the table to discard a sample involving 
-a daemon whose PT is above the respective cutoff. Dropping a certain sample means that there happened such a daemon's significant influence on that sample. 
-This indicates that we can't trust and include that sample in the base data to calculate the execution time of the given program. 
+Last but not least, there seems a confusion from the used program-under-test (PUT) (e.g., PUT128 and PUT16384) 
+for not only defining but also evaluating the protocol. (In fact, the PUT is also an arbitrary \hbox{compute-bound} program, 
+so there's no problem with applying the protocol to that. But I acknowledge that the dual use of the PUT potentially confuses readers including you.)
+To unravel the confusion, I have redesigned the protocol, divided into the three major steps, as shown in Fig.~2 on page~2. 
+In the new design, I talk about the PUT, only in the context of protocol definition (Step~B), but do not use it for evaluation. 
+As described above, the evaluation was performed on those two real-world programs and the SPEC CPU benchmarks.
 
-The validity of our protocol using the cutoff was assessed on real-world programs (sort and matrix multiplication) and the SPEC CPU2006 benchmark. 
-As shown in Fig.~5 and Tab.~3, our protocol obtained better measurement quality 
-for those real workloads, compared with that of the existing timing scheme using elapsed time.  
-For more details, please refer to the blue text in Section~3.
 
-For better clarification, I slightly modified the Contribution paragraph, 
-provided a single-line comment about the cutoff computation, and finally 
-added the last sentence in parentheses in the prose of Step~9. 
-These changes are marked in blue and incorporated into the revision. 
+%If I understand your question right, 
+%we actually *measure* each daemon's process time (PT) for each timing (sample) of a program-under-test, 
+%rather than estimate the influence of that daemon as time. 
+%Remind that PT is computed based on the measures of user and system time received from the kernel via 
+%the Netlink socket. To check whether the influence (in your terminology) was significant on each sample, 
+%we came up with an idea of the {\em cutoff} method by 
+%which we could eliminate a certain sample containing a daemon that ran over the respective cutoff time. 
+%
+%To determine the cutoff associated with each daemon, we first identify infrequent, long-running daemons (\hbox{Steps~2---8}). 
+%We then compute the cutoff of each so-identified daemon (Step~9). 
+%The detailed cutoff computation is specified in the second paragraph in the right column on page~3. 
+%The final cutoff data that we obtained for our identified daemon are exhibited in Table~1. 
+%For more details about the identification and cutoff calculation, please revisit the blue text in Section~2. 
+%
+%We applied the table to discard a sample involving 
+%a daemon whose PT is above the respective cutoff. Dropping a certain sample means that there happened such a daemon's significant influence on that sample. 
+%This indicates that we can't trust and include that sample in the base data to calculate the execution time of the given program. 
+%
+%The validity of our protocol using the cutoff was assessed on real-world programs (sort and matrix multiplication) and the SPEC CPU2006 benchmark. 
+%As shown in Fig.~5 and Tab.~3, our protocol obtained better measurement quality 
+%for those real workloads, compared with that of the existing timing scheme using elapsed time.  
+%For more details, please refer to the blue text in Section~3.
+%
+%For better clarification, I slightly modified the Contribution paragraph, 
+%provided a single-line comment about the cutoff computation, and finally 
+%added the last sentence in parentheses in the prose of Step~9. 
+%These changes are marked in blue and incorporated into the revision. 
+%
 
-I hope my response to your concern resolved your question. But if I misunderstood you, please kindly let me know. Many thanks for your great comments.
+If I'm misunderstood, please kindly let me know. I'll re-address. Many thanks for your great comments.
 
 \end{document}
