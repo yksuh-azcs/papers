@@ -55,16 +55,19 @@ Measuring program execution time is
 a \hbox{much-used} technique for performance evaluation in computer science. 
 Without proper care, however, timed results may vary a lot, 
 thus making it hard to trust their validity. 
-In this paper we propose a novel timing protocol to significantly 
-reduce such variability.
+{\color{blue}We propose a novel timing protocol to significantly 
+reduce such variability by eliminating executions involving infrequent, \hbox{long-running} daemons.}
 
 \end{summary}
 \begin{keywords}
 Infrequent Long-running Daemon, Execution-Time Measurement
 \end{keywords}
 
+\vspace{-0.05in}
+
 \section{Introduction}
 \label{sec:intro}
+\vspace{-0.05in}
 
 Measuring program execution time is a much-used
 technique for performance evaluation in computer science. 
@@ -76,18 +79,17 @@ a better timing protocol that can significantly reduce such variability
 and thus enable better timing results without a doubt of their validity.
 
 {\color{blue}
-Fig.~\ref{fig:synprog_test} compared the performance of 
-the existing timing scheme, termed {\em ORG} using \hbox{end-to-end} (elapsed) time 
-and our timing protocol, termed {\em \hbox{SEDONA}} 
-(\hbox{Selective} Elimination through Detection of infrequent, \hbox{lOng-ruNning} dAemons), 
+Fig.~\ref{fig:synprog_test} compares the performance of 
+the existing timing scheme, termed {\em ORG}, using elapsed time and our timing protocol, termed {\em \hbox{SEDONA}} 
+(\hbox{Selective} \hbox{Elimination} through Detection of infrequent, \hbox{lOng-ruNning} dAemons), 
 to be proposed shortly. 
 For this comparison we used 
-two kinds of real-world programs such as insertion sort, termed SORT and 
+two kinds of real-world programs, specifically insertion sort, termed SORT and 
 matrix multiplication (in column major), termed MM. 
 As illustrated in Fig.~\ref{fig:synprog_test}, 
 SEDONA outperformed ORG with regard to measurement quality by standard deviation. 
-To be more specific, we observed that as workload size increased the performance gap between the two methods 
-was increasingly bigger, reaching up to by six~times. 
+To be more specific, we observed that as workload size increased the performance gap between the two methods also increased, 
+reaching up to by six~times. 
 }
 
 \begin{figure}[t]
@@ -100,12 +102,12 @@ was increasingly bigger, reaching up to by six~times.
 		\includegraphics[scale=0.31]{matc_std.eps}
 		\label{fig:matc_std}
 	}
-	%\vspace{-.1in}
+	\vspace{-.15in}
 	\caption{Performance Comparison on Real-world Programs~\label{fig:synprog_test}}
-\vspace{-.3in}
+\vspace{-.25in}
 \end{figure}
 
-\vspace{-0.15in}
+%\vspace{-0.15in}
 {\bf Characteristics.} There are several important specifics of our protocol. 
 First, we utilize {\em process time} (PT) rather than on elapsed time (ET). 
 The use of PT is preferred, as it takes into account 
@@ -140,7 +142,7 @@ whether they can prevent such a daemon from timing.
 %\vspace{0.02in}
 {\bf Contribution.} 
 Our contributions are following.
-\vspace{-0.1in}
+\vspace{-0.05in}
 \begin{itemize}
 
 \item We show empirical evidence that 
@@ -157,16 +159,19 @@ and thus impact the timing of a given program.
 \item We propose a novel timing protocol that can considerably 
 reduce variance via the elimination. 
 
-\item The evaluation results on real-world programs 
-show a support for the effectiveness of the protocol. 
+\item An evaluation on real-world programs 
+shows a support for the effectiveness of the protocol. 
 }
 
 \end{itemize}
-\vspace{-0.2in}
+\vspace{-0.05in}
 
 \noindent
 The rest is organized as follows. 
-We next elaborate on the proposed timing protocol. In turn we evaluate the performance of the scheme using real workloads. 
+We next elaborate on the proposed timing protocol. 
+{\color{blue}In turn we assess the performance of the protocol using a popular industrial benchmark suite. 
+%Finally, we conclude this letter by summarizing our discussion on the proposed protocol.}
+Finally, we summarize our discussion.}
 
 \section{Proposed Scheme}
 \label{sec:prop_appach}
@@ -217,7 +222,7 @@ The environment requires (i)~deactivating non-critical daemons,
 (iii)~turning off particular CPU features~\cite{intel15,intelSpeed15}, 
 and (iv)~getting an up-to-date kernel installed.
 
-{\bf Determining the Cutoffs}
+{\bf Determining the Cutoffs.}
 Step~B consists of eight sub-steps, resulting in determining 
 the cutoffs for each identified infrequent, long-running daemon. 
 
@@ -464,11 +469,11 @@ HDD & Western Digital Caviar Black 1TB 7200rpm SATA Drive\\ \hline
 \vspace{-0.3in}
 \end{table}
 
-As already mentioned in Section~\ref{sec:intro}, we first 
+As already seen in Figure~\ref{fig:synprog_test}, we 
 confirmed the validity of our protocol with two 
 real \hbox{CPU-bound} programs---insertion sort and \hbox{column-major} matrix multiplication---with heavy memory references.
 
-To further assess the performance of the protocol, 
+To assess the performance of the protocol, 
 we proceeded with SPEC CPU2006 benchmarks~\cite{specCpu2006}, providing various 
 \hbox{compute-bound} real applications.
 %The results are \hbox{provided} in Table~\ref{tab:spec_real}. 
@@ -478,7 +483,7 @@ Note that in this evaluation we could not obtain the results for {\tt 481} and {
 {\tt 481} threw some runtime error that we could not resolve, and {\tt 483} incurred I/O, which was out of scope of this article.
 Hence, those two results are omitted in Table~\ref{tab:spec_real}.
 
-Consequently, we reaffirmed from Table~\ref{tab:spec_real} that \hbox{SEDONA} bettered ORG,
+Consequently, we affirmed from Table~\ref{tab:spec_real} that \hbox{SEDONA} bettered ORG,
 on the standard deviation and relative error across the very different SPEC benchmarks.
 Specifically, all the benchmarks revealed a smaller standard deviation 
 from SEDONA as compared to that of ORG.
