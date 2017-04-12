@@ -354,3 +354,40 @@ INC16     & 16043     & proc\_monitor     & 196     & 198     & 197.5     & 1   
 \end{center}
 \caption{Daemons observed from the INC16 run~\label{tab:inc16_daemons}}
 \end{table}
+
+\pagebreak
+\section{Histograms with 10,000 Samples~\label{sec:10k_hist}}  
+In this further evaluation we run INC8 and INC16 10,000 times. 
+We render histograms based on the data from those two 10k runs. 
+
+\subsection{INC8}
+
+\begin{figure}[hp!]
+	\centering
+	\subfigure[ET frequency]{
+		\includegraphics[scale=0.43]{sodb9_10k/8_sec_10k_et_hist_v5.eps}
+		\label{fig:inc8_10k_et_hist_v5}
+	}
+	\subfigure[PT frequency]{
+		\includegraphics[scale=0.43]{sodb9_10k/8_sec_10k_pt_hist_v5.eps}
+		\label{fig:inc8_10k_pt_hist_v5}
+	}
+	\caption{Histograms of INC8 with 10,000 Samples~\label{fig:inc8_10k}}
+\end{figure}
+
+\subsection{INC16}
+
+\begin{figure}[hp!]
+	\centering
+	\subfigure[ET frequency]{
+		\includegraphics[scale=0.43]{sodb10_10k/16_sec_10k_et_hist_v5.eps}
+		\label{fig:inc16_10k_et_hist_v5}
+	}
+	\subfigure[PT frequency]{
+		\includegraphics[scale=0.43]{sodb10_10k/16_sec_10k_pt_hist_v5.eps}
+		\label{fig:inc16_10k_pt_hist_v5}
+	}
+	\caption{Histograms of INC16 with 10,000 Samples~\label{fig:inc16_10k}}
+\end{figure}
+
+%In this section we gather all daemons observed and their statistics like minimum PT, maximum PT, average PT, and standard deviation of PT for each bin in Figures~\ref{fig:inc8_et_hist_v5} and~\ref{fig:inc16_et_hist_v5}.
