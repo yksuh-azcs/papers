@@ -2140,6 +2140,141 @@ CREATE TABLE NSO_Calc_RD2  AS
 	ORDER BY dbms, runid, querynum, upper_card desc;
 ALTER TABLE NSO_Calc_RD2 ADD PRIMARY KEY (runid, querynum, upper_card, lower_card);
 
+  COUNT(*)
+----------
+      3101
+
+select count(*) from NSO_Calc_RD2 where rel_delta = -1
+
+  COUNT(*)
+----------
+	11
+
+SQL> select count(*) from NSO_Calc_RD2 where rel_delta = 1;
+
+  COUNT(*)
+----------
+	 2
+
+select count(*) 
+from NSO_Upper_EQT t0
+WHERE t0.upper_ep_cqt < 0 
+
+  COUNT(*)
+----------
+	 1
+
+
+SELECT count(*)
+FROM NSO_Lower_EQT t0
+WHERE t0.lower_ep_cqt < 0
+
+  COUNT(*)
+----------
+	 9
+
+select count(*) 
+from
+	(SELECT t0.dbms,
+	       t0.runid,
+	       t0.querynum,
+	       t0.upper_gen as newer_gen_num,
+	       --t0.lower_gen as lower_gen_num,
+	       t0.upper_card,
+	       t0.lower_card,
+	       case 
+		--when t0.upper_ep_cqt < 0 then round(((t0.upper_cqt) / t0.upper_cqt), 2)
+		--when t0.upper_ep_cqt > t0.upper_cqt then round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_ep_cqt), 2)
+		--else round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_cqt), 2)
+	       when t0.upper_ep_cqt > t0.upper_cqt then round(((t0.upper_cqt - t0.upper_ep_cqt) / t0.upper_ep_cqt), 2) -- not suboptimal
+	       else  round(((t0.upper_cqt - t0.upper_ep_cqt) / t0.upper_cqt), 2)
+	       end as rel_delta,
+	       t0.upper_gen_txt as upper_gen_txt,
+	       t0.lower_gen_txt as lower_gen_txt
+	FROM NSO_Upper_EQT t0
+	WHERE t0.upper_ep_cqt >= 0) 
+where rel_delta <= 0 and rel_delta > -1
+
+  COUNT(*)
+----------
+       492 (494)
+
+
+select count(*) 
+from
+	(SELECT t0.dbms,
+	       t0.runid,
+	       t0.querynum,
+	       t0.lower_gen as newer_gen_num,
+	       --t0.upper_gen as upper_gen_num,
+	       t0.upper_card,
+	       t0.lower_card,
+	       case
+	       --when t0.lower_ep_cqt < 0 then round(((t0.lower_cqt) / t0.lower_cqt), 2) 
+	       when t0.lower_ep_cqt > t0.lower_cqt then round(((t0.lower_cqt - t0.lower_ep_cqt) / t0.lower_ep_cqt), 2) 
+	       else round(((t0.lower_cqt - t0.lower_ep_cqt) / t0.lower_cqt), 2) 
+	       end as rel_delta,
+	       t0.upper_gen_txt as upper_gen_txt,
+	       t0.lower_gen_txt as lower_gen_txt
+	FROM NSO_Lower_EQT t0
+	WHERE t0.lower_ep_cqt >= 0) 
+where rel_delta <= 0 and rel_delta > -1
+
+  COUNT(*)
+----------
+      1218 (1227)
+
+select count(*) 
+from
+	(SELECT t0.dbms,
+	       t0.runid,
+	       t0.querynum,
+	       t0.upper_gen as newer_gen_num,
+	       --t0.lower_gen as lower_gen_num,
+	       t0.upper_card,
+	       t0.lower_card,
+	       case 
+		--when t0.upper_ep_cqt < 0 then round(((t0.upper_cqt) / t0.upper_cqt), 2)
+		--when t0.upper_ep_cqt > t0.upper_cqt then round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_ep_cqt), 2)
+		--else round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_cqt), 2)
+	       when t0.upper_ep_cqt > t0.upper_cqt then round(((t0.upper_cqt - t0.upper_ep_cqt) / t0.upper_ep_cqt), 2) -- not suboptimal
+	       else  round(((t0.upper_cqt - t0.upper_ep_cqt) / t0.upper_cqt), 2)
+	       end as rel_delta,
+	       t0.upper_gen_txt as upper_gen_txt,
+	       t0.lower_gen_txt as lower_gen_txt
+	FROM NSO_Upper_EQT t0
+	WHERE t0.upper_ep_cqt >= 0) 
+where rel_delta > 0 and rel_delta < 1
+
+  COUNT(*)
+----------
+       583 (583)
+
+select count(*) 
+from
+	(SELECT t0.dbms,
+	       t0.runid,
+	       t0.querynum,
+	       t0.lower_gen as newer_gen_num,
+	       --t0.upper_gen as upper_gen_num,
+	       t0.upper_card,
+	       t0.lower_card,
+	       case
+	       --when t0.lower_ep_cqt < 0 then round(((t0.lower_cqt) / t0.lower_cqt), 2) 
+	       when t0.lower_ep_cqt > t0.lower_cqt then round(((t0.lower_cqt - t0.lower_ep_cqt) / t0.lower_ep_cqt), 2) 
+	       else round(((t0.lower_cqt - t0.lower_ep_cqt) / t0.lower_cqt), 2) 
+	       end as rel_delta,
+	       t0.upper_gen_txt as upper_gen_txt,
+	       t0.lower_gen_txt as lower_gen_txt
+	FROM NSO_Lower_EQT t0
+	WHERE t0.lower_ep_cqt >= 0) 
+where rel_delta > 0 and rel_delta < 1
+
+ COUNT(*)
+----------
+       795 (797)
+
+
 select round(avg(rel_delta),3) as avg_rd, max(rel_delta) as max_rd, count(*) as counts 
 from NSO_Calc_RD2 
 where rel_delta < 1 and rel_delta > 0 
@@ -2160,7 +2295,23 @@ where rel_delta > -1 and rel_delta <= 0  2    3  ;
 ---------- ---------- ----------
      -.246	 -.96	    1710
 
- select count(*) from NSO_Calc_RD2 where rel_delta = -1
+
+
+select count(*)
+from NSO_Calc_RD2 
+where rel_delta = -1
+
+  COUNT(*)
+----------
+	11
+
+select count(*)
+from NSO_Calc_RD2 
+where rel_delta = 1
+
+  COUNT(*)
+----------
+	 2
 
 -- Calculate the averge relative delta
 DROP TABLE NSO_RD_Stat CASCADE CONSTRAINTS;
