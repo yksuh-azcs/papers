@@ -1624,6 +1624,45 @@ SUM(NUMQATCS)
 -------------
        106601
 
+
+select count(*)
+from	(select dbms, runid, querynum, count(card) as numQatCs 
+	from 
+		(select dbms, runid, querynum, card, planid from NSO_Gen_Stat_at_QatC) t0 
+	group by dbms, runid, querynum
+	) t1
+where t1.numQatCs > 1
+
+select count(*)
+from
+	(select runid, querynum, count(card) as numCards
+	from (select runid, querynum, card from NSO_Gen_Stat_at_QatC) 
+	group by runid, querynum) t1
+where numCards > 1
+
+select count(*)
+from
+	(select runid, querynum, count(card) as numCards
+	from (select runid, querynum, card from NSO_Gen_Stat_at_QatC0) 
+	group by runid, querynum) t1
+where numCards = 1
+
+
+select count(querynum)
+from
+	(select runid, querynum, count(card) as numCards
+	from (select runid, querynum, card from NSO_Gen_Stat_at_QatC0) 
+	group by runid, querynum) t1
+where numCards = 1
+
+
+select count(*)
+from
+	(select runid, querynum, count(card) as numCards
+	from (select runid, querynum, card from NSO_Gen_Stat_at_QatC) 
+	group by runid, querynum) t1
+where numCards > 1
+
 DROP TABLE NSO_GP_QatCs CASCADE CONSTRAINTS;
 CREATE TABLE NSO_GP_QatCs AS
 	SELECT	t0.dbms,
@@ -1652,7 +1691,50 @@ ALTER TABLE NSO_GP_QatCs ADD PRIMARY KEY (runid, querynum, upper_card, lower_car
 --  COUNT(*)
 ----------
 --     66792
+--select count(*) from NSO_GP_QatCs where upper_gen = lower_gen;
+--select count(*) from NSO_GP_QatCs where upper_gen > lower_gen;
+  COUNT(*)
+----------
+      1632
+--select count(*) from NSO_GP_QatCs where upper_gen < lower_gen;
+  COUNT(*)
+----------
+      2257
+
+--(1)
+--SQL> select count(*) from NSO_GP_QatCs where upper_gen = lower_gen;
+
+--  COUNT(*)
+----------
+--     62903
+
+--(2) 
+--SQL> select count(*) from NSO_Upper_EQT where upper_ep_cqt < 0;
+
+--  COUNT(*)
+----------
+--	 1
+--SQL> select count(*) from NSO_Lower_EQT where lower_ep_cqt < 0;
 --
+--  COUNT(*)
+----------
+--	 9
+
+--(7) 
+1632 - 1078 (including negative) = 554
+--(8) 
+2257 - 2033 (including negative) = 224
+--(9) 
+select count(*)
+from NSO_Calc_RD 
+where rel_delta = -1 or rel_delta = 1 
+  COUNT(*)
+----------
+	23
+
+62903 + (3088 + 23) + (554+224) = 66792 
+where does negative time go into?
+
 DROP TABLE NSO_AQatCPairs CASCADE CONSTRAINTS;
 CREATE TABLE NSO_AQatCPairs AS
 	select dbms,
@@ -1750,7 +1832,7 @@ t1.med_calc_qt-(((t0.lower_cqt - t1.med_calc_qt) / (t0.lower_card - t1.card))*t1
 			WHERE t1.runid = t2.runid 
 			and t1.querynum = t2.querynum
 			and t1.planid = t2.planid 
-			and t0.runid = t2.runid
+			and t0.runid = t2.runidno 
 			and t0.querynum = t2.querynum
 			and t0.lower_plan = t2.planid
 			-- should be no cardinality between lower card and nearest (upper) card with the same plans
@@ -1766,6 +1848,34 @@ ALTER TABLE NSO_Upper_EQT ADD PRIMARY KEY (runid, querynum, upper_card, lower_ca
 --  COUNT(*)
 ----------
 --       1078
+
+	SELECT	count(*)
+	FROM NSO_Newer_Gen_at_Upper_Card t0, 
+	     NSO_Gen_Stat_at_QatC t1
+	WHERE t0.dbms = t1.dbms 
+	and t0.runid = t1.runid 
+	and t0.querynum = t1.querynum -- same query
+	and t0.lower_plan = t1.planid -- same plan
+	-- 143K > 30K
+	and t0.lower_card > t1.card
+	and NOT EXISTS (SELECT * -- NOT EXISTS between lower card and nearest card (to be used for extrapolation)
+			FROM NSO_Gen_Stat_at_QatC t2
+			WHERE t1.runid = t2.runid 
+			and t1.querynum = t2.querynum
+			and t1.planid = t2.planid 
+			and t0.runid = t2.runid
+			and t0.querynum = t2.querynum
+			and t0.lower_plan = t2.planid
+			-- should be no cardinality between lower card and nearest (upper) card with the same plans
+			-- x > 30K
+			and t2.card > t1.card
+			-- x < 143K
+			and t2.card < t0.lower_card
+			);
+
+			
+
+select count(*) from NSO_Upper_EQT where upper_ep_cqt > 0;
 
 --select * from NSO_Newer_Gen_at_Upper_Card where dbms = 'pgsql';
 DROP TABLE NSO_Newer_Gen_at_Lower_Card CASCADE CONSTRAINTS;
@@ -1858,6 +1968,9 @@ ALTER TABLE NSO_Lower_EQT ADD PRIMARY KEY (runid, querynum, upper_card, lower_ca
 ----------
       2033
 
+lower, newer plan = backward
+upper, newer plan  = forward
+
 -- Calculate the relative delta
 DROP TABLE NSO_Calc_RD CASCADE CONSTRAINTS;
 CREATE TABLE NSO_Calc_RD  AS
@@ -1909,6 +2022,145 @@ ALTER TABLE NSO_Calc_RD ADD PRIMARY KEY (runid, querynum, upper_card, lower_card
   COUNT(*)
 ----------
        3111
+t0.upper_cqt
+--(4)+(6)
+select count(*)
+from 
+	(SELECT  t0.dbms,
+		       t0.runid,
+		       t0.querynum,
+		       t0.upper_gen as newer_gen_num,
+		       --t0.lower_gen as lower_gen_num,
+		       t0.upper_card,
+		       t0.lower_card,
+		       case 
+			when t0.upper_ep_cqt < 0 then round(((t0.upper_cqt) / t0.upper_cqt), 2)
+			--when t0.upper_ep_cqt > t0.upper_cqt then round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_ep_cqt), 2)
+			--else round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_cqt), 2)
+			when t0.upper_cqt < t0.upper_ep_cqt then round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_ep_cqt), 2)
+			else  round(((t0.upper_cqt - t0.upper_ep_cqt) / t0.upper_cqt), 2)
+		       end as rel_delta,
+		       t0.upper_gen_txt as upper_gen_txt,
+		       t0.lower_gen_txt as lower_gen_txt
+		FROM NSO_Upper_EQT t0
+		WHERE t0.upper_cqt > 0) 
+  COUNT(*)
+----------
+      1078
+
+--(3)+(5): 
+select count(*)
+from 
+	(SELECT t0.dbms,
+	       t0.runid,
+	       t0.querynum,
+	       t0.lower_gen as newer_gen_num,
+	       --t0.upper_gen as upper_gen_num,
+	       t0.upper_card,
+	       t0.lower_card,
+	       case
+		when t0.lower_ep_cqt < 0 then round(((t0.lower_cqt) / t0.lower_cqt), 2) 
+		when t0.lower_ep_cqt > t0.lower_cqt then round(((t0.lower_ep_cqt - t0.lower_cqt) / t0.lower_ep_cqt), 2) 
+		else round(((t0.lower_ep_cqt - t0.lower_cqt) / t0.lower_cqt), 2) 
+	        --else round(((t0.lower_cqt - t0.lower_ep_cqt) / t0.lower_cqt), 2) 
+	       end as rel_delta,
+	       t0.upper_gen_txt as upper_gen_txt,
+	       t0.lower_gen_txt as lower_gen_txt
+	FROM NSO_Lower_EQT t0
+	WHERE t0.lower_cqt > 0
+	ORDER BY dbms, runid, querynum, upper_card desc) 
+  COUNT(*)
+----------
+      2033
+
+select round(avg(rel_delta),3) as avg_rd, min(rel_delta) as max_rd, count(*) as counts 
+from NSO_Calc_RD 
+where rel_delta > -1 and rel_delta < 0 
+
+    AVG_RD     MAX_RD	  COUNTS
+---------- ---------- ----------
+     -.225	 -.93	    1378
+
+select round(avg(rel_delta),3) as avg_rd, max(rel_delta) as max_rd, count(*) as counts 
+from NSO_Calc_RD 
+where rel_delta < 1 and rel_delta >= 0 
+
+    AVG_RD     MAX_RD	  COUNTS
+---------- ---------- ----------
+      .246	    0	    1710
+
+--select count(*) from NSO_Calc_RD where rel_delta = -1 or rel_delta = 1
+--SQL> select count(*) from NSO_Calc_RD where rel_delta = -1 or rel_delta = 1;
+
+--  COUNT(*)
+----------
+--	23
+
+select count(*) from NSO_Calc_RD where rel_delta <-1 or rel_delta > 1;
+
+DROP TABLE NSO_Calc_RD2 CASCADE CONSTRAINTS;
+CREATE TABLE NSO_Calc_RD2  AS
+	-- upper plan is a newer generation
+	SELECT t0.dbms,
+	       t0.runid,
+	       t0.querynum,
+	       t0.upper_gen as newer_gen_num,
+	       --t0.lower_gen as lower_gen_num,
+	       t0.upper_card,
+	       t0.lower_card,
+	       case 
+		--when t0.upper_ep_cqt < 0 then round(((t0.upper_cqt) / t0.upper_cqt), 2)
+		--when t0.upper_ep_cqt > t0.upper_cqt then round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_ep_cqt), 2)
+		--else round(((t0.upper_ep_cqt - t0.upper_cqt) / t0.upper_cqt), 2)
+	       when t0.upper_ep_cqt > t0.upper_cqt then round(((t0.upper_cqt - t0.upper_ep_cqt) / t0.upper_ep_cqt), 2) -- not suboptimal
+	       else  round(((t0.upper_cqt - t0.upper_ep_cqt) / t0.upper_cqt), 2)
+	       end as rel_delta,
+	       t0.upper_gen_txt as upper_gen_txt,
+	       t0.lower_gen_txt as lower_gen_txt
+	FROM NSO_Upper_EQT t0
+	WHERE t0.upper_ep_cqt >= 0
+	UNION  
+	-- lower plan is a newer generation
+	SELECT t0.dbms,
+	       t0.runid,
+	       t0.querynum,
+	       t0.lower_gen as newer_gen_num,
+	       --t0.upper_gen as upper_gen_num,
+	       t0.upper_card,
+	       t0.lower_card,
+	       case
+	       --when t0.lower_ep_cqt < 0 then round(((t0.lower_cqt) / t0.lower_cqt), 2) 
+	       when t0.lower_ep_cqt > t0.lower_cqt then round(((t0.lower_cqt - t0.lower_ep_cqt) / t0.lower_ep_cqt), 2) 
+	       else round(((t0.lower_cqt - t0.lower_ep_cqt) / t0.lower_cqt), 2) 
+	       end as rel_delta,
+	       t0.upper_gen_txt as upper_gen_txt,
+	       t0.lower_gen_txt as lower_gen_txt
+	FROM NSO_Lower_EQT t0
+	WHERE t0.lower_ep_cqt >= 0
+	ORDER BY dbms, runid, querynum, upper_card desc;
+ALTER TABLE NSO_Calc_RD2 ADD PRIMARY KEY (runid, querynum, upper_card, lower_card);
+
+select round(avg(rel_delta),3) as avg_rd, max(rel_delta) as max_rd, count(*) as counts 
+from NSO_Calc_RD2 
+where rel_delta < 1 and rel_delta > 0 
+
+    AVG_RD     MAX_RD	  COUNTS
+---------- ---------- ----------
+      .225	  .93	    1378
+
+select round(avg(rel_delta),3) as avg_rd, min(rel_delta) as max_rd, count(*) as counts 
+from NSO_Calc_RD2 
+where rel_delta > -1 and rel_delta <= 0 
+
+SQL> select round(avg(rel_delta),3) as avg_rd, min(rel_delta) as max_rd, count(*) as counts 
+from NSO_Calc_RD2 
+where rel_delta > -1 and rel_delta <= 0  2    3  ;
+
+    AVG_RD     MAX_RD	  COUNTS
+---------- ---------- ----------
+     -.246	 -.96	    1710
+
+ select count(*) from NSO_Calc_RD2 where rel_delta = -1
 
 -- Calculate the averge relative delta
 DROP TABLE NSO_RD_Stat CASCADE CONSTRAINTS;
