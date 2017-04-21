@@ -8,21 +8,16 @@ binsize=1
 x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)+1) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins+1,plot=F)
+xmin <-min(x$METIME)
+xmin
+xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
-xmin <-min(x$METIME)
-xmax <-max(x$METIME)
-plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), xlim=c(xmin-1,xmax+1),col="blue", main='ET frequency on INC1', sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), xlab='ET (ms)', ylab=expression('Frequency'))
-#xaxtl <- seq(xmin-1,xmax+1,by=1)
-#axis(side=1, at=xaxtl, labels=xaxtl)
-#xaxtl <- seq(floor(min(h$mids)),ceiling(max(h$mids)-1),by=binsize)
-#xaxtl <- seq(floor(min(h$mids)),ceiling(max(h$mids)),by=binsize)
-#axis(side=1, at=h$breaks, labels=xaxtl)
-#yaxtl <- seq(0,ymax,by=50)
-#axis(side=2, at=yaxtl, labels=yaxtl)
-axis(side=1,at=h$mids,labels=seq(xmin,xmax-1))
+plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC1', sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), xlab='ET (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 x = read.csv(file="2_sec.dat",head=TRUE,sep="\t")
@@ -33,8 +28,12 @@ binsize=1
 x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
+xmin <-min(x$METIME)
+xmin
+xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 xmin <-min(x$METIME)
@@ -42,7 +41,7 @@ xmax <-max(x$METIME)
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), xlim=c(xmin-1,xmax+1),col="blue", main='ET frequency on INC2', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax-1))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 x = read.csv(file="4_sec.dat",head=TRUE,sep="\t")
@@ -53,16 +52,18 @@ binsize=1
 x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
+xmin <-min(x$METIME)
+xmin
+xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 #ymax <- 80
-xmin <-min(x$METIME)
-xmax <-max(x$METIME)
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC4', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax-1))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 x = read.csv(file="8_sec.dat",head=TRUE,sep="\t")
@@ -74,38 +75,43 @@ x <- subset(x, x$ITERNUM != 27)
 x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 #ymax <- 150
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC8', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax-1))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 x = read.csv(file="16_sec.dat",head=TRUE,sep="\t")
 x <- subset(x, x$ITERNUM <= numSamples)
 setEPS()
 postscript("16_sec_et_hist_v5.eps")
+binsize=1
 #x <- subset(x, x$ITERNUM != 686 & x$ITERNUM != 700)
 x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 #ymax <- 100
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC16', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax-1))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 x = read.csv(file="32_sec.dat",head=TRUE,sep="\t")
@@ -117,17 +123,19 @@ x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 binsize=1
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 #ymax <- 120
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC32', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax-1))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 x = read.csv(file="64_sec.dat",head=TRUE,sep="\t")
@@ -139,17 +147,19 @@ x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 binsize=1
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 #ymax <- 60
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC64', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax-1))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 x = read.csv(file="128_sec.dat",head=TRUE,sep="\t")
@@ -161,17 +171,19 @@ x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 binsize=2
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
-ymax <- 100
+ymax <- 80
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax),col="blue", main='ET frequency on INC128', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids)),2))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,binsize))
 dev.off()
 
 x = read.csv(file="256_sec.dat",head=TRUE,sep="\t")
@@ -182,10 +194,12 @@ x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 binsize=2
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 ymax <- max(h$counts)
@@ -193,7 +207,7 @@ ymax <- 80
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC256', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids)),2))
+axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
 dev.off()
 
 x = read.csv(file="512_sec.dat",head=TRUE,sep="\t")
@@ -204,10 +218,12 @@ x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 binsize=2
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 ymax <- max(h$counts)
@@ -215,7 +231,7 @@ ymax <- 60
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC512', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids)),2))
+axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
 dev.off()
 
 x = read.csv(file="1024_sec.dat",head=TRUE,sep="\t")
@@ -226,10 +242,12 @@ x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 binsize=2
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 ymax <- max(h$counts)
@@ -237,7 +255,7 @@ ymax <- 50
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC1024', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids)),2))
+axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
 dev.off()
 
 x = read.csv(file="2048_sec.dat",head=TRUE,sep="\t")
@@ -247,10 +265,12 @@ x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 binsize=5
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 ymax <- max(h$counts)
@@ -258,7 +278,7 @@ ymax <- 80
 plot(h,  xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC2048', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids)),5))
+axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
 dev.off()
 
 ### run on sodb12
@@ -270,10 +290,12 @@ x_up = mean(x$METIME) + 2*sd(x$METIME)
 x_dn = mean(x$METIME) - 2*sd(x$METIME)
 binsize=5
 #x = subset(x, x$METIME >= x_dn & x$METIME <= x_up)
-nbins <- ceiling((max(x$METIME)-min(x$METIME)) / binsize)
-h = hist(x$METIME, right=F, breaks=nbins,plot=F)
 xmin <-min(x$METIME)
+xmin
 xmax <-max(x$METIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 ymax <- max(h$counts)
@@ -281,5 +303,5 @@ ymax <- 50
 plot(h, xaxt="n",freq=TRUE,ylim=c(0,ymax), col="blue", main='ET frequency on INC4096', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids)),5))
+axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
 dev.off()
