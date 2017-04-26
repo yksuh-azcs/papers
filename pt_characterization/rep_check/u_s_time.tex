@@ -1,4 +1,4 @@
-\section{User and System Time Histograms on the Second Run~\label{sec:u_s_time_hist}} 
+\section{Further invstigation of the Second Run~\label{sec:u_s_time_hist}} 
 This section exhibits user and system time histograms on the second run of 
 INC with its task length increasing from 1 second to 4096 seconds, via SEDONA. 
 The detailed description of the base data is from Table~\ref{tab:exp_notes2}.
@@ -154,3 +154,81 @@ The detailed description of the base data is from Table~\ref{tab:exp_notes2}.
 	\caption{System Time Histograms of INC2048 and INC4096~\label{fig:st_hist4}}
 \end{figure}
 
+\clearpage
+\pagebreak
+
+\subsection{Correlation}
+
+%% done
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|} \hline
+%Machine & Task Length (sec) & Description & Experiment Period & Relevant \linebreak Histograms\\ \hline
+%{\tt sodb9} &  INC1$\sim$INC64 & 1000 samples, each & 2017-03-02 $\sim$ 2017-03-04 & Figs.~\ref{fig:s9_r1_et_hist1},~\ref{fig:s9_r1_et_hist2},~\ref{fig:s9_r1_pt_hist1}, and~\ref{fig:s9_r1_pt_hist2}\\ \hline
+%{\tt sodb9} &  INC128$\sim$INC1024 & 300 samples, each & 2017-03-04 $\sim$ 2017-03-11 & 
+%Figs.~\ref{fig:s9_r1_et_hist3} and~\ref{fig:s9_r1_pt_hist3}\\ \hline
+%{\tt sodb10} & INC2048 & 300 samples & 2017-03-02 $\sim$ 2017-03-09 & Figs.~\ref{fig:inc2048_r1_et_hist_v5} and~\ref{fig:inc2048_r1_hist_v5}\\ \hline
+%{\tt sodb12} & INC4096 & 300 samples & 2017-02-13 $\sim$ 2017-02-27 & Figs.~\ref{fig:inc4096_r1_et_hist_v5} and~\ref{fig:inc4096_r1_hist_v5}\\ \hline
+ 						& w/ u time & w/ s time\\ \hline
+daemon u time & 0.1 & {\bf 0.3} \\ \hline
+daemon s time & -0.09 & {\bf 0.19} \\ \hline
+daemon minor faults & {\bf 0.11} & {\bf 0.32} \\ \hline
+%read bytes & N/A & N/A
+daemon read char & 0.1 & {\bf 0.32} \\ \hline
+daemon read sys calls & 0.11 & {\bf 0.32} \\ \hline
+daemon write bytes & 0 & {\bf 0.26} \\ \hline
+daemon write char & 0.11 & {\bf 0.32}\\ \hline
+%read sys calls & N/A & N/A
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Correlation of user and system time of INC4096 with some daemon measures\label{tab:corr_table}}
+\end{table}
+
+\clearpage
+\newpage
+
+\subsection{Scatter Plots on Some Significant Correlations}
+The following scatter plots correspond to the correlations bold in Table~\ref{tab:corr_table}.
+
+\begin{figure}[htp!]
+	\centering
+	\subfigure[User time vs. All daemon system time]{
+		\includegraphics[scale=0.43]{u_s_time/corr_u_as_time.eps}
+		\label{fig:corr_u_as_time}
+	}
+	\subfigure[System time vs. All daemon system time]{
+		\includegraphics[scale=0.43]{u_s_time/corr_s_as_time.eps}
+		\label{fig:corr_s_as_time}
+	}
+	\subfigure[User time vs. All daemon minor faults]{
+		\includegraphics[scale=0.43]{u_s_time/corr_mnf_u_time.eps}
+		\label{fig:corr_u_mnf}
+	}
+	\subfigure[System time vs. All daemon minor faults]{
+		\includegraphics[scale=0.43]{u_s_time/corr_mnf_s_time.eps}
+		\label{fig:corr_s_mnf}
+	}
+	\caption{Scatter plots between measures on INC4096~\label{fig:corr1}}
+\end{figure}
+
+\begin{figure}[htp!]
+	\centering
+	\subfigure[System time vs. All daemon read char]{
+		\includegraphics[scale=0.43]{u_s_time/corr_s_rchar.eps}
+		\label{fig:corr_s_rchar}
+	}
+	\subfigure[System time vs. All daemon read syscalls]{
+		\includegraphics[scale=0.43]{u_s_time/corr_s_rsysc.eps}
+		\label{fig:corr_s_rsysc}
+	}
+	\subfigure[System time vs. All daemon write bytes]{
+		\includegraphics[scale=0.43]{u_s_time/corr_s_wbytes.eps}
+		\label{fig:corr_s_wbytes}
+	}
+	\subfigure[System time vs. All daemon write char]{
+		\includegraphics[scale=0.43]{u_s_time/corr_s_wchar.eps}
+		\label{fig:corr_s_wchar}
+	}
+	\caption{Scatter plots between measures on INC4096~\label{fig:corr2}}
+\end{figure}
