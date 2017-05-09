@@ -12,14 +12,14 @@ CREATE TABLE DiscontOpNew_Step0 AS
 	select *
 	from DiscontOp_S0
 	where 
-	   -- runid = 252 
-	--and querynum = 7
+	    runid = 252 
+	and querynum = 7
   	--   runid = 269 
 	--and querynum = 8
 	--   runid = 418
 	--and querynum = 7
-  	 runid = 285
-	and querynum = 7
+  	-- runid = 285
+	--and querynum = 7
 	;
 ALTER TABLE DiscontOpNew_Step0 ADD PRIMARY KEY (runid,querynum,card,PLANID,opID,statName);
 -- queryid = 5338, runid = 252, querynumber = 7.
@@ -35,12 +35,12 @@ CREATE TABLE DiscontOpNew_Step1 AS
 	       t0.planid
 	from DiscontOp_S0 t0 
 	where 
-	--     runid = 252 
-	--and querynum = 7
+	    runid = 252 
+	and querynum = 7
 	--   runid = 418
 	--and querynum = 7
- 	runid = 285
-	and querynum = 7
+ 	--runid = 285
+	--and querynum = 7
 	order by runid, querynum;
 ALTER TABLE DiscontOpNew_Step1 ADD PRIMARY KEY (runid,querynum,card);
 -- select * from DiscontOpNew_Step1 where card <= 100000 order by card asc
@@ -100,7 +100,6 @@ CREATE TABLE DiscontOpNew_Step4 AS
 ALTER TABLE DiscontOpNew_Step4 ADD PRIMARY KEY (runid,querynum,low_card,high_card);
 --- select low_card, high_card from DiscontOpNew_Step4
 
-
 DROP TABLE DiscontOpNew_Step5;
 CREATE TABLE DiscontOpNew_Step5 AS 
 	SELECT  distinct
@@ -150,52 +149,63 @@ order by dbms, runid, querynum, low_card asc, oporder asc
 -- generate sequences of at least five cardinalities 
 DROP TABLE DiscontOpNew_Step7;
 CREATE TABLE DiscontOpNew_Step7 AS 
-	with atomic_seq
-	(SELECT t1.runid,
-	       t1.querynum,
-	       t1.low_card,
-	       t0.card as high_card
-	FROM DiscontOpNew_Step1 t0, DiscontOpNew_Step4 t1
-	WHERE t0.runid = t1.runid 
+	select distinct
+	       t0.runid,
+	       t0.querynum,
+	       t0.low_card,
+	       t1.card as high_card
+	from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1
+	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t1.low_card+40000 <= t0.card and t0.card+10000 <= t1.high_card-40000)
-	SELECT
-	FROM  atomic_seq t0,
-	      DiscontOpNew_Step1 t1
-	WHERE 
-	    t0.runid 	= t1.runid
+	and t0.low_card+40000 <= t1.card 
+	and t1.card+40000 < t0.high_card
+	UNION
+	select distinct
+	       t0.runid,
+	       t0.querynum,
+	       t1.card as low_card,
+	       t0.high_card
+	from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1
+	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.low_card+40000 <= t1.card and t1.card+10000 <= t0.high_card-40000)
+	and t0.low_card+40000 < t1.card 
+	and t1.card+40000 <= t0.high_card
+	order by runid, querynum, low_card asc
 ALTER TABLE DiscontOpNew_Step7 ADD PRIMARY KEY (runid,querynum,low_card,high_card);
 
--- 2 operators
-WITH operatorCard AS 
-(SELECT dbms, runid, querynum, card, COUNT(*) AS noOperators
-FROM NSOOper_S1_QatC_Op
-GROUP BY dbms, runid, querynum, card
-HAVING COUNT(*)=2)
-SELECT o1.dbms, a1.opname||', '||a2.opname AS operatorName, o1.noOperators, COUNT(*) as numQatCs
-FROM operatorCard o1, NSOOper_S1_QatC_Op a1, NSOOper_S1_QatC_Op a2
-WHERE a1.dbms = o1.dbms
-AND a1.runid = o1.runid
-AND a1.querynum = o1.querynum
-AND a1.card = o1.card 
-AND a1.dbms = a2.dbms
-AND a1.runid = a2.runid
-AND a1.querynum = a2.querynum
-AND a1.card = a2.card
-AND a1.opname>a2.opname 
-GROUP BY o1.dbms, a1.opname||', '||a2.opname, o1.noOperators
-order by o1.dbms, numQatCs desc;
 
+SELECT DISTINCT S.FromCard AS LowerStart, 
+C.AtCard AS LowerEnd, C.AtCard + 10000 AS UpperStart, S.ToCard AS UpperEnd
+FROM Cardinalities C, SinglePlan S
+WHERE S.FromCard + 50000 <= C.AtCard and C.AtCard +10000 + 50000 <= S.ToCard
 
+select distinct
+       t0.runid,
+       t0.querynum,
+       t0.low_card as lowerStart,
+       t1.card as lowerEnd,
+       t1.card+10000 as upperStart,
+       t0.high_card as upperEnd
+from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1
+where t0.runid = t1.runid 
+and t0.querynum = t1.querynum
+and t0.low_card+40000 <= t1.card 
+and t1.card+40000 < t0.high_card
 
-  LOW_CARD  HIGH_CARD
----------- ----------
-    100000     310000 100000, 
-    320000     550000
-    560000     990000
-   1000000    1650000
-   1660000    1990000
-
---select low_card, high_card from DiscontOpNew_Step4
+select distinct
+       t0.runid,
+       t0.querynum,
+       t0.low_card as lowerStart,
+       t1.card as lowerEnd,
+       t1.card+10000 as lowerStart1,
+       t2.card as lowerEnd1,
+       t2.card+10000 as upperStart
+       t0.high_card as upperEnd
+from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1, DiscontOpNew_Step1 t2, 
+where t0.runid = t1.runid 
+and t0.querynum = t1.querynum 
+and t1.runid = t2.runid 
+and t1.querynum = t2.querynum 
+and t0.low_card+40000 <= t1.card and t1.card+40000 <= t0.high_card 
+and t1.card+10000 <= t2.card and t2.card <= t1.card+40000 
+and t2.card+40000 <= t0.high_card 
