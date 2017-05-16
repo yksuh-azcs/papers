@@ -11,15 +11,15 @@ DROP TABLE DiscontOpNew_Step0;
 CREATE TABLE DiscontOpNew_Step0 AS 
 	select *
 	from DiscontOp_S0
-	wher 	e 
-	    runid = 252 
-	and querynum = 7
+	--where 
+	   -- runid = 252 
+	--and querynum = 7
   	--   runid = 269 
 	--and querynum = 8
 	--   runid = 418
 	--and querynum = 7
   	-- runid = 285
-	--and querynum = 7
+	---and querynum = 7
 	;
 ALTER TABLE DiscontOpNew_Step0 ADD PRIMARY KEY (runid,querynum,card,PLANID,opID,statName);
 -- queryid = 5338, runid = 252, querynumber = 7.
@@ -34,14 +34,15 @@ CREATE TABLE DiscontOpNew_Step1 AS
 	       t0.card, 
 	       t0.planid
 	from DiscontOp_S0 t0 
-	where 
-	    runid = 252 
-	and querynum = 7
+	--where 
+	--     runid = 252 
+	--and querynum = 7
 	--   runid = 418
 	--and querynum = 7
  	--runid = 285
 	--and querynum = 7
-	order by runid, querynum;
+	order by runid, querynum
+	;
 ALTER TABLE DiscontOpNew_Step1 ADD PRIMARY KEY (runid,querynum,card);
 -- select * from DiscontOpNew_Step1 where card <= 100000 order by card asc
 DROP TABLE DiscontOpNew_Step2;
@@ -93,11 +94,21 @@ CREATE TABLE DiscontOpNew_Step4 AS
 	FROM
 		(SELECT distinct dbms, runid, querynum, low_card, max(high_card) as high_card
 		FROM DiscontOpNew_Step3
-		where high_card - low_card >= 60000 and numPlans = 1 	
+		where (dbms <> 'mysql' and high_card - low_card >= 60000 and numPlans = 1)
+		or (dbms = 'mysql' and high_card - low_card >= 600 and numPlans = 1)	
 		group by dbms, runid, querynum, low_card) 
 	group by dbms, runid, querynum, high_card
 	order by runid, querynum, high_card desc;
 ALTER TABLE DiscontOpNew_Step4 ADD PRIMARY KEY (runid,querynum,low_card,high_card);
+--- select low_card, high_card from DiscontOpNew_Step4
+
+DROP TABLE DiscontOpNew_Step4_MXD;
+CREATE TABLE DiscontOpNew_Step4_MXD AS 
+	SELECT dbms, max(high_card - low_card) as maxRangeDiff
+	FROM DiscontOpNew_Step4
+	group by dbms
+	order by dbms;
+ALTER TABLE DiscontOpNew_Step4_MXD ADD PRIMARY KEY (dbms);
 --- select low_card, high_card from DiscontOpNew_Step4 where dbms = 'db2' and high_card-low_card = 1910000
 
 --- select low_card, high_card from DiscontOpNew_Step4 where runid = 252 and querynum = 7;
