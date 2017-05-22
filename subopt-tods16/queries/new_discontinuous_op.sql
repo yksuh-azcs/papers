@@ -112,6 +112,17 @@ ALTER TABLE DiscontOpNew_Step4_MXD ADD PRIMARY KEY (dbms);
 --- select low_card, high_card from DiscontOpNew_Step4 where dbms = 'db2' and high_card-low_card = 1910000
 
 --- select low_card, high_card from DiscontOpNew_Step4 where runid = 252 and querynum = 7;
+--- select low_card, high_card from DiscontOpNew_Step4 where runid = 252 and querynum = 8;
+
+SQL>  select low_card, high_card from DiscontOpNew_Step4 where runid = 252 and querynum = 9;
+
+SQL> select low_card, high_card from DiscontOpNew_Step4 where runid = 252 and querynum = 9;
+
+  LOW_CARD  HIGH_CARD
+---------- ----------
+     10000     460000
+    490000    1920000
+   1930000    2000000
 
 DBMS
 --------------------------------------------------------------------------------
@@ -179,6 +190,28 @@ CREATE TABLE DiscontOpNew_Step4_2RS AS
 ALTER TABLE DiscontOpNew_Step4_2RS ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,upperStart,upperEnd);
 -- select * from DiscontOpNew_Step4_2RS;
 
+     RUNID   QUERYNUM LOWERSTART   LOWEREND UPPERSTART	 UPPEREND
+---------- ---------- ---------- ---------- ---------- ----------
+       252	    7	   50000      90000	100000	   200000
+       252	    7	   50000     100000	110000	   200000
+       252	    7	   50000     110000	120000	   200000
+       252	    7	   50000     120000	130000	   200000
+       252	    7	   50000     130000	140000	   200000
+       252	    7	   50000     140000	150000	   200000
+       252	    7	   50000     150000	160000	   200000
+       252	    7	  450000     490000	500000	   540000
+       252	    7	 1030000    1070000    1080000	  1140000
+       252	    7	 1030000    1080000    1090000	  1140000
+       252	    7	 1030000    1090000    1100000	  1140000
+       252	    7	 1530000    1570000    1580000	  1630000
+       252	    7	 1530000    1580000    1590000	  1630000
+       252	    7	 1710000    1750000    1760000	  1850000
+       252	    7	 1710000    1760000    1770000	  1850000
+       252	    7	 1710000    1770000    1780000	  1850000
+       252	    7	 1710000    1780000    1790000	  1850000
+       252	    7	 1710000    1790000    1800000	  1850000
+       252	    7	 1710000    1800000    1810000	  1850000
+
 --- three-region sequence
 DROP TABLE DiscontOpNew_Step4_3RS;
 CREATE TABLE DiscontOpNew_Step4_3RS AS 
@@ -187,14 +220,15 @@ CREATE TABLE DiscontOpNew_Step4_3RS AS
 	       t0.querynum,
 	       t0.low_card as lowerStart,
 	       t1.card as lowerEnd,
-	       t1.card+10000 as lowerStart1,
-	       t2.card+40000 as lowerEnd1,
+	       t1.card+10000 as intermStart1,
+	       t2.card+40000 as intermEnd1,
 	       t2.card+40000+10000 as upperStart,
 	       t0.high_card as upperEnd
 	from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1, DiscontOpNew_Step1 t2
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum 
-	and t0.runid = 252 and t0.querynum = 7
+	--and t0.runid = 252 and t0.querynum = 7
+	and t0.runid = 252 and t0.querynum = 9
 	and t1.runid = t2.runid 
 	and t1.querynum = t2.querynum 
 	and t0.low_card+40000 <= t1.card and t1.card+40000 <= t0.high_card 
@@ -202,12 +236,26 @@ CREATE TABLE DiscontOpNew_Step4_3RS AS
 	and t2.card+40000 <= t0.high_card 
 	and t0.high_card-t2.card-40000-10000 >= 40000
 	order by runid, querynum, lowerStart, lowerEnd;
-ALTER TABLE DiscontOpNew_Step4_3RS ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,lowerStart1,lowerEnd1,upperStart,upperEnd);
--- select * from DiscontOpNew_Step4_3RS;
+ALTER TABLE DiscontOpNew_Step4_3RS ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,upperStart,upperEnd);
+-- select LOWERSTART,LOWEREND,INTERMSTART1, INTERMEND1, UPPERSTART, UPPEREND from DiscontOpNew_Step4_3RS;
 
+LOWERSTART   LOWEREND INTERMSTART1 INTERMEND1 UPPERSTART   UPPEREND
+---------- ---------- ------------ ---------- ---------- ----------
+     50000	90000	    100000     140000	  150000     200000
+     50000	90000	    100000     150000	  160000     200000
+     50000     100000	    110000     150000	  160000     200000
+   1710000    1750000	   1760000    1800000	 1810000    1850000
 
 -- [100-140, 150-190, 200-240, 250-500]
 -- [100-150, 160-200, 210-250, 260-500]
+
+
+
+--[490K,177K, 178K-182K,183K-187K, 188K-1920K]
+--[490K,176K, 177K-181K,182K-186K, 187K-1920K]
+--[490K,175K, 176K-180K,181K-185K, 186K-1920K]
+
+--[490K,530K, 540K-580K,590K-630K, 640K-1920K]
 
 DROP TABLE DiscontOpNew_Step4_4RS;
 CREATE TABLE DiscontOpNew_Step4_4RS AS 
@@ -216,32 +264,27 @@ CREATE TABLE DiscontOpNew_Step4_4RS AS
 	       t0.querynum,
 	       t0.low_card as lowerStart,
 	       t1.card as lowerEnd,
-	       t1.card+10000 as lowerStart1, 
-	       t1.card+10000+40000 as lowerEnd1,  
-	       t2.card as lowerStart2, 
-	       t2.card+40000 as lowerEnd2,
-	       t3.card as upperStart 
-	       t0.high_card as upperEnd
+	       t1.card+10000 as intermStart1,
+	       t2.card+40000 as intermEnd1,
+	       t2.card+40000+10000 as intermStart2,
+ 	       t3.card+40000 as intermEnd2,
+ 	       t3.card+40000+10000 as upperStart,
+ 	       t0.high_card as upperEnd
 	from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1, DiscontOpNew_Step1 t2, DiscontOpNew_Step1 t3
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum 
-	and t0.runid = 252 and t0.querynum = 7
+	--and t0.runid = 252 and t0.querynum =6
+	and t0.low_card = 670000 and t0.high_card = 1120000
 	and t1.runid = t2.runid 
 	and t1.querynum = t2.querynum 
 	and t2.runid = t3.runid
 	and t2.querynum = t3.querynum 
-	and t0.low_card+40000 <= t1.card and t1.card+40000 <= t2.card --- t1.card = 140, t2.card = 200
-	--and t1.card+10000 <= t2.card and t2.card <= t1.card+40000   
-	and t2.card >= t1.card+50000
-	and t3.card <= t2.card+50000
-	and t2.card+10000 <= t3.card and t3.card+40000 <= t0.high_card  --- t2.card = 210 <= 260 <= 250
-	and t0.high_card-t3.card-40000-10000>=40000 -- t3.card = 260
---	and t0.low_card+40000 <= t1.card and t1.card+40000 <= t0.high_card 
---	and t1.card+10000 <= t2.card and t2.card <= t1.card+40000 
---	and t2.card+40000 <= t0.high_card 
---	and t0.high_card-t2.card-40000-10000 >= 40000
+	and t0.low_card+40000 <= t1.card and t1.card+40000 <= t2.card 
+	and t2.card+40000+10000 <= t3.card and t3.card+40000 <= t0.high_card 
+	and t0.high_card-t3.card-40000-10000 >= 40000
 	order by runid, querynum, lowerStart, lowerEnd; 
-ALTER TABLE DiscontOpNew_Step4_3RS ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,lowerStart1,lowerEnd1,lowerStart2,lowerEnd2,upperStart,upperEnd);
+ALTER TABLE DiscontOpNew_Step4_4RS ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2,intermEnd2,upperStart,upperEnd);
+-- select LOWERSTART,LOWEREND,INTERMSTART1, INTERMEND1, INTERMSTART2, intermEnd2, UPPERSTART, UPPEREND from DiscontOpNew_Step4_4RS;
 
 DROP TABLE DiscontOpNew_Step4_5RS;
 CREATE TABLE DiscontOpNew_Step4_5RS AS 
@@ -250,18 +293,19 @@ CREATE TABLE DiscontOpNew_Step4_5RS AS
 	       t0.querynum,
 	       t0.low_card as lowerStart,
 	       t1.card as lowerEnd,
-	       t1.card+10000 as lowerStart1, 
-	       t1.card+10000+40000 as lowerEnd1,  
-	       t2.card as lowerStart2, 
-	       t2.card+40000 as lowerEnd2,
-	       t3.card as lowerStart3, 
-	       t3.card+40000 as lowerEnd3,
-	       t4.card as upperStart 
-	       t0.high_card as upperEnd
-	from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1, DiscontOpNew_Step1 t2, DiscontOpNew_Step1 t3, DiscontOpNew_Step1 t4 
+	       t1.card+10000 as intermStart1,
+	       t2.card+40000 as intermEnd1,
+	       t2.card+40000+10000 as intermStart2,
+ 	       t3.card+40000 as intermEnd2,
+	       t3.card+40000+10000 as intermStart3,
+ 	       t4.card+40000 as intermEnd3,
+	       t4.card+40000+10000 as upperStart,
+ 	       t0.high_card as upperEnd
+	from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1, DiscontOpNew_Step1 t2, DiscontOpNew_Step1 t3, DiscontOpNew_Step1 t4
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum 
-	and t0.runid = 252 and t0.querynum = 7
+	and t0.runid = 252 and t0.querynum =6
+	and t0.low_card = 670000 and t0.high_card = 1120000
 	and t1.runid = t2.runid 
 	and t1.querynum = t2.querynum 
 	and t2.runid = t3.runid
@@ -269,11 +313,13 @@ CREATE TABLE DiscontOpNew_Step4_5RS AS
 	and t3.runid = t4.runid
 	and t3.querynum = t4.querynum 
 	and t0.low_card+40000 <= t1.card and t1.card+40000 <= t2.card 
-	and t1.card+40000 <= t2.card and t2.card+40000 <= t3.card 
-	and t2.card+40000 <= t3.card and t3.card+40000 <= t4.card 
-	and t0.high_card-t4.card-40000-10000>=40000 
+	and t2.card+40000+10000 <= t3.card and t3.card+40000+10000 <= t4.card and t4.card+40000 <= t0.high_card 
+	and t0.high_card-t4.card-40000-10000 >= 40000
 	order by runid, querynum, lowerStart, lowerEnd; 
-ALTER TABLE DiscontOpNew_Step4_5RS ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,lowerStart1,lowerEnd1,lowerStart2,lowerEnd2,lowerStart3,lowerEnd3,upperStart,upperEnd);
+ALTER TABLE DiscontOpNew_Step4_5RS ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2,intermEnd2,intermStart3,intermEnd3,upperStart,upperEnd);
+
+-- select * from DiscontOpNew_Step4_5RS;
+
 
 DROP TABLE DiscontOpNew_Step4_6RS;
 CREATE TABLE DiscontOpNew_Step4_6RS AS 
@@ -282,30 +328,33 @@ CREATE TABLE DiscontOpNew_Step4_6RS AS
 	       t0.querynum,
 	       t0.low_card as lowerStart,
 	       t1.card as lowerEnd,
-	       t1.card+10000 as lowerStart1, 
-	       t1.card+10000+40000 as lowerEnd1,  
-	       t2.card as lowerStart2, 
-	       t2.card+40000 as lowerEnd2,
-	       t3.card as lowerStart3, 
-	       t3.card+40000 as lowerEnd3,
-	       t4.card as lowerStart4, 
-	       t4.card+40000 as lowerEnd4,
-	       t5.card as upperStart 
-	       t0.high_card as upperEnd
+	       t1.card+10000 as intermStart1,
+	       t2.card+40000 as intermEnd1,
+	       t2.card+40000+10000 as intermStart2,
+ 	       t3.card+40000 as intermEnd2,
+	       t3.card+40000+10000 as intermStart3,
+ 	       t4.card+40000 as intermEnd3,
+	       t4.card+40000+10000 as intermStart4,
+	       t5.card+40000 as intermEnd4,
+	       t5.card+40000+10000 as upperStart,
+ 	       t0.high_card as upperEnd
 	from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1, DiscontOpNew_Step1 t2, DiscontOpNew_Step1 t3, DiscontOpNew_Step1 t4, DiscontOpNew_Step1 t5
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum 
-	and t0.runid = 252 and t0.querynum = 7
+	and t0.runid = 252 and t0.querynum =6
+	and t0.low_card = 670000 and t0.high_card = 1120000
 	and t1.runid = t2.runid 
 	and t1.querynum = t2.querynum 
 	and t2.runid = t3.runid
 	and t2.querynum = t3.querynum 
 	and t3.runid = t4.runid
 	and t3.querynum = t4.querynum 
+	and t4.runid = t5.runid
+	and t4.querynum = t5.querynum 
 	and t0.low_card+40000 <= t1.card and t1.card+40000 <= t2.card 
-	and t1.card+40000 <= t2.card and t2.card+40000 <= t3.card 
-	and t2.card+40000 <= t3.card and t3.card+40000 <= t4.card 
-	and t0.high_card-t4.card-40000-10000>=40000 
+	and t2.card+40000+10000 <= t3.card and t3.card+40000+10000 <= t4.card 
+	and t4.card+40000 <= t5.card and t5.card+40000 <= t0.high_card
+	and t0.high_card-t5.card-40000-10000 >= 40000
 	order by runid, querynum, lowerStart, lowerEnd; 
 ALTER TABLE DiscontOpNew_Step4_5RS ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,lowerStart1,lowerEnd1,lowerStart2,lowerEnd2,lowerStart3,lowerEnd3,upperStart,upperEnd);
 
