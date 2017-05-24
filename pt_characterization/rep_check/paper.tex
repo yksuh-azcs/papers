@@ -2,6 +2,7 @@
 \usepackage[margin=1in]{geometry}
  \usepackage{auto-pst-pdf}
 \usepackage{graphicx}
+\usepackage{footnote}
 %\usepackage{arydshln}
 \usepackage{ifpdf}
 \ifpdf
@@ -34,9 +35,18 @@ of a program under test, called {\em INC}, with a set of increasing task lengths
 from 1 second to 4096 seconds.
 We would like to see if both of the sets have the same shape for the same task length.
 If so then, we can say that run repeatability is satisfied in our experiment setting. 
-In this study the used protocol is equivalent to SEDONA, eliminating samples involving infrequent, long-running daemons, which is the first step of EMPv5. In other words, the protocol skips the second step 
-of EMPv5 that removes samples with process times over/below two standard deviations 
-from the average after performing the first step.
+In this study the used protocol is equivalent to SEDONA~\cite{Sedona}, 
+eliminating samples involving infrequent, long-running daemons, which is the first step of EMPv5.
+
+In the SEDONA protocol, we use taskstats C struct to get measures of a captured process. 
+The taskstat's data is delivered via a netlink socket from the kernel space. 
+The receive buffer for the socket is not robust for many observed processes~\cite{Metrology}. 
+Fortunately, there is an average of 95 processes per iteration of a run, 
+which turns out to be fine with the struct. 
+For a much more number of processes, 
+the use of  {\tt /proc/}[pid]{\tt{/stat}} is preferred, 
+as (i) there are equivalent measures available in the {\tt /proc} filesystem, 
+and (ii) there's little constraint on the use as opposed to taskstats. 
 
 Now we show histograms of elapsed time (ET) and process time (PT) of INC via the SEDONA protocol.
 
@@ -63,5 +73,20 @@ Now we show histograms of elapsed time (ET) and process time (PT) of INC via the
 \newpage
 
 \input{1024_run.tex}
+
+\bibliographystyle{abbrv}
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{99}
+\vspace{0.1em}
+\bibitem
+%{Avnur:2000:ECA:342009.335420}
+{Sedona}
+Young-Kyoon Suh, ``SEDONA: A Novel Protocol for Identifying Infrequent, Long-running Daemons on a Linux System'', in {\em IEICE Transactions on Information Systems}, Vol. 100D, No. 9, pp.~??--??, 2017.
+\vspace{0.1em}
+\bibitem
+%{Avnur:2000:ECA:342009.335420}
+{Metrology}
+Sabah Currim,Richard T. Snodgrass, Young-Kyoon Suh, and Rui Zhang, ``DBMS Metrology: Measuring Query Time'', in {\em ACM Transactions on Database Systems}, 42(1):3:1--42(+8), 2017.
+\end{thebibliography}
 
 \end{document}

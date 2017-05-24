@@ -1,3 +1,7 @@
+numSamples <- 300
+x = read.csv(file="per_iter_detailed.dat",head=TRUE,sep="\t")
+corr(x$U_TIME, x$S_TIME)
+
 ### sodb9
 numSamples <- 300
 x = read.csv(file="per_iter_detailed.dat",head=TRUE,sep="\t")
