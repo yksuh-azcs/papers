@@ -102,6 +102,18 @@ CREATE TABLE DiscontOpNew_Step4 AS
 ALTER TABLE DiscontOpNew_Step4 ADD PRIMARY KEY (runid,querynum,low_card,high_card);
 --- select low_card, high_card from DiscontOpNew_Step4
 
+DROP TABLE DiscontOpNew_Step5;
+CREATE TABLE DiscontOpNew_Step5 AS 
+	select t0.runid, t0.querynum, t0.CARD, t0.PLANID,t0.OPID,t0.ESTCOST
+	from DiscontOp_S0 t0, DiscontOpNew_Step4 t1
+	where t0.runid = t1.runid 
+	and t0.querynum = t1.querynum
+	and t1.low_card >= t0.CARD 
+	and t1.high_card <= t0.CARD 
+	--group by t0.runid, t0.querynum, t0.CARD, t0.OPID
+	order by runid, querynum, CARD desc, OPID asc;
+ALTER TABLE DiscontOpNew_Step5 ADD PRIMARY KEY (runid,querynum,CARD,OPID);
+
 DROP TABLE DiscontOpNew_Step4_MXD;
 CREATE TABLE DiscontOpNew_Step4_MXD AS 
 	SELECT dbms, max(high_card - low_card) as maxRangeDiff
