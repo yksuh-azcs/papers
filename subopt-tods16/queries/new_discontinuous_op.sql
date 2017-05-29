@@ -20,6 +20,8 @@ CREATE TABLE DiscontOpNew_Step0 AS
 	--and querynum = 7
   	-- runid = 285
 	---and querynum = 7
+	--- runid IN (252,256,250,441)
+	--- runid IN (697,696,699,710)
 	;
 ALTER TABLE DiscontOpNew_Step0 ADD PRIMARY KEY (runid,querynum,card,PLANID,opID,statName);
 -- queryid = 5338, runid = 252, querynumber = 7.
@@ -110,6 +112,29 @@ CREATE TABLE DiscontOpNew_1RegSeq AS
 	order by runid, querynum, low_card asc;
 ALTER TABLE DiscontOpNew_1RegSeq ADD PRIMARY KEY (runid,querynum,low_card,high_card);
 -- select count(*) from DiscontOpNew_OneRegSeq
+
+SQL> select count(*) from DiscontOpNew_1RegSeq;
+
+  COUNT(*)
+----------
+       499
+
+select count(*) from DiscontOpNew_2RegSeq;
+
+  COUNT(*)
+----------
+     24149
+
+select count(*) from DiscontOpNew_3RegSeq;
+
+  COUNT(*)
+----------
+     87050
+
+select count(*) from DiscontOpNew_4RegSeq;
+  COUNT(*)
+----------
+  60099764
 
 ---
 DROP TABLE DiscontOpNew_1RegSeqAll;
