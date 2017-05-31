@@ -1,97 +1,11 @@
 -- Writer      : Young-Kyoon Suh
 -- Date        : 05/30/17
--- Description : Define analysis queries for new discontinous operators 
+-- Description : Define analysis queries for new discontinuous operators 
 -- labshelf 7.10
 
--- Gather all estimated cost per operator per plan across runs
--- DiscontOp_S0: DiscontinuousOperator_Step0
-column opname FORMAT A10;
-column dbms FORMAT A10;
-DROP TABLE DiscontOpNew_Step0;
-CREATE TABLE DiscontOpNew_Step0 AS 
-	select *
-	from DiscontOp_S0
-	--where 
-	   -- runid = 252 
-	--and querynum = 7
-  	--   runid = 269 
-	--and querynum = 8
-	--   runid = 418
-	--and querynum = 7
-  	-- runid = 285
-	---and querynum = 7
-	--- runid IN (252,256,250,441)
-	--- runid IN (697,696,699,710)
-	;
-ALTER TABLE DiscontOpNew_Step0 ADD PRIMARY KEY (runid,querynum,card,PLANID,opID,statName);
--- queryid = 5338, runid = 252, querynumber = 7.
---select * from DiscontOp_S0 where opname = 'ALL:Full Table Scan'
-
-DROP TABLE DiscontOpNew_Step1;
-CREATE TABLE DiscontOpNew_Step1 AS 
-	select distinct 
-	       t0.dbms,
-	       t0.runid,
-	       t0.querynum,
-	       t0.card, 
-	       t0.planid
-	from DiscontOp_S0 t0 
-	--where 
-	--     runid = 252 
-	--and querynum = 7
-	--   runid = 418
-	--and querynum = 7
- 	--runid = 285
-	--and querynum = 7
-	order by runid, querynum
-	;
-ALTER TABLE DiscontOpNew_Step1 ADD PRIMARY KEY (runid,querynum,card);
--- select * from DiscontOpNew_Step1 where card <= 100000 order by card asc
-DROP TABLE DiscontOpNew_Step2;
-CREATE TABLE DiscontOpNew_Step2 AS 
-	select  t0.dbms,
-		t0.runid,
-		t0.querynum,
-		t0.card as low_card,
-		t1.card as high_card,
-		t0.planid as low_plan,
-		t1.planid as high_plan
-	from DiscontOpNew_Step1 t0,
-	     DiscontOpNew_Step1 t1
-	where t0.runid = t1.runid 
-	and t0.querynum = t1.querynum 
-	and t0.card < t1.card
-	order by runid, querynum, low_card asc; 
-ALTER TABLE DiscontOpNew_Step2 ADD PRIMARY KEY (runid,querynum,low_card,high_card);
--- select * from DiscontOpNew_Ste
-
-DROP TABLE DiscontOpNew_Step3;
-CREATE TABLE DiscontOpNew_Step3 AS 
-	SELECT t0.dbms,
-	       t1.runid,
-	       t1.querynum,
-	       t1.low_card,
-	       t1.high_card,
-	       count(distinct t0.planid) as numPlans
-	FROM DiscontOpNew_Step1 t0,
-	     DiscontOpNew_Step2 t1
-	WHERE t0.runid = t1.runid 
-	and t0.querynum = t1.querynum
-	and t0.card >= t1.low_card and t0.card <= t1.high_card  
-	group by t0.dbms, t1.runid, t1.querynum, t1.low_card, t1.high_card
-	order by runid, querynum, high_card desc, low_card asc;
-ALTER TABLE DiscontOpNew_Step3 ADD PRIMARY KEY (runid,querynum,low_card,high_card);
---- select low_card, high_card from DiscontOpNew_Step3
-
---- max consecutive range with the unique plan  
+--- find ranges with a unique plan
 DROP TABLE DiscontOpNew_Step4;
 CREATE TABLE DiscontOpNew_Step4 AS 
---	SELECT distinct runid, querynum, high_card, min(low_card) as low_card
---	FROM DiscontOpNew_Step3
---	where high_card - low_card > 60000 and numPlans = 1
---	group by runid, querynum, high_card
---	order by runid, querynum, high_card desc
---	UNION
 	SELECT dbms, runid, querynum, high_card, min(low_card) as low_card
 	FROM
 		(SELECT distinct dbms, runid, querynum, low_card, max(high_card) as high_card
@@ -102,41 +16,16 @@ CREATE TABLE DiscontOpNew_Step4 AS
 	group by dbms, runid, querynum, high_card
 	order by runid, querynum, high_card desc;
 ALTER TABLE DiscontOpNew_Step4 ADD PRIMARY KEY (runid,querynum,low_card,high_card);
---- select low_card, high_card from DiscontOpNew_Step4
 
---- one region sequence
+--- construct two-region sequence
 DROP TABLE DiscontOpNew_1RegSeq;
 CREATE TABLE DiscontOpNew_1RegSeq AS 
 	SELECT dbms, runid, querynum, low_card, high_card, high_card-low_card as rangeSize
 	FROM DiscontOpNew_Step4
 	order by runid, querynum, low_card asc;
 ALTER TABLE DiscontOpNew_1RegSeq ADD PRIMARY KEY (runid,querynum,low_card,high_card);
--- select count(*) from DiscontOpNew_OneRegSeq
 
-SQL> select count(*) from DiscontOpNew_1RegSeq;
-
-  COUNT(*)
-----------
-       499
-
-select count(*) from DiscontOpNew_2RegSeq;
-
-  COUNT(*)
-----------
-     24149
-
-select count(*) from DiscontOpNew_3RegSeq;
-
-  COUNT(*)
-----------
-     87050
-
-select count(*) from DiscontOpNew_4RegSeq;
-  COUNT(*)
-----------
-  60099764
-
----
+--- compute r2 for one-region sequence
 DROP TABLE DiscontOpNew_1RegSeqR2;
 CREATE TABLE DiscontOpNew_1RegSeqR2 AS 
 	select t0.runid, t0.querynum,t1.low_card,t1.high_card,t0.opID,coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
@@ -149,7 +38,7 @@ CREATE TABLE DiscontOpNew_1RegSeqR2 AS
 	order by t0.runid, t0.querynum, t1.low_card asc, t0.opID asc;
 ALTER TABLE DiscontOpNew_1RegSeqR2 ADD PRIMARY KEY (runid,querynum,low_card,high_card,OPID);
 
---- two-region sequence
+--- construct two-region sequence
 DROP TABLE DiscontOpNew_2RegSeq;
 CREATE TABLE DiscontOpNew_2RegSeq AS 
 	select distinct
@@ -170,7 +59,7 @@ CREATE TABLE DiscontOpNew_2RegSeq AS
 ALTER TABLE DiscontOpNew_2RegSeq ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,upperStart,upperEnd);
 -- select lowerStart,lowerEnd, upperStart,upperEnd from DiscontOpNew_Step4_2RS;
 
---- r2_1
+--- r2 for left subrange
 DROP TABLE DiscontOpNew_2RegSeqR2_1;
 CREATE TABLE DiscontOpNew_2RegSeqR2_1 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
@@ -182,7 +71,7 @@ CREATE TABLE DiscontOpNew_2RegSeqR2_1 AS
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_2RegSeqR2_1  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,upperStart,upperEnd,OPID);
 
---- r2_2
+--- r2 for right subrange
 DROP TABLE DiscontOpNew_2RegSeqR2_2;
 CREATE TABLE DiscontOpNew_2RegSeqR2_2 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
@@ -194,6 +83,7 @@ CREATE TABLE DiscontOpNew_2RegSeqR2_2 AS
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_2RegSeqR2_2  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,upperStart,upperEnd,OPID);
 
+--- compute r2 for two-region sequence 
 DROP TABLE DiscontOpNew_2RegSeqR2;	
 CREATE TABLE DiscontOpNew_2RegSeqR2 AS 
 	SELECT  lowerRange.runid,
@@ -216,7 +106,7 @@ CREATE TABLE DiscontOpNew_2RegSeqR2 AS
 	order by runid, querynum, lowerStart asc, opID asc;
 ALTER TABLE DiscontOpNew_2RegSeqR2 ADD PRIMARY KEY (runid,querynum,lowerStart, lowerEnd, upperStart, upperEnd, OPID);
 
---- three-region sequence
+--- build three-region sequence
 DROP TABLE DiscontOpNew_3RegSeq;
 CREATE TABLE DiscontOpNew_3RegSeq AS 
 	select distinct
@@ -242,7 +132,7 @@ CREATE TABLE DiscontOpNew_3RegSeq AS
 	order by runid, querynum, lowerStart, lowerEnd;
 ALTER TABLE DiscontOpNew_3RegSeq ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,upperStart,upperEnd);
 
---- r2_1
+--- r2 for the leftmost subrange
 DROP TABLE DiscontOpNew_3RegSeqR2_1;
 CREATE TABLE DiscontOpNew_3RegSeqR2_1 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1,t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
@@ -254,7 +144,7 @@ CREATE TABLE DiscontOpNew_3RegSeqR2_1 AS
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_3RegSeqR2_1  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,upperStart,upperEnd,OPID);
 
---- r2_2
+--- r2 for the intermediate subrange
 DROP TABLE DiscontOpNew_3RegSeqR2_2;
 CREATE TABLE DiscontOpNew_3RegSeqR2_2 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
@@ -266,7 +156,7 @@ CREATE TABLE DiscontOpNew_3RegSeqR2_2 AS
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_3RegSeqR2_2  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1, upperStart,upperEnd,OPID);
 
---- r2_3
+--- r2 for the rightmost subrange
 DROP TABLE DiscontOpNew_3RegSeqR2_3;
 CREATE TABLE DiscontOpNew_3RegSeqR2_3 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
@@ -278,6 +168,7 @@ CREATE TABLE DiscontOpNew_3RegSeqR2_3 AS
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_3RegSeqR2_3  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,upperStart,upperEnd,OPID);
 
+--- compute r2 for three-region sequence
 DROP TABLE DiscontOpNew_3RegSeqR2;	
 CREATE TABLE DiscontOpNew_3RegSeqR2 AS 
 	SELECT  lowerRange.runid,
@@ -325,6 +216,7 @@ SQL> select count(*) from DiscontOpNew_3RegSeqR2;
 ----------
     512603
 
+--- build four-region sequence
 DROP TABLE DiscontOpNew_4RegSeq;
 CREATE TABLE DiscontOpNew_4RegSeq AS 
 	select distinct
@@ -341,7 +233,7 @@ CREATE TABLE DiscontOpNew_4RegSeq AS
 	from DiscontOpNew_Step4 t0, DiscontOpNew_Step1 t1, DiscontOpNew_Step1 t2, DiscontOpNew_Step1 t3
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum 
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	--and t0.runid = 252 and t0.querynum =6
 	--and t0.low_card = 670000 and t0.high_card = 1120000
 	and t1.runid = t2.runid 
@@ -355,33 +247,33 @@ CREATE TABLE DiscontOpNew_4RegSeq AS
 ALTER TABLE DiscontOpNew_4RegSeq ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2,intermEnd2,upperStart,upperEnd);
 -- select LOWERSTART,LOWEREND,INTERMSTART1, INTERMEND1, INTERMSTART2, intermEnd2, UPPERSTART, UPPEREND from DiscontOpNew_Step4_4RS;
 
---- r2_1
+--- r2 for the leftmost subrange
 DROP TABLE DiscontOpNew_4RegSeqR2_1;
 CREATE TABLE DiscontOpNew_4RegSeqR2_1 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_4RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.lowerStart <= t0.CARD 
 	and t1.lowerEnd >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_4RegSeqR2_1  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2, upperStart,upperEnd,OPID);
 
---- r2_2
+--- r2 for intermediate subrange 1
 DROP TABLE DiscontOpNew_4RegSeqR2_2;
 CREATE TABLE DiscontOpNew_4RegSeqR2_2 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_4RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.intermStart1 <= t0.CARD 
 	and t1.intermEnd1 >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_4RegSeqR2_2  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2, upperStart,upperEnd,OPID);
 
---- r2_3
+--- r2 for intermediate subrange 2
 DROP TABLE DiscontOpNew_4RegSeqR2_3;
 CREATE TABLE DiscontOpNew_4RegSeqR2_3 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
@@ -394,14 +286,14 @@ CREATE TABLE DiscontOpNew_4RegSeqR2_3 AS
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_4RegSeqR2_3  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2, upperStart,upperEnd,OPID);
 
---- r2_4
+--- r2 for the rightmost subrange
 DROP TABLE DiscontOpNew_4RegSeqR2_4;
 CREATE TABLE DiscontOpNew_4RegSeqR2_4 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_4RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.upperStart <= t0.CARD 
 	and t1.upperEnd >= t0.CARD
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.upperStart, t1.upperEnd, t0.opID;
@@ -445,11 +337,12 @@ CREATE TABLE DiscontOpNew_4RegSeqR2 AS
 	and intermRange1.upperEnd = intermRange2.upperEnd 
 	and intermRange1.opID = intermRange2.opID 
 	--and lowerRange.runid = 252 and lowerRange.querynum = 6
-	and lowerRange.runid IN (252,256,250,441)
+	--and lowerRange.runid IN (252,256,250,441)
 	group by lowerRange.runid, lowerRange.querynum, lowerRange.lowerStart, lowerRange.lowerEnd, intermRange1.intermStart1, intermRange1.intermEnd1, intermRange2.intermStart2, intermRange2.intermEnd2,lowerRange.upperStart, lowerRange.upperEnd, lowerRange.opID
 	order by runid, querynum, lowerStart asc, opID asc;
 ALTER TABLE DiscontOpNew_4RegSeqR2 ADD PRIMARY KEY (runid,querynum,lowerStart, lowerEnd, intermStart1, intermEnd1,intermStart2, intermEnd2, upperStart, upperEnd, OPID);
 
+--- build five-region sequence
 DROP TABLE DiscontOpNew_5RegSeq;
 CREATE TABLE DiscontOpNew_5RegSeq AS 
 	select distinct
@@ -470,7 +363,7 @@ CREATE TABLE DiscontOpNew_5RegSeq AS
 	and t0.querynum = t1.querynum 
 	--and t0.runid = 252 and t0.querynum =6
 	--and t0.low_card = 670000 and t0.high_card = 1120000
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.runid = t2.runid 
 	and t1.querynum = t2.querynum 
 	and t2.runid = t3.runid
@@ -484,66 +377,66 @@ CREATE TABLE DiscontOpNew_5RegSeq AS
 ALTER TABLE DiscontOpNew_5RegSeq ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2,intermEnd2,intermStart3,intermEnd3,upperStart,upperEnd);
 -- select LOWERSTART,LOWEREND,INTERMSTART1, INTERMEND1, INTERMSTART2, intermEnd2, INTERMSTART3, intermEnd3, UPPERSTART, UPPEREND from DiscontOpNew_Step4_5RS;
 
---- r2_1
+--- r2 for the leftmost subrange
 DROP TABLE DiscontOpNew_5RegSeqR2_1;
 CREATE TABLE DiscontOpNew_5RegSeqR2_1 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_5RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.lowerStart <= t0.CARD 
 	and t1.lowerEnd >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_5RegSeqR2_1  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3, upperStart,upperEnd,OPID);
 
---- r2_2
+--- r2 for the intermediate subrange 1
 DROP TABLE DiscontOpNew_5RegSeqR2_2;
 CREATE TABLE DiscontOpNew_5RegSeqR2_2 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_5RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.intermStart1 <= t0.CARD 
 	and t1.intermEnd1 >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_5RegSeqR2_2  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3, upperStart,upperEnd,OPID);
 
---- r2_3
+--- r2 for the intermediate subrange 2
 DROP TABLE DiscontOpNew_5RegSeqR2_3;
 CREATE TABLE DiscontOpNew_5RegSeqR2_3 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_5RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.intermStart2 <= t0.CARD 
 	and t1.intermEnd2 >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_5RegSeqR2_3  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3, upperStart,upperEnd,OPID);
 
---- r2_4
+--- r2 for the intermediate subrange 3
 DROP TABLE DiscontOpNew_5RegSeqR2_4;
 CREATE TABLE DiscontOpNew_5RegSeqR2_4 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_5RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.intermStart3 <= t0.CARD 
 	and t1.intermEnd3 >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_5RegSeqR2_4  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3, upperStart,upperEnd,OPID);
 
---- r2_5
+--- r2 for the rightmost subrange 
 DROP TABLE DiscontOpNew_5RegSeqR2_5;
 CREATE TABLE DiscontOpNew_5RegSeqR2_5 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_5RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441)
+	--and t0.runid IN (252,256,250,441)
 	and t1.upperStart <= t0.CARD 
 	and t1.upperEnd >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.upperStart, t1.upperEnd, t0.opID;
@@ -597,11 +490,12 @@ DiscontOpNew_5RegSeqR2_4 intermRange3, DiscontOpNew_5RegSeqR2_5 upperRange
 	and intermRange3.upperEnd = intermRange2.upperEnd 
 	and intermRange3.opID = intermRange2.opID 
 	--and lowerRange.runid = 252 and lowerRange.querynum = 6
-	and lowerRange.runid IN (252,256,250,441)
+	--and lowerRange.runid IN (252,256,250,441)
 	group by lowerRange.runid, lowerRange.querynum, lowerRange.lowerStart, lowerRange.lowerEnd, intermRange1.intermStart1, intermRange1.intermEnd1, intermRange2.intermStart2, intermRange2.intermEnd2,intermRange3.intermStart3, intermRange3.intermEnd3,lowerRange.upperStart, lowerRange.upperEnd, lowerRange.opID
 	order by runid, querynum, lowerStart asc, opID asc;
 ALTER TABLE DiscontOpNew_5RegSeqR2 ADD PRIMARY KEY (runid,querynum,lowerStart, lowerEnd, intermStart1, intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3, upperStart, upperEnd, OPID);
 
+--- build six-region sequence 
 DROP TABLE DiscontOpNew_6RegSeq;
 CREATE TABLE DiscontOpNew_6RegSeq AS 
 	select distinct
@@ -632,7 +526,7 @@ CREATE TABLE DiscontOpNew_6RegSeq AS
 	and t3.querynum = t4.querynum 
 	and t4.runid = t5.runid
 	and t4.querynum = t5.querynum 
-	and t0.runid IN (252,256,250,441) 
+	--and t0.runid IN (252,256,250,441) 
 	and t0.low_card+40000 <= t1.card and t1.card+40000 <= t2.card 
 	and t2.card+40000+10000 <= t3.card and t3.card+40000+10000 <= t4.card 
 	and t4.card+40000+10000 <= t5.card and t5.card+40000 <= t0.high_card
@@ -640,79 +534,79 @@ CREATE TABLE DiscontOpNew_6RegSeq AS
 	order by runid, querynum, lowerStart, lowerEnd; 
 ALTER TABLE DiscontOpNew_6RegSeq ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2,intermEnd2,intermStart3,intermEnd3,intermStart4,intermEnd4,upperStart,upperEnd);
 
---- r2_1
+--- compute r2 for the leftmost subrange
 DROP TABLE DiscontOpNew_6RegSeqR2_1;
 CREATE TABLE DiscontOpNew_6RegSeqR2_1 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_6RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441) 
+	--and t0.runid IN (252,256,250,441) 
 	and t1.lowerStart <= t0.CARD 
 	and t1.lowerEnd >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_6RegSeqR2_1  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3,intermStart4, intermEnd4, upperStart,upperEnd,OPID);
 
---- r2_2
+--- compute r2 for the intermediate subrange 1
 DROP TABLE DiscontOpNew_6RegSeqR2_2;
 CREATE TABLE DiscontOpNew_6RegSeqR2_2 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_6RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441) 
+	--and t0.runid IN (252,256,250,441) 
 	and t1.intermStart1 <= t0.CARD 
 	and t1.intermEnd1 >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_6RegSeqR2_2  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3,intermStart4, intermEnd4, upperStart,upperEnd,OPID);
 
---- r2_3
+--- compute r2 for the intermediate subrange 2
 DROP TABLE DiscontOpNew_6RegSeqR2_3;
 CREATE TABLE DiscontOpNew_6RegSeqR2_3 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_6RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441) 
+	--and t0.runid IN (252,256,250,441) 
 	and t1.intermStart2 <= t0.CARD 
 	and t1.intermEnd2 >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_6RegSeqR2_3  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3,intermStart4, intermEnd4, upperStart,upperEnd,OPID);
 
---- r2_4
+--- compute r2 for the intermediate subrange 3
 DROP TABLE DiscontOpNew_6RegSeqR2_4;
 CREATE TABLE DiscontOpNew_6RegSeqR2_4 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_6RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441) 
+	--and t0.runid IN (252,256,250,441) 
 	and t1.intermStart3 <= t0.CARD 
 	and t1.intermEnd3 >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_6RegSeqR2_4  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3,intermStart4, intermEnd4, upperStart,upperEnd,OPID);
 
---- r2_5
+--- compute r2 for the intermediate subrange 4
 DROP TABLE DiscontOpNew_6RegSeqR2_5;
 CREATE TABLE DiscontOpNew_6RegSeqR2_5 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_6RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441) 
+	--and t0.runid IN (252,256,250,441) 
 	and t1.intermStart4 <= t0.CARD 
 	and t1.intermEnd4 >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.opID;
 ALTER TABLE DiscontOpNew_6RegSeqR2_5  ADD PRIMARY KEY (runid,querynum,lowerStart,lowerEnd,intermStart1,intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3,intermStart4, intermEnd4, upperStart,upperEnd,OPID);
 
---- r2_6
+--- compute r2 for the intermediate subrange 5
 DROP TABLE DiscontOpNew_6RegSeqR2_6;
 CREATE TABLE DiscontOpNew_6RegSeqR2_6 AS 
 	select t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.OPID, coalesce(round(REGR_R2(t0.card, t0.estCost),3),0) r2
 	from DiscontOpNew_Step0 t0, DiscontOpNew_6RegSeq t1
 	where t0.runid = t1.runid 
 	and t0.querynum = t1.querynum
-	and t0.runid IN (252,256,250,441) 
+	--and t0.runid IN (252,256,250,441) 
 	and t1.upperStart <= t0.CARD 
 	and t1.upperEnd >= t0.CARD 
 	group by t0.runid, t0.querynum, t1.lowerStart, t1.lowerEnd, t1.intermStart1, t1.intermEnd1, t1.intermStart2, t1.intermEnd2, t1.intermStart3, t1.intermEnd3, t1.intermStart4, t1.intermEnd4, t1.upperStart, t1.upperEnd, t0.opID;
@@ -775,11 +669,12 @@ DiscontOpNew_6RegSeqR2_4 intermRange3, DiscontOpNew_6RegSeqR2_5 intermRange4, Di
 	and intermRange3.upperEnd = intermRange4.upperEnd 
 	and intermRange3.opID = intermRange4.opID 
 	--and lowerRange.runid = 252 and lowerRange.querynum = 6
-	and lowerRange.runid IN (252,256,250,441) 
+	--and lowerRange.runid IN (252,256,250,441) 
 	group by lowerRange.runid, lowerRange.querynum, lowerRange.lowerStart, lowerRange.lowerEnd, intermRange1.intermStart1, intermRange1.intermEnd1, intermRange2.intermStart2, intermRange2.intermEnd2,intermRange3.intermStart3, intermRange3.intermEnd3,intermRange4.intermStart4, intermRange4.intermEnd4,lowerRange.upperStart, lowerRange.upperEnd, lowerRange.opID
 	order by runid, querynum, lowerStart asc, opID asc;
 ALTER TABLE DiscontOpNew_6RegSeqR2 ADD PRIMARY KEY (runid,querynum,lowerStart, lowerEnd, intermStart1, intermEnd1,intermStart2, intermEnd2,intermStart3, intermEnd3, intermStart4, intermEnd4,upperStart, upperEnd, OPID);
 
+-- pick up the minimum r2 for x-region sequence
 DROP TABLE DiscontOpNew_ReqSeqMinR2;	
 CREATE TABLE DiscontOpNew_ReqSeqMinR2 AS 
 	SELECT t1.runid,

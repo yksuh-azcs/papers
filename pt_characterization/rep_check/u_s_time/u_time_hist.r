@@ -132,6 +132,25 @@ xlab='User time (ms)', ylab=expression('Frequency'))
 axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
+x = read.csv(file="96_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("96_sec_ut_hist.eps")
+binsize=1
+#x = subset(x, x$U_TIME >= x_dn & x$U_TIME <= x_up)
+x <- subset(x, x$ITERNUM != 474)
+xmin <-min(x$U_TIME)
+xmax <-max(x$U_TIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$U_TIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="orange",  main='User time frequency on INC96', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='User time (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
 x = read.csv(file="128_sec.dat",head=TRUE,sep="\t")
 x <- subset(x, x$ITERNUM <= numSamples)
 setEPS()
@@ -149,6 +168,72 @@ ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 ymax <- 80
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="orange",  main='User time frequency on INC128', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='User time (ms)', ylab=expression('Frequency'))
+axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
+dev.off()
+
+x = read.csv(file="128_sec2.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("128_sec_ut_hist2.eps")
+binsize=2
+#x = subset(x, x$U_TIME >= x_dn & x$U_TIME <= x_up)
+x <- subset(x, x$ITERNUM != 281 & x$ITERNUM != 949)
+xmin <-min(x$U_TIME)
+xmax <-max(x$U_TIME)
+xmin
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$U_TIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 300
+plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="orange",  main='User time frequency on INC128', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='User time (ms)', ylab=expression('Frequency'))
+axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
+dev.off()
+
+x = read.csv(file="160_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("160_sec_ut_hist.eps")
+binsize=2
+#x = subset(x, x$U_TIME >= x_dn & x$U_TIME <= x_up)
+x <- subset(x, x$ITERNUM != 503)
+xmin <-min(x$U_TIME)
+xmax <-max(x$U_TIME)
+xmin
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$U_TIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 250
+plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="orange",  main='User time frequency on INC160', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='User time (ms)', ylab=expression('Frequency'))
+axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
+dev.off()
+
+x = read.csv(file="192_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("192_sec_ut_hist.eps")
+binsize=2
+#x = subset(x, x$U_TIME >= x_dn & x$U_TIME <= x_up)
+x <- subset(x, x$ITERNUM != 26 & x$ITERNUM != 472)
+xmin <-min(x$U_TIME)
+xmax <-max(x$U_TIME)
+xmin
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$U_TIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 200
+plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="orange",  main='User time frequency on INC192', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='User time (ms)', ylab=expression('Frequency'))
 axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
@@ -182,7 +267,8 @@ setEPS()
 postscript("512_sec_ut_hist.eps")
 binsize=5
 #x = subset(x, x$U_TIME >= x_dn & x$U_TIME <= x_up)
-x <- subset(x, x$ITERNUM != 58 & x$ITERNUM != 226)
+#x <- subset(x, x$ITERNUM != 58 & x$ITERNUM != 226)
+x <- subset(x, x$ITERNUM != 58 & x$ITERNUM != 186 & x$ITERNUM != 226)
 xmin <-min(x$U_TIME)
 xmax <-max(x$U_TIME)
 xmin
