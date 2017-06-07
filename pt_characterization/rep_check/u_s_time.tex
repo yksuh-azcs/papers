@@ -1,8 +1,22 @@
 \section{Further invstigation of the Second Run~\label{sec:u_s_time_hist}} 
 This section exhibits user and system time histograms on the second run of 
 INC with its task length increasing from 1 second to 4096 seconds, via SEDONA. 
-The detailed description of the base data is from Table~\ref{tab:exp_notes2}.
+The detailed description of the base data is from Table~\ref{tab:exp_notes2}, 
+and for some additional data, the corresponding description is given in Table~\ref{tab:exp_notes3}.
 
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{2cm}|p{3cm}|p{3cm}|p{4cm}|p{3.5cm}|} \hline
+Machine & Task Length (sec) & Description & Experiment Period & Relevant \linebreak Histograms\\ \hline
+{\tt sodb9} &  INC96$\sim$INC256 & 1000 samples, each & 2017-05-24 $\sim$ 2017-06-06 & 
+Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Notes on experiment runs used for histograms\label{tab:exp_notes3}}
+\end{table}
+
+\newpage
 \subsection{User Time}
 
 \begin{figure}[hp!]
@@ -66,8 +80,12 @@ The detailed description of the base data is from Table~\ref{tab:exp_notes2}.
 
 \begin{figure}[hp!]
 	\centering
+	\subfigure[User time frequency on INC224]{
+		\includegraphics[scale=0.43]{u_s_time/224_sec_ut_hist.eps}
+		\label{fig:inc224_ut_hist}
+	}
 	\subfigure[User time frequency on INC256]{
-		\includegraphics[scale=0.43]{u_s_time/256_sec_ut_hist.eps}
+		\includegraphics[scale=0.43]{u_s_time/256_sec_ut_hist2.eps}
 		\label{fig:inc256_ut_hist}
 	}
 	\subfigure[User time frequency on INC512 (with one extreme outlier of 513,259 msec removed)]{
@@ -78,21 +96,21 @@ The detailed description of the base data is from Table~\ref{tab:exp_notes2}.
 		\includegraphics[scale=0.43]{u_s_time/1024_sec_ut_hist.eps}
 		\label{fig:inc1024_ut_hist}
 	}
-	\caption{User Time Histograms of INC256 ... INC1024~\label{fig:ut_hist4}}
+	\caption{User Time Histograms of INC224 ... INC256~\label{fig:ut_hist4}}
 \end{figure}
 
-%\begin{figure}[hp!]
-%	\centering
-%	\subfigure[User time frequency on INC2048]{
-%		\includegraphics[scale=0.43]{u_s_time/2048_sec_ut_hist.eps}
-%		\label{fig:inc2048_ut_hist}
-%	}
-%	\subfigure[User time frequency on INC4096]{
-%		\includegraphics[scale=0.43]{u_s_time/4096_sec_ut_hist.eps}
-%		\label{fig:inc4096_ut_hist}
-%	}
-%	\caption{User Time Histograms of INC2048 and INC4096~\label{fig:ut_hist5}}
-%\end{figure}
+\begin{figure}[hp!]
+	\centering
+	\subfigure[User time frequency on INC2048]{
+		\includegraphics[scale=0.43]{u_s_time/2048_sec_ut_hist.eps}
+		\label{fig:inc2048_ut_hist}
+	}
+	\subfigure[User time frequency on INC4096]{
+		\includegraphics[scale=0.43]{u_s_time/4096_sec_ut_hist.eps}
+		\label{fig:inc4096_ut_hist}
+	}
+	\caption{User Time Histograms of INC2048 and INC4096~\label{fig:ut_hist5}}
+\end{figure}
 
 \vspace\fill
 \clearpage
