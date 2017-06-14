@@ -20,7 +20,8 @@ CREATE TABLE INCX_RUN_PROC_INFO AS
 	and (proc.utime+proc.stime) > 0
 	--and proc.processname NOT IN ('incr_work')
 	-- 1024 secs
-	and arr.algrunid IN (19060,19080,19100,19120,19140,19160)
+	--and arr.algrunid IN (19060,19080,19100,19120,19140,19160)
+	and arr.algrunid IN (19180,19200,19220,19240,19260,19280,19300,19320,19340,19360)
 	order by iternum, pt desc;
 ALTER TABLE INCX_RUN_PROC_INFO ADD PRIMARY KEY (algrunid, iternum, procid,processname);
 
@@ -52,7 +53,21 @@ EXP_RUN_TIME  NUMTRIALS     AVG_ET     STD_ET	  AVG_PT     STD_PT
 	 224	   1000  224502.34	    5  224476.65	  4
 	 256	   1000  256575.21	  5.6  256545.67	4.2
 
-6 rows selected.
+EXP_RUN_TIME  NUMTRIALS     AVG_ET     STD_ET	  AVG_PT     STD_PT
+------------ ---------- ---------- ---------- ---------- ----------
+	   3	   1000    3006.99	  2.2	 3006.65	  2
+	   6	   1000    6014.94	  2.8	 6013.95	2.7
+	  12	   1000   12027.97	    3	12026.46	2.9
+	  24	   1000   24053.86	  2.8	24051.13	2.5
+	  48	   1000   48108.09	  3.5	 48102.5	2.8
+	  72	   1000   72163.45	  3.5	72154.88	2.8
+	  80	   1000   80180.19	    3	80170.83	2.3
+	  88	   1000   88197.82	  3.6	88187.68	3.1
+	 104	   1000  104234.44	  3.8  104222.39	3.2
+	 112	   1000  112253.02	  3.3	112240.1	2.6
+
+10 rows selected.
+
 
 --column PROCESSNAME format a15
 DROP TABLE INCX_RUN_CUTOFF_Info CASCADE CONSTRAINTS;
@@ -117,6 +132,13 @@ select distinct exp_run_time, algrunid, iternum from INCX_RUN_CUTOFF_Info order 
 
 EXP_RUN_TIME   ALGRUNID    ITERNUM
 ------------ ---------- ----------
+	  24	  19240        951
+	  72	  19280        523
+	  80	  19300        625
+	  88	  19320        639
+	 104	  19340        516
+	 112	  19360        327
+
 	  96	  19060        474
 	 128	  19080        281
 	 128	  19080        949
