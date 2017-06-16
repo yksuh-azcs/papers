@@ -21,7 +21,7 @@ CREATE TABLE INCX_RUN_PROC_INFO AS
 	--and proc.processname NOT IN ('incr_work')
 	-- 1024 secs
 	--and arr.algrunid IN (19060,19080,19100,19120,19140,19160)
-	and arr.algrunid IN (19180,19200,19220,19240,19260,19280,19300,19320,19340,19360)
+	and arr.algrunid IN (19180,19200,19220,19240,19260,19280,19300,19320,19340,19360,19380)
 	order by iternum, pt desc;
 ALTER TABLE INCX_RUN_PROC_INFO ADD PRIMARY KEY (algrunid, iternum, procid,processname);
 
@@ -138,6 +138,9 @@ EXP_RUN_TIME   ALGRUNID    ITERNUM
 	  88	  19320        639
 	 104	  19340        516
 	 112	  19360        327
+	 120	  19380 	80
+	 120	  19380        797
+
 
 	  96	  19060        474
 	 128	  19080        281

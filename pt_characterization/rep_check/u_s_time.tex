@@ -10,8 +10,8 @@ and for some additional data, the corresponding description is given in Table~\r
 Machine & Task Length (sec) & Description & Experiment Period & Relevant \linebreak Histograms\\ \hline
 {\tt sodb9} &  INC96$\sim$INC256 & 1000 samples, each & 2017-05-24 $\sim$ 2017-06-06 & 
 Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}\\ \hline
-					&  INC3, 6, 12, 24, 48, 72, 80, 88, 104, 112 & 1000 samples, each & 2017-06-07 $\sim$ 2017-06-14 & Figs.~\ref{fig:inc3_ut_hist}, ~\ref{fig:inc6_ut_hist}, ~\ref{fig:inc12_ut_hist}, ~\ref{fig:inc24_ut_hist},
-~\ref{fig:inc48_ut_hist}, ~\ref{fig:inc72_ut_hist}, ~\ref{fig:inc80_ut_hist}, ~\ref{fig:inc88_ut_hist}, ~\ref{fig:inc104_ut_hist}, and ~\ref{fig:inc112_ut_hist}\\ \hline
+					&  INC3, 6, 12, 24, 48, 72, 80, 88, 104, 112, and 120 & 1000 samples, each & 2017-06-07 $\sim$ 2017-06-16 & Figs.~\ref{fig:inc3_ut_hist}, ~\ref{fig:inc6_ut_hist}, ~\ref{fig:inc12_ut_hist}, ~\ref{fig:inc24_ut_hist},
+~\ref{fig:inc48_ut_hist}, ~\ref{fig:inc72_ut_hist}, ~\ref{fig:inc80_ut_hist}, ~\ref{fig:inc88_ut_hist}, ~\ref{fig:inc104_ut_hist},~\ref{fig:inc112_ut_hist}, and~\ref{fig:inc120_ut_hist}\\ \hline
 \end{tabular}
 \end{center}
 \vspace{-.2in}
@@ -116,15 +116,19 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 		\includegraphics[scale=0.43]{u_s_time/112_sec_ut_hist.eps}
 		\label{fig:inc112_ut_hist}
 	}
-	\caption{User Time Histograms of INC104 and INC112~\label{fig:ut_hist5}}
-\end{figure}
-
-\begin{figure}[hp!]
-	\centering
+	\subfigure[User time frequency on INC120]{
+		\includegraphics[scale=0.43]{u_s_time/120_sec_ut_hist.eps}
+		\label{fig:inc120_ut_hist}
+	}
 	\subfigure[User time frequency on INC128]{
 		\includegraphics[scale=0.43]{u_s_time/128_sec_ut_hist2.eps}
 		\label{fig:inc128_ut_hist2}
 	}
+	\caption{User Time Histograms of INC104 and INC128~\label{fig:ut_hist5}}
+\end{figure}
+
+\begin{figure}[hp!]
+	\centering
 	\subfigure[User time frequency on INC160]{
 		\includegraphics[scale=0.43]{u_s_time/160_sec_ut_hist.eps}
 		\label{fig:inc160_ut_hist}
@@ -133,11 +137,6 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 		\includegraphics[scale=0.43]{u_s_time/192_sec_ut_hist.eps}
 		\label{fig:inc192_ut_hist}
 	}
-	\caption{User Time Histograms of INC128 ... INC192~\label{fig:ut_hist6}}
-\end{figure}
-
-\begin{figure}[hp!]
-	\centering
 	\subfigure[User time frequency on INC224]{
 		\includegraphics[scale=0.43]{u_s_time/224_sec_ut_hist.eps}
 		\label{fig:inc224_ut_hist}
@@ -146,6 +145,11 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 		\includegraphics[scale=0.43]{u_s_time/256_sec_ut_hist2.eps}
 		\label{fig:inc256_ut_hist}
 	}
+	\caption{User Time Histograms of INC160 ... INC256~\label{fig:ut_hist6}}
+\end{figure}
+
+\begin{figure}[hp!]
+	\centering
 	\subfigure[User time frequency on INC512 (with one extreme outlier of 513,259 msec removed)]{
 		\includegraphics[scale=0.43]{u_s_time/512_sec_ut_hist.eps}
 		\label{fig:inc512_ut_hist}
@@ -154,11 +158,6 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 		\includegraphics[scale=0.43]{u_s_time/1024_sec_ut_hist.eps}
 		\label{fig:inc1024_ut_hist}
 	}
-	\caption{User Time Histograms of INC224 ... INC256~\label{fig:ut_hist7}}
-\end{figure}
-
-\begin{figure}[hp!]
-	\centering
 	\subfigure[User time frequency on INC2048]{
 		\includegraphics[scale=0.43]{u_s_time/2048_sec_ut_hist.eps}
 		\label{fig:inc2048_ut_hist}
@@ -167,7 +166,7 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 		\includegraphics[scale=0.43]{u_s_time/4096_sec_ut_hist.eps}
 		\label{fig:inc4096_ut_hist}
 	}
-	\caption{User Time Histograms of INC2048 and INC4096~\label{fig:ut_hist8}}
+	\caption{User Time Histograms of INC512 ... INC4096~\label{fig:ut_hist7}}
 \end{figure}
 
 \vspace\fill
