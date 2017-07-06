@@ -4,8 +4,8 @@
 #install.packages("rgl")
 #library(rgl)
 require(rgl)
-install.packages("misc3d")
-install.packages("plot3D", repos="http://R-Forge.R-project.org")
+#install.packages("misc3d")
+#install.packages("plot3D", repos="http://R-Forge.R-project.org")
 require(plot3D)
 library(plot3D)
 numSamples <- 1000
@@ -16,9 +16,8 @@ xmin <-min(x1$PRTIME)
 xmax <-max(x1$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h1 = hist(x1$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-#z1 <- h1$mids
-#z1[z1!=0] <- 1
-x1_pt <- (h1$mids-1000)
+#x1_pt <- (h1$mids-1000)
+x1_pt <- ((h1$mids-min(h1$mids))/(max(h1$mids)-min(h1$mids)))
 y1_pt <- 1
 z1_pt <- h1$density
 ### 2 sec
@@ -30,7 +29,9 @@ nbins <- ceiling((xmax-xmin) / binsize)
 h2 = hist(x2$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 #z2 <- h2$mids
 #z2[z2!=0] <- 2
-x2_pt <- (h2$mids-2000)
+#x2_pt <- (h2$mids-2000)
+#x2_pt <- (h2$mids-min(h2$mids))
+x2_pt <- ((h2$mids-min(h2$mids))/(max(h2$mids)-min(h2$mids)))
 y2_pt <- 2
 z2_pt <- h2$density
 ### 4 sec
@@ -40,52 +41,11 @@ xmin <-min(x4$PRTIME)
 xmax <-max(x4$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h4 = hist(x4$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x4_pt <- (h4$mids-4000)
+#x4_pt <- (h4$mids-4000)
+#x4_pt <- (h4$mids-min(h4$mids))
+x4_pt <- ((h4$mids-min(h4$mids))/(max(h4$mids)-min(h4$mids)))
 y4_pt <- 4
 z4_pt <- h4$density
-
-######## now let's generate 3D-plot ####
-nx <- c(x1_pt,x2_pt,x4_pt)
-ny <- c(y1_pt,y2_pt,y4_pt)
-nz <- c(z1_pt,z2_pt,z4_pt)
-
-mz=matrix(nz, nrow=length(nx),ncol=length(ny), byrow=F)
-## 1 sec
-mz[(length(x1_pt)+1):(length(nx)),1] <- NA
-## 2 sec
-mz[1:length(x1_pt),2] <- NA
-mz[(length(x1_pt)+length(x2_pt)+1):(length(nx)),2] <- NA
-## 4 sec
-mz[1:(length(x1_pt)+length(x2_pt)),3] <- NA
-#mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+1):(length(nx)),3] <- NA
-
-postscript("3d_plot.eps")
-#hist3D(x,y,mz,xlim=c(0,17000),zlim=c(0,1000), ylim=c(0,13), xlab="INC Time (msec)",ylab="INC Length (sec)",zlab="Frequency",theta=30, phi=20, border = "black", axes=TRUE,label=TRUE, nticks=10,ticktype="detailed", space=0.2) 
-#axis(side=1,at=x,labels=seq(min(x),max(x),1))
-hist3D(nx,ny,mz,log="y",zlim=c(0,1), xlab="Relative INC Difference (msec)",ylab="Task Length (sec)",zlab="Relative Frequency",
-theta=30, phi=20, border = "black",axes=TRUE,label=TRUE, ticktype="detailed", space=0.1) 
-#axis(side=1,at=x,labels=seq(min(x),max(x),1))
-dev.off()
-
-
-### 2 sec
-x2 = read.csv(file="2_sec.dat",head=TRUE,sep="\t")
-x2 <- subset(x2, x2$ITERNUM <= numSamples)
-xmin <-min(x2$PRTIME)
-xmax <-max(x2$PRTIME)
-nbins <- ceiling((xmax-xmin) / binsize)
-h2 = hist(x2$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z2 <- h2$mids
-z2[z2!=0] <- 2
-### 4 sec
-x4 = read.csv(file="4_sec.dat",head=TRUE,sep="\t")
-x4 <- subset(x4, x4$ITERNUM <= numSamples)
-xmin <-min(x4$PRTIME)
-xmax <-max(x4$PRTIME)
-nbins <- ceiling((xmax-xmin) / binsize)
-h4 = hist(x4$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z4 <- h4$mids
-z4[z4!=0] <- 4
 ### 8 sec
 x8 = read.csv(file="8_sec.dat",head=TRUE,sep="\t")
 x8 <- subset(x8, x8$ITERNUM <= numSamples)
@@ -94,8 +54,11 @@ xmin <-min(x8$PRTIME)
 xmax <-max(x8$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h8 = hist(x8$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z8 <- h8$mids
-z8[z8!=0] <- 8
+#x8_pt <- (h8$mids-8000)
+#x8_pt <- (h8$mids-min(h8$mids))
+x8_pt <- ((h8$mids-min(h8$mids))/(max(h8$mids)-min(h8$mids)))
+y8_pt <- 8
+z8_pt <- h8$density
 ### 16 sec
 x16 = read.csv(file="16_sec.dat",head=TRUE,sep="\t")
 x16 <- subset(x16, x16$ITERNUM <= numSamples)
@@ -103,8 +66,11 @@ xmin <-min(x16$PRTIME)
 xmax <-max(x16$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h16 = hist(x16$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z16 <- h16$mids
-z16[z16!=0] <- 16
+#x16_pt <- (h16$mids-16000)
+#x16_pt <- (h16$mids-min(h16$mids))
+x16_pt <- ((h16$mids-min(h16$mids))/(max(h16$mids)-min(h16$mids)))
+y16_pt <- 16
+z16_pt <- h16$density
 ### 32 sec
 x32 = read.csv(file="32_sec.dat",head=TRUE,sep="\t")
 x32 <- subset(x32, x32$ITERNUM <= numSamples)
@@ -113,8 +79,11 @@ xmin <-min(x32$PRTIME)
 xmax <-max(x32$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h32 = hist(x32$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z32 <- h32$mids
-z32[z32!=0] <- 32
+#x32_pt <- (h32$mids-32000)
+#x32_pt <- (h32$mids-min(h32$mids))
+x32_pt <- ((h32$mids-min(h32$mids))/(max(h32$mids)-min(h32$mids)))
+y32_pt <- 32
+z32_pt <- h32$density
 ### 64 sec
 x64 = read.csv(file="64_sec.dat",head=TRUE,sep="\t")
 x64 <- subset(x64, x64$ITERNUM <= numSamples)
@@ -122,8 +91,11 @@ xmin <-min(x64$PRTIME)
 xmax <-max(x64$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h64 = hist(x64$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z64 <- h64$mids
-z64[z64!=0] <- 64
+#x64_pt <- (h64$mids-64000)
+#x64_pt <- (h64$mids-min(h64$mids))
+x64_pt <- ((h64$mids-min(h64$mids))/(max(h64$mids)-min(h64$mids)))
+y64_pt <- 64
+z64_pt <- h64$density
 ### 128 sec
 x128 = read.csv(file="128_sec.dat",head=TRUE,sep="\t")
 x128 <- subset(x128, x128$ITERNUM <= numSamples)
@@ -133,8 +105,11 @@ xmax <-max(x128$PRTIME)
 binsize=2
 nbins <- ceiling((xmax-xmin) / binsize)
 h128 = hist(x128$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z128 <- h128$mids
-z128[z128!=0] <- 128
+#x128_pt <- (h128$mids-128000)
+#x128_pt <- (h128$mids-min(h128$mids))
+x128_pt <- ((h128$mids-min(h128$mids))/(max(h128$mids)-min(h128$mids)))
+y128_pt <- 128
+z128_pt <- h128$density
 ### 256 sec
 x256 = read.csv(file="256_sec.dat",head=TRUE,sep="\t")
 x256 <- subset(x256, x256$ITERNUM <= numSamples)
@@ -143,8 +118,11 @@ xmin <-min(x256$PRTIME)
 xmax <-max(x256$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h256 = hist(x256$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z256 <- h256$mids
-z256[z256!=0] <- 256
+#x256_pt <- (h256$mids-256000)
+#x256_pt <- (h256$mids-min(h256$mids))
+x256_pt <- ((h256$mids-min(h256$mids))/(max(h256$mids)-min(h256$mids)))
+y256_pt <- 256
+z256_pt <- h256$density
 ### 512 sec
 x512 = read.csv(file="512_sec.dat",head=TRUE,sep="\t")
 x512 <- subset(x512, x512$ITERNUM <= numSamples)
@@ -154,8 +132,11 @@ xmax <-max(x512$PRTIME)
 binsize=5
 nbins <- ceiling((xmax-xmin) / binsize)
 h512 = hist(x512$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z512 <- h512$mids
-z512[z512!=0] <- 512
+#x512_pt <- (h512$mids-512000)
+#x512_pt <- (h512$mids-min(h512$mids))
+x512_pt <- ((h512$mids-min(h512$mids))/(max(h512$mids)-min(h512$mids)))
+y512_pt <- 512
+z512_pt <- h512$density
 ### 1024 sec
 x1024 = read.csv(file="1024_sec.dat",head=TRUE,sep="\t")
 x1024 <- subset(x1024, x1024$ITERNUM <= numSamples)
@@ -164,9 +145,11 @@ xmin <-min(x1024$PRTIME)
 xmax <-max(x1024$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h1024 = hist(x1024$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z1024 <- h1024$mids
-#z1024[z1024!=0] <- 10
-z1024[z1024!=0] <- 1024
+#x1024_pt <- (h1024$mids-1024000)
+#x1024_pt <- (h1024$mids-min(h1024$mids))
+x1024_pt <- ((h1024$mids-min(h1024$mids))/(max(h1024$mids)-min(h1024$mids)))
+y1024_pt <- 1024
+z1024_pt <- h1024$density
 ### 2048 sec
 x2048 = read.csv(file="2048_sec.dat",head=TRUE,sep="\t")
 x2048 <- subset(x2048, x2048$ITERNUM <= numSamples)
@@ -174,9 +157,11 @@ xmin <-min(x2048$PRTIME)
 xmax <-max(x2048$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h2048 = hist(x2048$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z2048 <- h2048$mids
-#z2048[z2048!=0] <- 11
-z2048[z2048!=0] <- 2048
+#x2048_pt <- (h2048$mids-2048000)
+#x2048_pt <- (h2048$mids-min(h2048$mids))
+x2048_pt <- ((h2048$mids-min(h2048$mids))/(max(h2048$mids)-min(h2048$mids)))
+y2048_pt <- 2048
+z2048_pt <- h2048$density
 ### 4096 sec
 x4096 = read.csv(file="4096_sec.dat",head=TRUE,sep="\t")
 x4096 <- subset(x4096, x4096$ITERNUM <= numSamples)
@@ -185,144 +170,64 @@ xmin <-min(x4096$PRTIME)
 xmax <-max(x4096$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h4096 = hist(x4096$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-z4096 <- h4096$mids
-#z4096[z4096!=0] <- 12
-z4096[z4096!=0] <- 4096
+#x4096_pt <- (h4096$mids-4096000)
+#x4096_pt <- (h4096$mids-min(h4096$mids))
+x4096_pt <- ((h4096$mids-min(h4096$mids))/(max(h4096$mids)-min(h4096$mids)))
+y4096_pt <- 4096
+z4096_pt <- h4096$density
 
-#####
-#install.packages("scatterplot3d")
-require(scatterplot3d)
-library(scatterplot3d)
-x <- c(z1,z2,z4,z8,z16,z32,z64,z128,z256,z512,z1024,z2048,z4096)
-y <- c(h1$mids,h2$mids,h4$mids,h8$mids,h16$mids,h32$mids,h64$mids,h128$mids,h256$mids,h512$mids,h1024$mids,h2048$mids,h4096$mids)
-z <- c(h1$counts,h2$counts,h4$counts,h8$counts,h16$counts,h32$counts,h64$counts,h128$counts,h256$counts,h512$counts,h1024$counts,h2048$counts,h4096$counts)
-postscript("3d_plot.eps")
-#marks <- c(0,1000000,2000000,4000000,8000000)
-#scatterplot3d(x,y,z,xlim=c(-1,4100),ylim=c(0,4300000),y.ticklabs=c("0","1K sec","2K sec","3K sec","4K sec","8K sec"),log="xy",color="blue",pch=19,type="h",xlab="INC Length (sec) in log", ylab = "INC Time in log",zlab="Frequency",main="Frequency of INC Time over Increasing Task Length")
-scatterplot3d(x,y,z,xlim=c(-1,4100),ylim=c(0,4300000),y.ticklabs=c("0","1K sec","2K sec","3K sec","4K sec","8K sec"),log="xy",color="blue",pch=19,type="h",xlab="INC Length (sec) in log", ylab = "INC Time in log",zlab="Frequency",main="Frequency of INC Time over Increasing Task Length")
-#axis(2,at=marks,labels=marks)
-#text(x = 14, y = 1e+06, "INC Time (msec)", srt = 45)
-#ylab="INC Time (msec)",
-#aty <- axTicks(2)
-#labels <- sapply(aty,function(i)
-#            as.expression(bquote(10^ .(i)))
-#          )
-#axis(2,at=aty,labels=labels)
-#y.ticklabs=c("0","1K sec","2K sec","4K sec","8K sec"),
-dev.off()
+######## now let's generate 3D-plot ####
+nx <- c(x1_pt,x2_pt,x4_pt,x8_pt,x16_pt,x32_pt,x64_pt,x128_pt,x256_pt,x512_pt,x1024_pt,x2048_pt,x4096_pt)
+#ny <- c(y1_pt,y2_pt,y4_pt,y8_pt,y16_pt,y32_pt,y64_pt,y128_pt,y256_pt,y512_pt,y1024_pt,y2048_pt,y4096_pt)
+ny <- c(0,1,2,3,4,5,6,7,8,9,10,11,12)
+nz <- c(z1_pt,z2_pt,z4_pt,z8_pt,z16_pt,z32_pt,z64_pt,z128_pt,z256_pt,z512_pt,z1024_pt,z2048_pt,z4096_pt)
 
-x <- c(h1$mids,h2$mids,h4$mids,h8$mids,h16$mids,h32$mids,h64$mids,h128$mids,h256$mids,h512$mids,h1024$mids,h2048$mids,h4096$mids)
-y <- c(1,2,4,8,16,32,64,128,256,512,1024,2048,4096)
-z <- c(h1$counts,h2$counts,h4$counts,h8$counts,h16$counts,h32$counts,h64$counts,h128$counts,h256$counts,h512$counts,h1024$counts,h2048$counts,h4096$counts)
-mz=matrix(z, nrow=length(x),ncol=length(y), byrow=F)
+mz=matrix(nz, nrow=length(nx),ncol=length(ny), byrow=F)
 ## 1 sec
-mz[(length(h1$mids)+1):(length(x)),1] <- 0
+mz[(length(x1_pt)+1):(length(nx)),1] <- NA
 ## 2 sec
-mz[1:length(h1$mids),2] <- 0
-mz[(length(h1$mids)+length(h2$mids)+1):(length(x)),2] <- 0
+mz[1:length(x1_pt),2] <- NA
+mz[(length(x1_pt)+length(x2_pt)+1):(length(nx)),2] <- NA
 ## 4 sec
-mz[1:(length(h1$mids)+length(h2$mids)),3] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+1):(length(x)),3] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)),3] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+1):(length(nx)),3] <- NA
 ## 8 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)),4] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+1):(length(x)),4] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)),4] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+1):(length(nx)),4] <- NA
 ## 16 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)),5] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+1):(length(x)),5] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)),5] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+1):(length(nx)),5] <- NA
 ## 32 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)),6] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+1):(length(x)),6] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)),6] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+1):(length(nx)),6] <- NA
 ## 64 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)),7] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+1):(length(x)),7] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)),7] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+1):(length(nx)),7] <- NA
 ## 128 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)),8] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+1):(length(x)),8] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)),8] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+1):(length(nx)),8] <- NA
 ## 256 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)),9] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+length(h256$mids)+1):(length(x)),9] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)),9] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+1):(length(nx)),9] <- NA
 ## 512 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+length(h256$mids)),10] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+length(h256$mids)+length(h512$mids)+1):(length(x)),10] <- 0
-##1024 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+length(h256$mids)+length(h512$mids)),11] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+length(h256$mids)+length(h512$mids)+length(h1024$mids)+1):(length(x)),11] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)),10] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+1):(length(nx)),10] <- NA
+## 1024 sec
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)),11] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+1):(length(nx)),11] <- NA
 ## 2048 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+length(h256$mids)+length(h512$mids)+length(h1024$mids)),12] <- 0
-mz[(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+length(h256$mids)+length(h512$mids)+length(h1024$mids)+length(h2048$mids)+1):(length(x)),12] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)),12] <- NA
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+1):(length(nx)),12] <- NA
 ## 4096 sec
-mz[1:(length(h1$mids)+length(h2$mids)+length(h4$mids)+length(h8$mids)+length(h16$mids)+length(h32$mids)+length(h64$mids)+length(h128$mids)+length(h256$mids)+length(h512$mids)+length(h1024$mids)+length(h2048$mids)),13] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)),13] <- NA
+#mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt)+1):(length(nx)),12] <- NA
 
-postscript("3d_plot2.eps")
-hist3D(x,y,mz,xlim=c(0,17000),zlim=c(0,1000), ylim=c(0,13), xlab="INC Time (msec)",ylab="INC Length (sec)",zlab="Frequency",theta=30, phi=20, border = "black", axes=TRUE,label=TRUE, nticks=10,ticktype="detailed", space=0.2) 
-#axis(side=1,at=x,labels=seq(min(x),max(x),1))
-dev.off()
-
-====================================================================
-
-install.packages("scatterplot3d")
-require(scatterplot3d)
-library(scatterplot3d)
-x <- c(h1$mids,h2$mids,h4$mids)
-y <- c(h1$counts,h2$counts,h4$counts)
-z <- c(z1,z2,z4)
 postscript("3d_plot.eps")
-scatterplot3d(z,x,y, xlim=c(0,5),xlab="INC Length (sec)",ylab="INC Time (msec)",zlab="Frequency",main="3D Scatterplot")
-dev.off()
-
-x <- c(h1$mids,h2$mids,h4$mids)
-y <- c(1,2,4)
-z <- c(h1$counts,h2$counts,h4$counts)
-mz=matrix(z, nrow=length(x),ncol=length(y), byrow=F)
-mz[(length(h1$mids)+1):(length(x)),1] <- 0
-mz[1:length(h1$mids),2] <- 0
-mz[(length(h1$mids)+length(h2$mids)+1):(length(x)),2] <- 0
-mz[1:(length(h1$mids)+length(h2$mids)),3] <- 0
-postscript("3d_plot2.eps")
-hist3D(x,y,mz,clim=c(0,4040),zlim=c(0,1000), ylim=c(0,5), xlab="INC Time (msec)",ylab="INC Length (sec)",zlab="Frequency",theta=30, phi=20, border = "black", axes=TRUE,label=TRUE, nticks=10,ticktype="detailed", space=0.2) 
+#hist3D(x,y,mz,xlim=c(0,17000),zlim=c(0,1000), ylim=c(0,13), xlab="INC Time (msec)",ylab="INC Length (sec)",zlab="Frequency",theta=30, phi=20, border = "black", axes=TRUE,label=TRUE, nticks=10,ticktype="detailed", space=0.2) 
+#axis(side=1,at=x,labels=seq(min(x),max(x),1))
+hist3D(nx,ny,mz,log='xy',zlim=c(0,1), xlab="Normalized INC Time Difference",ylab="Task Length in log scale",zlab="Relative Frequency",
+bty = "g",  border = "black",axes=TRUE,label=TRUE, ticktype="detailed", nticks=10,space=0.1) 
 #axis(side=1,at=x,labels=seq(min(x),max(x),1))
 dev.off()
 
-plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC1', 
-sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
-xlab='PT (ms)', ylab=expression('Frequency'))
-axis(side=1,at=x,labels=seq(xmin,xmax,1000))
-dev.off()
-
-
-
-hist3D(x,y,mz, xlim=c(980,1010), zlim=c(0,1000), theta=40, phi=40, axes=TRUE,label=TRUE, nticks=5, 
-        ticktype="detailed", space=0.5, lighting=TRUE, light="diffuse", shade=0.5,xlab="INC Time (msec)",ylab="INC Length",zlab="Frequency")
-
-
-#y <- c(y1,y2,y4)
-y <- c(1000,2000,4000)
-zero_vec <- c(0,0,0)
-z <- c(h1$counts,h2$counts,h4$counts)
-mz=matrix(z, nrow=10,ncol=3, byrow=F)
-
-
-
-hist3D(x,y,mz, xlim=c(980,4020), zlim=c(0,1000), ylim=c(1,4), theta=40, phi=40, axes=TRUE,label=TRUE, nticks=5, 
-        ticktype="detailed", space=0.5, lighting=TRUE, light="diffuse", shade=0.5)
-
-
-
-y <- as.matrix(y)
-y <- as.vector(y)
-z <- c(z1, z2, z4)
-z <- as.matrix(z)
-z <- t(z)
-mz = matrix(rep(z,length(z)),nrow=length(z),byrow=T)
-#mz=matrix(rep(z,lz), ncol=lz, byrow=T)
-#scatter3D(x, y, z, phi = 0, bty = "g",  type = "h", #ticktype = "detailed", pch = 19, cex = 0.5)
-#z <- as.matrix(z)
-#lz=length(z)
-#z=matrix(rep(z,lz), ncol=lz, byrow=F)
-hist3D(x,y,mz, xlim=c(980,4020), ylim=c(0,1000), zlim=c(1,4), theta=40, phi=40, axes=TRUE,label=TRUE, nticks=5, 
-        ticktype="detailed", space=0.5, lighting=TRUE, light="diffuse", shade=0.5)
-
-
-hist3D(x,y,z, xlim=c(980,4020), ylim=c(0,1000), zlim=c(1,4), theta=40, phi=40, axes=TRUE,label=TRUE, nticks=5, 
-        ticktype="detailed", space=0.5, lighting=TRUE, light="diffuse", shade=0.5)
 
