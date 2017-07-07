@@ -214,7 +214,7 @@ nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
-ymax <-50
+ymax <-60
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="blue",  main='ET frequency on INC512', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
@@ -236,7 +236,7 @@ nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
-ymax <-60
+ymax <-50
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="blue",  main='ET frequency on INC1024', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='ET (ms)', ylab=expression('Frequency'))
