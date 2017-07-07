@@ -11,11 +11,11 @@ set term post eps enhanced
 set key top right font "Times-Roman, 22"
 set xrange [0.8:5000]
 set yrange [0.0000001:0.01]
-set output 'new_overall_pt_re.eps'
+set output 'overall_re.eps'
 #set format y "%.1t{/Symbol \264}10^{%T}"
 set format y "10^{%T}"
 set ylabel "Coefficient of variation (CV) in log scale" font "Times-Roman, 20"
-plot "overall_pt_re.dat" using 1:($3) title "ET" with linespoint ls 4,\
-     "overall_pt_re.dat" using 1:($2) title "PT" with linespoint ls 7 
+plot "overall_re.dat" using 1:($3) title "ET" with linespoint ls 4,\
+     "overall_re.dat" using 1:($2) title "PT" with linespoint ls 7 
 set term X11; replot;
 unset key;

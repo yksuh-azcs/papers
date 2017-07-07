@@ -1,7 +1,7 @@
-\section{Further investigation of the Second Run~\label{sec:u_s_time_hist}} 
+\section{Further Investigation of the First Run and Some Additional Runs~\label{sec:u_s_time_hist}} 
 This section exhibits user and system time histograms on the second run of 
-INC with its task length increasing from 1 second to 4096 seconds. 
-The detailed description of the base data is from Table~\ref{tab:exp_notes2}, 
+INC with its task length increasing from 1 second to 4096 seconds via EMPv5 with no Step 2.
+The detailed description of the base data is from Table~\ref{tab:exp_notes1}, 
 and for some additional data, the corresponding description is given in Table~\ref{tab:exp_notes3}.
 
 \begin{table}[h]
@@ -12,13 +12,70 @@ Machine & Task Length (sec) & Description & Experiment Period & Relevant \linebr
 Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}\\ \hline
 					&  INC3, 6, 12, 24, 48, 72, 80, 88, 104, 112, and 120 & 1000 samples, each & 2017-06-07 $\sim$ 2017-06-16 & Figs.~\ref{fig:inc3_ut_hist}, ~\ref{fig:inc6_ut_hist}, ~\ref{fig:inc12_ut_hist}, ~\ref{fig:inc24_ut_hist},
 ~\ref{fig:inc48_ut_hist}, ~\ref{fig:inc72_ut_hist}, ~\ref{fig:inc80_ut_hist}, ~\ref{fig:inc88_ut_hist}, ~\ref{fig:inc104_ut_hist},~\ref{fig:inc112_ut_hist}, and~\ref{fig:inc120_ut_hist}\\ \hline
+%%%%% INC2048 and INC4096 come from the second run
 \end{tabular}
 \end{center}
 \vspace{-.2in}
 \caption{Notes on experiment runs used for histograms\label{tab:exp_notes4}}
 \end{table}
 
+\subsection{Summary of Histograms}
+
+\begin{figure}[htp!]
+\vspace{-.3in}
+	\centering
+	\includegraphics[scale=0.5,angle=270]{u_s_time/3d_plot.eps}\label{fig:3d_plot}
+	\caption{3D histograms on INC~\label{fig:hist3d}}
+\end{figure}
+
+\clearpage
+\pagebreak
+
+\subsection{Absolute and Relative Variance over Increasing Task Length}
+
+\begin{figure}[htp!]
+	\centering
+	\subfigure[Standard deviation (absolute)]{
+		\includegraphics[scale=0.6]{u_s_time/overall_std.eps}
+		\label{fig:overall_std}
+	}
+	\subfigure[Coefficient of variation (relative)]{
+		\includegraphics[scale=0.6]{u_s_time/overall_re.eps}
+		\label{fig:overall_re}
+	}
+	\caption{Absolute and relative variances~\label{fig:cv_inc}}
+\end{figure}
+
+\pagebreak
 \newpage
+
+\subsection{Additional Histograms}
+
+\subsection{ET}
+
+%\begin{figure}[hp!]
+%	\centering
+%	\subfigure[User time frequency on INC3]{
+%		\includegraphics[scale=0.43]{u_s_time/3_sec_et_hist.eps}
+%		\label{fig:inc3_ut_hist}
+%	}
+%	\caption{User Time Histograms of INC1 ... INC4~\label{fig:ut_hist1}}
+%\end{figure}
+
+\subsection{PT}
+
+%\begin{figure}[hp!]
+%	\centering
+%	\subfigure[User time frequency on INC3]{
+%		\includegraphics[scale=0.43]{u_s_time/3_sec_et_hist.eps}
+%		\label{fig:inc3_ut_hist}
+%	}
+%	\caption{User Time Histograms of INC1 ... INC4~\label{fig:ut_hist1}}
+%\end{figure}
+
+\pagebreak
+\newpage
+
 \subsection{User Time}
 
 \begin{figure}[hp!]

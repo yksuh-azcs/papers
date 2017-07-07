@@ -11,10 +11,10 @@ set term post eps enhanced
 #set key top right font "Times-Roman, 22"
 set key bottom right font "Times-Roman, 22"
 set xrange [0.8:5000]
-set output 'new_overall_pt_std.eps'
+set output 'overall_std.eps'
 set ylabel "Standard deviation (msec)" font "Times-Roman, 20"
-plot     "overall_pt_std.dat" using 1:($3) title "ET" with linespoint ls 4,\
-         "overall_pt_std.dat" using 1:($2) title "PT" with linespoint ls 7 
+plot     "overall_std.dat" using 1:($3) title "ET" with linespoint ls 4,\
+         "overall_std.dat" using 1:($2) title "PT" with linespoint ls 7 
 set term X11; 
 replot;
 unset key;
