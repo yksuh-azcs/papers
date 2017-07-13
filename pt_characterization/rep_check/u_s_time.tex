@@ -2,7 +2,7 @@
 This section exhibits user and system time histograms on the second run of 
 INC with its task length increasing from 1 second to 4096 seconds via EMPv5 with no Step 2.
 The detailed description of the base data is from Table~\ref{tab:exp_notes1}, 
-and for some additional data, the corresponding description is given in Table~\ref{tab:exp_notes3}.
+and for some additional data, the corresponding description is given in Table~\ref{tab:exp_notes4}.
 
 \begin{table}[h]
 \begin{center}
@@ -24,7 +24,7 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 \begin{figure}[htp!]
 \vspace{-.3in}
 	\centering
-	\includegraphics[scale=0.5,angle=270]{u_s_time/3d_plot.eps}\label{fig:3d_plot}
+	\includegraphics[scale=0.6,angle=270]{u_s_time/3d_plot.eps}\label{fig:3d_plot}
 	\caption{3D histograms on INC~\label{fig:hist3d}}
 \end{figure}
 
@@ -51,27 +51,102 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 
 \subsection{Additional Histograms}
 
-\subsection{ET}
+\subsubsection{ET}
+Not available at this point, due to the labshelf server's unavailability for the time being.
 
-%\begin{figure}[hp!]
-%	\centering
-%	\subfigure[User time frequency on INC3]{
-%		\includegraphics[scale=0.43]{u_s_time/3_sec_et_hist.eps}
-%		\label{fig:inc3_ut_hist}
-%	}
-%	\caption{User Time Histograms of INC1 ... INC4~\label{fig:ut_hist1}}
-%\end{figure}
+\subsubsection{PT}
+The histograms of INC1 through INC4096 are 
+the same as those of Figures~\ref{fig:s9_r1_pt_hist1},~\ref{fig:s9_r1_pt_hist2},~\ref{fig:s9_r1_pt_hist3}, and~\ref{fig:s9_r1_pt_hist4}. 
+The following are the histograms of INC with some intermediate task lengths.
 
-\subsection{PT}
+\begin{figure}[hp!]
+	\centering
+	\subfigure[PT frequency on INC3]{
+		\includegraphics[scale=0.43]{u_s_time/3_sec_pt_hist.eps}
+		\label{fig:inc3_pt_hist}
+	}
+	\subfigure[PT frequency on INC6]{
+		\includegraphics[scale=0.43]{u_s_time/6_sec_pt_hist.eps}
+		\label{fig:inc6_pt_hist}
+	}
+	\subfigure[PT frequency on INC12]{
+		\includegraphics[scale=0.43]{u_s_time/12_sec_pt_hist.eps}
+		\label{fig:inc12_pt_hist}
+	}
+	\subfigure[PT frequency on INC24]{
+		\includegraphics[scale=0.43]{u_s_time/24_sec_pt_hist.eps}
+		\label{fig:inc24_pt_hist}
+	}
+	\caption{PT Histograms of INC3 ... INC24~\label{fig:new_pt_hist1}}
+\end{figure}
 
-%\begin{figure}[hp!]
-%	\centering
-%	\subfigure[User time frequency on INC3]{
-%		\includegraphics[scale=0.43]{u_s_time/3_sec_et_hist.eps}
-%		\label{fig:inc3_ut_hist}
-%	}
-%	\caption{User Time Histograms of INC1 ... INC4~\label{fig:ut_hist1}}
-%\end{figure}
+\pagebreak
+\newpage
+
+\begin{figure}[hp!]
+	\centering
+	\subfigure[PT frequency on INC48]{
+		\includegraphics[scale=0.43]{u_s_time/48_sec_pt_hist.eps}
+		\label{fig:inc48_pt_hist}
+	}
+	\subfigure[PT frequency on INC72]{
+		\includegraphics[scale=0.43]{u_s_time/72_sec_pt_hist.eps}
+		\label{fig:inc72_pt_hist}
+	}
+	\subfigure[PT frequency on INC80]{
+		\includegraphics[scale=0.43]{u_s_time/80_sec_pt_hist.eps}
+		\label{fig:inc80_pt_hist}
+	}
+	\subfigure[PT frequency on INC88]{
+		\includegraphics[scale=0.43]{u_s_time/88_sec_pt_hist.eps}
+		\label{fig:inc88_pt_hist}
+	}
+	\caption{PT Histograms of INC48 ... INC88~\label{fig:new_pt_hist2}}
+\end{figure}
+
+\pagebreak
+\newpage
+
+\begin{figure}[hp!]
+	\centering
+	\subfigure[PT frequency on INC96]{
+		\includegraphics[scale=0.43]{u_s_time/96_sec_pt_hist.eps}
+		\label{fig:inc96_pt_hist}
+	}
+	\subfigure[PT frequency on INC104]{
+		\includegraphics[scale=0.43]{u_s_time/104_sec_pt_hist.eps}
+		\label{fig:inc104_pt_hist}
+	}
+	\subfigure[PT frequency on INC112]{
+		\includegraphics[scale=0.43]{u_s_time/112_sec_pt_hist.eps}
+		\label{fig:inc112_pt_hist}
+	}
+	\subfigure[PT frequency on INC120]{
+		\includegraphics[scale=0.43]{u_s_time/120_sec_pt_hist.eps}
+		\label{fig:inc120_pt_hist}
+	}
+	\caption{PT Histograms of INC96 ... INC120~\label{fig:new_pt_hist3}}
+\end{figure}
+
+\pagebreak
+\newpage
+
+\begin{figure}[hp!]
+	\centering
+	\subfigure[PT frequency on INC160]{
+		\includegraphics[scale=0.43]{u_s_time/160_sec_pt_hist.eps}
+		\label{fig:inc160_pt_hist}
+	}
+	\subfigure[PT frequency on INC192]{
+		\includegraphics[scale=0.43]{u_s_time/192_sec_pt_hist.eps}
+		\label{fig:inc192_pt_hist}
+	}
+	\subfigure[PT frequency on INC224]{
+		\includegraphics[scale=0.43]{u_s_time/224_sec_pt_hist.eps}
+		\label{fig:inc224_pt_hist}
+	}
+	\caption{PT Histograms of INC169 ... INC224~\label{fig:new_pt_hist4}}
+\end{figure}
 
 \pagebreak
 \newpage

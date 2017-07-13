@@ -308,6 +308,7 @@ xlab='PT (ms)', ylab=expression('Frequency'))
 axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
+numSamples <- 1000
 x = read.csv(file="6_sec.dat",head=TRUE,sep="\t")
 x <- subset(x, x$ITERNUM <= numSamples)
 setEPS()
@@ -319,7 +320,7 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- 250
+ymax <- ceiling(ymax/100)*100
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC6', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
@@ -337,7 +338,25 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- 250
+ymax <- ceiling(ymax/100)*100
+plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC12', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+x = read.csv(file="12_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("12_sec_pt_hist.eps")
+binsize=1
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC12', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
@@ -356,7 +375,7 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- 300
+ymax <- ceiling(ymax/100)*100
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC24', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
@@ -393,7 +412,7 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- 200
+ymax <- ceiling(ymax/100)*100
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC72', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
@@ -412,7 +431,7 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- 200
+ymax <- ceiling(ymax/100)*100
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC80', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
@@ -431,7 +450,7 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- 150
+ymax <- 200
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC88', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
@@ -450,7 +469,7 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- ceiling(ymax/100)*100
+ymax <- 250
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC96', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
@@ -469,7 +488,7 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- 120
+ymax <- 150
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC104', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
@@ -488,28 +507,8 @@ xmax <-max(x$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
 ymax <- max(h$counts)
-ymax <- 200
+ymax <- 250
 plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC112', 
-sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
-xlab='PT (ms)', ylab=expression('Frequency'))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
-dev.off()
-
-numSamples <- 1000
-x = read.csv(file="120_sec.dat",head=TRUE,sep="\t")
-x <- subset(x, x$ITERNUM <= numSamples)
-setEPS()
-postscript("120_sec_pt_hist1.eps")
-binsize=1
-#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
-x <- subset(x, x$ITERNUM != 80 & x$ITERNUM != 797)
-xmin <-min(x$PRTIME)
-xmax <-max(x$PRTIME)
-nbins <- ceiling((xmax-xmin) / binsize)
-h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
-ymax <- max(h$counts)
-ymax <- 150
-plot(h, xaxt='n', axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green",  main='PT frequency on INC120', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
 axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
