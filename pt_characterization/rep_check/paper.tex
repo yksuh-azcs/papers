@@ -30,16 +30,21 @@ Young-Kyoon Suh\\
 \maketitle
 
 \section{Description}
-This document presents two sets of histograms based on the two runs 
-of a program under test, called {\em INC}, with a set of increasing task lengths 
-from 1 second to 4096 seconds.
-We would like to see if both of the sets have the same shape for the same task length.
-If so then, we can say that run repeatability is satisfied in our experiment setting. 
-%In this study the used protocol is equivalent to SEDONA~\cite{Sedona}, 
-%eliminating samples involving infrequent, long-running daemons, which is the first step of EMPv5.
-In this study the used protocol eliminates samples involving infrequent, long-running daemons, 
-which is the first step of EMPv5.
+This document characterizes execution times 
+measured on a simple program in pure-computation mode, called {\em INC}, 
+with increasing task lengths (up to 16,384 seconds from 1 second). 
+For the characterization, we present various histograms of INC throughout this document.
+The main goal of examining these histograms is to make sure if 
+two (or more) histograms of INC with the same task length 
+have the same shape or not. If that's the case, then we can say that such an INC run is so called {\em repeatable}; 
+in other words, {\em repeatability} is satisfied in our experimental settings. 
+Another goal is to uncover and explicate several interesting structures behind the histograms. 
+The third goal is to build a statistical distribution (or model) fitting in the histograms, so that later we 
+are capable of predicting a concrete execution time via 
+the model on an arbitrary algorithm with a given input on a real execution environment.
 
+In our experiments, we used EMPv5~\cite{EMP}. 
+(That said, the second step of EMPv5 was on purpose omitted, just to obtain better histograms by retaining more samples.) 
 In the protocol, we use taskstats C struct to get measures of a captured process. 
 The taskstat's data is delivered via a netlink socket from the kernel space. 
 The receive buffer for the socket is not robust for many observed processes~\cite{Metrology}. 
@@ -90,6 +95,10 @@ Now we show histograms of elapsed time (ET) and process time (PT) of INC via the
 %{Sedona}
 %Young-Kyoon Suh, ``SEDONA: A Novel Protocol for Identifying Infrequent, Long-running Daemons on a Linux System'', in {\em IEICE Transactions on Information Systems}, Vol. 100D, No. 9, pp.~??--??, 2017.
 %\vspace{0.1em}
+\bibitem
+%{Avnur:2000:ECA:342009.335420}
+{EMP}
+Young-Kyoon Suh, Richard T. Snodgrass, John Kececioglu, Peter J. Downey, Rob S. Maier, and Cheng Yi, ``EMP: Execution Time Measurement Protocol for Compute-Bound Programs'', in {\em Software: Practice and Experience}, 47(4):559--597, 2017.
 \bibitem
 %{Avnur:2000:ECA:342009.335420}
 {Metrology}
