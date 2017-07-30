@@ -74,9 +74,10 @@ z16_raw_pt <- h16$counts
 inc16 <- rep(16,length(h16$mids))
 ss_inc16 <- rep(numSamples,length(h16$mids)) 
 ### 32 sec
+binsize=1
 x32 = read.csv(file="32_sec.dat",head=TRUE,sep="\t")
-x32 <- subset(x32, x32$ITERNUM <= numSamples)
-x32 <- subset(x32, x32$ITERNUM != 433)
+#x32 <- subset(x32, x32$ITERNUM <= numSamples)
+#x32 <- subset(x32, x32$ITERNUM != 433)
 xmin <-min(x32$PRTIME)
 xmax <-max(x32$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
@@ -152,6 +153,8 @@ z512_raw_pt <- h512$counts
 inc512 <- rep(512,length(h512$mids))
 ss_inc512 <- rep(numSamples,length(h512$mids)) 
 ### 1024 sec
+binsize=5
+numSamples = 300
 x1024 = read.csv(file="1024_sec.dat",head=TRUE,sep="\t")
 x1024 <- subset(x1024, x1024$ITERNUM <= numSamples)
 x1024 <- subset(x1024, x1024$ITERNUM != 17 & x1024$ITERNUM != 101 & x1024$ITERNUM != 184 & x1024$ITERNUM != 268)
@@ -167,8 +170,9 @@ z1024_raw_pt <- h1024$counts
 inc1024 <- rep(1024,length(h1024$mids))
 ss_inc1024 <- rep(numSamples,length(h1024$mids)) 
 ### 2048 sec
+binsize=5
 x2048 = read.csv(file="2048_sec.dat",head=TRUE,sep="\t")
-x2048 <- subset(x2048, x2048$ITERNUM <= numSamples)
+x2048  <- subset(x2048, x2048$ITERNUM != 166)
 xmin <-min(x2048$PRTIME)
 xmax <-max(x2048$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
@@ -181,9 +185,11 @@ z2048_raw_pt <- h2048$counts
 inc2048 <- rep(2048,length(h2048$mids))
 ss_inc2048 <- rep(numSamples,length(h2048$mids)) 
 ### 4096 sec
+numSamples <- 300
 x4096 = read.csv(file="4096_sec.dat",head=TRUE,sep="\t")
 x4096 <- subset(x4096, x4096$ITERNUM <= numSamples)
-x4096 <- subset(x4096, x4096$ITERNUM != 5 & x4096$ITERNUM != 26 & x4096$ITERNUM != 47 & x4096$ITERNUM != 68 & x4096$ITERNUM != 89 & x4096$ITERNUM != 110 & x4096$ITERNUM != 131 & x4096$ITERNUM != 152 & x4096$ITERNUM != 173 & x4096$ITERNUM != 195 & x4096$ITERNUM != 215 & x4096$ITERNUM != 236 & x4096$ITERNUM != 258 & x4096$ITERNUM != 278 & x4096$ITERNUM != 299) 
+binsize=5
+x4096 <- subset(x4096, x4096$ITERNUM != 11 & x4096$ITERNUM != 32 & x4096$ITERNUM != 53 & x4096$ITERNUM != 74 & x4096$ITERNUM != 95 & x4096$ITERNUM != 116 & x4096$ITERNUM != 137 & x4096$ITERNUM != 158 & x4096$ITERNUM != 179 & x4096$ITERNUM != 200 & x4096$ITERNUM != 221 & x4096$ITERNUM != 242 & x4096$ITERNUM != 264)
 xmin <-min(x4096$PRTIME)
 xmax <-max(x4096$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
@@ -210,7 +216,9 @@ x8192 <- subset(x8192, x8192$ITERNUM <= numSamples)
 #sd(x8192$METIME)
 #sd(x8192$METIME)/mean(x8192$METIME)
 xmin <-min(x8192$PRTIME)
+xmin <- xmin-2
 xmax <-max(x8192$PRTIME)
+xmax <- xmax+1
 nbins <- ceiling((xmax-xmin) / binsize)
 h8192 = hist(x8192$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 x8192_pt <- (h8192$mids-8192000)/8192
@@ -236,6 +244,11 @@ sd(x16384$METIME)
 sd(x16384$METIME)/mean(x16384$METIME)
 xmin <-min(x16384$PRTIME)
 xmax <-max(x16384$PRTIME)
+binsize=10
+xmin <-min(x16384$PRTIME)
+xmin <- xmin-7
+xmax <-max(x16384$PRTIME)
+xmax <- xmax+5
 nbins <- ceiling((xmax-xmin) / binsize)
 h16384 = hist(x16384$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 x16384_pt <- (h16384$mids-16384000)/16384

@@ -118,7 +118,7 @@ axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 x = read.csv(file="32_sec.dat",head=TRUE,sep="\t")
-x <- subset(x, x$ITERNUM <= numSamples)
+#x <- subset(x, x$ITERNUM <= numSamples)
 setEPS()
 postscript("32_sec_pt_hist_v5.eps")
 #x <- subset(x, x$ITERNUM != 433)
