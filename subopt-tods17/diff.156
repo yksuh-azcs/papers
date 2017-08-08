@@ -1,0 +1,544 @@
+21a22,25
+> 
+> %For last edit: revise and resubmit for SIGMOD'14
+> \long\def\shortenF#1#2{}%First is letter indicating what has been removed
+> 
+204,205c208,209
+< \item The predictive model and these experimental results suggest several
+<   engineering implications.
+---
+> \item The predictive model and these experimental results suggest several specific
+>   engineering directions.
+217c221
+< One might ask, shouldn't the task of optimizing queries be left to DBAs?  In
+---
+> \shortenF{A}{One might ask, shouldn't the task of optimizing queries be left to DBAs?  In
+224,227c228,230
+< example, the data warehouse deployed at the University of Arizona runs about
+< 30,000 queries on a daily basis. Even if we optimistically estimate that 1\% of the queries are
+< unacceptably slow, that means DBAs have to tune 300 queries each day. Our
+< query optimization experts often take hours to tune and test a single query.
+---
+> example, \doublebline{the data warehouse deployed at the University of
+>   Arizona}{a large data warehouse we are familiar with} runs about
+> 30,000 queries on a daily basis. 
+229,231c232,235
+< negatively impact the performance of other queries. Therefore, we argue that it is important to
+< pro-actively identify characteristics of queries that we expect to be
+< slower, to indicate how existing query optimizers can be further improved.
+---
+> negatively impact the performance of other queries. Query optimization experts often take hours to tune and test existing canned
+> queries; the amount expended on this one system for manual query optimization
+> approaches \$100K/year. Therefore, we argue that it is important to
+> understand how existing query optimizers can be further improved.}
+434,435c438,440
+< Query evaluation 
+< proceeds in several steps~\cite{Ramakrishnan03}. First, the SQL query is 
+---
+> There has been extensive work in query optimization over the last 40
+> years~\cite{Ioannidis96,Jarke84}. Query optimization and evaluation
+> proceeds in several general steps~\cite{Ramakrishnan03}. First, the SQL query is 
+445,446c450
+< There has been extensive work in query optimization over the last 35
+< years. An influential survey~\cite{Chaudhuri98} does a superb job of
+---
+> An influential survey~\cite{Chaudhuri98} does a superb job of
+504c508
+< Section~\ref{sec:engineering}, where we discuss the engineering implications
+---
+> Sections~\ref{sec:root} and \ref{sec:engineering}, where we discuss the engineering implications
+555c559
+< constructs that we hypothesize will play a role in suboptimality: optimizer
+---
+> constructs that we\linebreak \hbox{hypothesize} will play a role in suboptimality: optimizer
+558c562,565
+< construct as a whole.
+---
+> construct as a whole. Our model distills many of the widely-held assumptions
+> about query optimization. Our contribution is the specific \hbox{structure} of
+> the model and the specific operationalization of the\linebreak
+> \hbox{factors} included in the model.
+614c621,623
+< discontinuity.''
+---
+> discontinuity.'' (Such operators have also been termed
+> ``nonlinear''~\cite{Hulgen03}, though it is the more specific aspect of
+> discontinuity that we focus on.)
+638c647,648
+< \pagebreak\vspace{0.6em}\noindent
+---
+> %\pagebreak
+> \vspace{0.6em}\noindent
+870c880
+< \pagebreak
+---
+> %\pagebreak
+967c977
+< each DBMS. We varied the cardinality of the variable table by starting with
+---
+> each DBMS. \shortenF{B}{We varied the cardinality of the variable table by starting with
+1039a1050
+> }
+1073c1084,1088
+< optimizer picked the less efficient plan, and thus, this query exhibits \hbox{suboptimality}.
+---
+> optimizer picked the less efficient plan, and thus, this query exhibits
+> \hbox{suboptimality}. Note that since this approach cannot identify plans
+> that were never chosen, it very likely misses some suboptimal plans (for
+> which there was a better plan never chosen), and thus produces a
+> conservative estimate of suboptimality.
+1345c1360
+< Utilizing JDBC to manipulate independent variables from outside the
+---
+> \shortenF{C}{Utilizing JDBC to manipulate independent variables from outside the
+1355c1370
+< 
+---
+> }
+1417c1432
+< Again, we ran the DBMSes at the 57,978 change points that were observed, roughly 12 per query. 
+---
+> Again, we ran the \hbox{DBMSes} at the 57,978 change points that were observed, roughly 12 per query. 
+1422c1437
+< In the Confirmatory Experiment, we observed 3,032 strict
+---
+> \shortenF{D}{In the Confirmatory Experiment, we observed 3,032 strict
+1430c1445
+< operationalization of suboptimality is a valid one.
+---
+> operationalization of suboptimality is a valid one.}
+1466c1481
+< while we predicted positive correlation.  Hypothesis 2 was not significant.
+---
+> while we predicted positive correlation.  \hbox{Hypothesis}~2 was not significant.
+1506c1521
+< not necessarily involved in any of the attributes in grouping.
+---
+> not necessarily included in the grouping attributes.
+1542c1557
+< \caption{Testing Hypothesis 8: Interaction Strength\label{tab:hyptest8OLD}}
+---
+> \caption{Testing Hypothesis 8: Correlations\label{tab:hyptest8OLD}}
+1625c1640
+< number of operators in a DBMS remains largely unexplored. Via regression
+---
+> number of operators in a DBMS remains \shorten{largely }unexplored. Via regression
+1636c1651
+< \section{Engineering Implications}\label{sec:engineering}
+---
+> \subsection{Identifying Root Causes of Suboptimality}\label{sec:root}
+1652c1667
+< suboptimality, indicating that choosing among many plans is hard.
+---
+> suboptimality\shorten{, indicating that choosing among many plans is hard}.
+1656c1671
+< implicating the cost model.
+---
+> \hbox{implicating} the cost model.
+1669,1675c1684,1693
+< Concerning the first, it seems that the cost model for \hbox{discontinuous}
+< operators is particularly challenging to a query optimizer. If the cost
+< model is even a little bit off, the optimizer might be on the wrong side of
+< the ``jump,'' thereby selecting the wrong plan.  Perhaps more
+< research should be done to improve the cost model for such operators, such
+< as careful calibration that tunes the cost model with more accurate resource
+< knowledge.
+---
+> \section{Engineering Implications}\label{sec:engineering}
+> We studied a particular
+> phenomenon, that of the \hbox{optimizer} selecting a wrong plan\shorten{, indicated by the existence of a query plan that performs more efficiently
+> than the DBMS's chosen plan, for the same query}. From the engineering
+> \hbox{perspective}, it is of critical importance to understand the prevalence
+> of suboptimality and its causal factors.\shorten{ The genesis of our model was a sense that suboptimality
+> is caused in part by the inherent complexity of these system and the
+> concomitant unanticipated interactions between various rules in the
+> optimizer.
+> }
+1677,1686c1695,1697
+< Concerning the search process, \shorten{one preliminary finding was that a heuristic
+< search process was implicated in 10--20\% of optimizer variance. I}in cases
+< where the \hbox{DBMS} is not as sure about the cardinalities of the underlying
+< relations or the speed of the disk (e.g.,~if such relations migrated
+< frequently~\cite{reiss03}), 
+< perhaps the optimizer should\shorten{not try as hard to produce out the ``perfect'' plan. 
+< It might help if optimizers instead}
+< explicitly take uncertainty into account. Indeed, others have started to
+< argue that uncertainties in the query planning process should be
+< acknowledged and exploited~\cite{Babcock05}.
+---
+> Through a series of experiments managed by \azdb, we uncovered
+> several surprising results that provide systematic clues as to where current optimizers come up
+> short and how they can be further improved.
+1688,1694c1699,1703
+< \shorten{\todo{Rick: comment out the following two paragraphs if necessary}The number of operators a \hbox{DBMS} supports is implicated in both root causes,
+< as well as explicitly in the causal model. Consider the following {\em
+<   gedankenexperiment}. We add an \linebreak\hbox{operator} to a DBMS. Doing so will certainly
+< reduce the running time of some queries, those that benefit from the new
+< operator, and will not affect the running time of those query plans that do
+< not include the new operator. That sounds like a sure-fire path to improving
+< the performance the DBMS.
+---
+> \begin{itemize}
+> \item For many queries, a majority of the ones we
+> considered, the optimizer picked the wrong plan for at least one
+> cardinality, even when the cardinality estimates were completely accurate
+> and even for our rather simple queries.
+1696,1707c1705,1711
+< However, due to the factors discussed above, sometimes the query
+< optimizer will choose a non-optimal plan. In fact, our analysis shows that as the number
+< of operators goes up, a suboptimal plan is chosen more frequently, so
+< the percentage of suboptimal plans will increase. Also, each new operator will
+< impact a smaller set of queries, but the set of suboptimal queries will grow.
+< At some point, the beneficial impact of each new operator will be
+< offset by the increased prevalence of suboptimality, and the \hbox{DBMS} will get
+< {\em slower, on average}. Of course, that inflection point is different for
+< each DBMS, but the fact that suboptimality is widespread across all the
+< DBMSes for the simple queries in this paper raises the possibility that we
+< are already there.
+< }
+---
+> \item A quarter of the queries exhibited significant suboptimality ($>= 20\%$ of
+>         the runtime) at some cardinality.
+> \end{itemize}
+> \noindent
+> These two results indicate that there is still research needed on
+> this topic. Fortunately, the causal model helps point out
+> specifically where that research should be focused.
+1709,1721c1713,1758
+< We mentioned dynamic query optimization \shorten{in Section~\ref{sec:related}}earlier.
+< Dynamic query-reoptimization normally
+< requires a significant amount of information to be recorded during query
+< execution, which can incur non-negligible overhead on the overall query
+< performance.
+< While the present paper does not provide any direct solution 
+< to addressing such an overhead in query reoptimization, we envision that by
+< utilizing the proposed predictive model for suboptimality, it may be
+< possible to enhance reoptimization techniques such that given a particular
+< query, a particular data distribution, and a specific plan operator, just
+< the important statistics that affect the operator's performance can be
+< identified and should be recorded, thereby reducing the overhead of
+< bookkeeping\linebreak irrelevant \hbox{information}.
+---
+> \begin{itemize}
+> 
+> \item Some queries exhibited significant {\em cardinality thrashing}, with a plan change at
+>          almost every cardinality. While this phenomenon was first visualized
+>          by Haritsa er al.~\cite{harish07,Haritsa10} on some complex
+>          queries, we have shown that it is present even in a surprising
+>          percentage of simple queries.
+> 
+> \item Furthermore, some queries exhibited many changes \linebreak
+> {\em to a suboptimal plan} as the
+>   cardinality was varied.
+> \end{itemize}
+> \noindent
+> These particular queries can be a starting point for identifying the root
+> cause(s) of query thrashing. The phenomenon can be investigated initially on a
+> per-DBMS basis. Our methodology could then be
+> used to test proposed causal mechanisms of query thrashing across DBMSes, to
+> ascertain the generality of any proposed solutions.
+> 
+> \begin{itemize}
+> \item The causal model and our experimental results suggest that more
+> research is needed to improve the cost model of {\em discontinuous
+> operators}.
+> 
+> \item We also show that it may well be useful to explicitly take {\em \hbox{cardinality} estimate
+>   uncertainty} into account.
+> 
+> \item This research indicates that aggregates are {\em not} a\linebreak problem, so
+>   that aspect of query optimization is in good shape.
+> 
+> \shorten{REVISE to characterize
+>   more precisely the relative
+> advantage or disadvantage of heuristic search\shorten{, and \hbox{(c)~research} is needed to
+> identify the inflection point where adding an operator decreases overall
+> DBMS performance}raise several unsettling concerns. These particularly simple
+> queries used only a few plans within any DBMS. Other more complex queries
+> will certainly use more plans. These results imply that as a \hbox{DBMS} becomes
+> more sophisticated, by adding operators, it also become more unstable, as
+> the prevalence of suboptimality grows. Perhaps there is a fixed level of
+> complexity beyond which a cost-based optimizer will be inexorably unstable.}
+> \end{itemize}
+> \noindent
+> Hence, these results suggest fairly specifically where additional
+> engineering is and is not needed.
+> We elaborate on some areas of investigation into such solutions
+> below\shorten{, as future work}.
+1723c1760
+< We should emphasize that this section of this paper, considering engineering
+---
+> \shortenF{H}{We should emphasize that this section of this paper, considering engineering
+1727c1764
+< scientific results.
+---
+> scientific results.}
+1729c1766
+< \section{Summary and Future Work}\label{sec:future}
+---
+> \section{Summary}\label{sec:summary}
+1739,1748c1776,1795
+< \item Introduces a new methodological
+< perspective \shorten{,} that treats \hbox{DBMSes} as experimental subjects.\shorten{of {\em empirical generalization}.}
+< \item Uses that perspective to study {\em query suboptimality}, a problem
+<   not previously investigated in depth.
+< \item Proposes a {\em predictive model} that attempts a causal explanation of
+<   suboptimality. 
+< \item Utilizes a novel {\em research infrastructure}, \azdb, to express, run, and
+<   analyze experiments.
+< \item Tests eight hypotheses deductively derived from the causal model; in
+<   most cases, the null hypothesis was rejected.
+---
+> \item Shows that even for simple queries, the prevalence of {\em query
+>   suboptimality}, a problem that has not been systematically investigated across DBMSes, is
+>   high, and thus there is still research needed on this mature topic.
+> 
+> \item Introduces a new {\em methodological
+> perspective} that treats \hbox{DBMSes} as experimental subjects.
+> \shorten{of {\em empirical generalization}.}
+> 
+> \item Proposes {\em operationalizations} of several relevant measuresa that apply
+>   even to proprietary DBMSes, as well as an overarching {\em predictive
+>     model} that attempts a causal explanation of suboptimality, encoding
+>    some of what is known about query optimization.
+> 
+> \shortenF{G}{\item Utilizes a novel {\em research infrastructure}, \azdb, to express, run, and
+>   analyze experiments.}
+> 
+> \item Tests {\em eight hypotheses} deductively derived from the causal model. A
+> correlational analysis and a regression analysis and
+> provided {\em strong support} for our model, across DBMSes, thus
+> qualitatively confirming what was informally known.
+1750c1797
+< \item Provides a {\em space of hypotheses} that in concert through further
+---
+> \shortenF{G}{\item Provides a {\em space of hypotheses} that in concert through further
+1752c1799
+<   better model.
+---
+>   better model.}
+1754,1772c1801
+< \item Thereby provides a path toward scientific progress in the
+<   understanding of a key enabling technology.
+< \end{itemize}
+< 
+< We studied a particular
+< phenomenon, that of the \hbox{optimizer} selecting a wrong plan\shorten{, indicated by the existence of a query plan that performs more efficiently
+< than the DBMS's chosen plan, for the same query}. From the engineering
+< \hbox{perspective}, it is of critical importance to understand the prevalence
+< of suboptimality and its causal factors.\shorten{ The genesis of our model was a sense that suboptimality
+< is caused in part by the inherent complexity of these system and the
+< concomitant unanticipated interactions between various rules in the
+< optimizer.
+< }
+< Through a series of experiments managed by \azdb, we uncovered the
+< surprising result that for many queries, a majority of the ones we
+< considered, the optimizer picked the wrong plan for at least one
+< cardinality, even when the cardinality estimates were completely accurate
+< and even for our simplistic queries. These experiments also uncovered
+< compelling evidence for a structural causal model that predicts that (a)~that
+---
+> \item Uncovers compelling {\em evidence} that (a)~that
+1776,1780c1805,1808
+< complexity, and (d)~that schema complexity, as operationalized by the
+< presence of primary keys, moderates these three interactions.  A
+< correlational analysis and a regression analysis tested the model through
+< eight hypotheses; these analyses provided strong support for our
+< model.\shorten{ A separate analysis suggested that heuristic plan selection
+---
+> \linebreak\hbox{complexity,} and (d)~that schema complexity, as operationalized by the
+> presence of primary keys, moderates these three interactions.
+> 
+> \shorten{\item A separate analysis suggested that heuristic plan selection
+1783c1811,1813
+< It is important to emphasize that our model doesn't\linebreak apply to just one implementation of the
+---
+> \item Provides a {\em path toward scientific progress} in the
+>   understanding of a key enabling technology. 
+>   It is important to emphasize that our model doesn't apply to just one implementation of the
+1787,1800c1817,1838
+< This model and these experimental results also \c2j{suggest two
+<   engineering challenges: (i)~more research is needed to improve the cost
+<   model of discontinuous operators\linebreak \hbox{and (ii)~research} is
+<   needed on how to explicitly take \hbox{cardinality} estimate uncertainty into account.
+< \shorten{ to characterize
+<   more precisely the relative
+< advantage or disadvantage of heuristic search}\shorten{, and \hbox{(c)~research} is needed to
+< identify the inflection point where adding an operator decreases overall
+< DBMS performance}}{raise several unsettling concerns. These particularly simple
+< queries used only a few plans within any DBMS. Other more complex queries
+< will certainly use more plans. These results imply that as a \hbox{DBMS} becomes
+< more sophisticated, by adding operators, it also become more unstable, as
+< the prevalence of suboptimality grows. Perhaps there is a fixed level of
+< complexity beyond which a cost-based optimizer will be inexorably unstable.}
+---
+> \item Thereby identifies {\em specific directions for implementation interventions}.
+> 
+> \end{itemize}
+> This paper thus suggests a framework of \shorten{casual }model elaboration and
+> directed engineering efforts that could reduce the prevalence of query suboptimality to an acceptably
+> low level.
+> 
+> \section{Future Work}\label{sec:future}
+> There are several directions we wish to take this work. With the model refinements
+> we propose here, additional directed pointers to engineering efforts should
+> emege.
+> 
+> For the kinds of queries we looked at, the factors that we
+> identified in our model: optimizer complexity, query complexity, and plan
+> space complexity, in concert predicted a significant portion of the variance
+> of suboptimality.  It is doubtful that any other factor, as yet unknown,
+> will itself predict as much variance as the factors we studied in this
+> paper. That said, it is certain that there remain several unknown causal factors;
+> identifying those factors will\linebreak undoubtedly also have important engineering
+> implications.\shorten{restate: Again, the purpose of our work is to present
+>   a methodological perspective that can be further improved to study more
+>   complex interactions present in the input to query optimizers.}
+1802d1839
+< There are several directions we wish to take this work.\linebreak
+1817c1854,1857
+< These investigations are based on very simple SPJ (select-project-join)
+---
+> We want to look into query thrashing in greater detail, as that phenomenon
+> provides a concrete indicator of problematic optimizer behavior.
+> 
+> These investigations were based on very simple SPJ (select-project-join)
+1819,1820c1859,1860
+< foreign keys and indexes, {\em query complexity}: complex predicates,
+< subqueries, and aggregates, as well as user-defined data types, methods, and
+---
+> foreign keys and indexes, {\em query complexity}: complex predicates, subqueries,
+> and user-defined data types, methods, and
+1823c1863,1878
+<   turning on and off the rules and observing suboptimality.}  Kabra and
+---
+>   turning on and off the rules and observing suboptimality.} Our causal
+> model is extensible, in that we can add other factors, as long as their proper
+> operationalization can be established, and additional causal links.
+> 
+> So for
+> sub-queries, we can add nesting level, type of sub-query (scalar,
+> correlated, etc.), and number of ``effective joins''  (as some queries can
+> be reweritten into joins with the outer level).
+> It would also be interesting to study how a suboptimal subquery can affect
+> the suboptimality of the containing query.  For instance, is it true that if
+> many subqueries are themselves suboptimal, does that causally impact whether
+> the overall query is suboptimal? Finally, we may be able to determine
+> whether certain query rewrite techniques are employed within each DBMS,
+> introducing\linebreak another ``DBMS complexity'' factor into our model.
+> 
+> Kabra and
+1829c1884
+< interactions, that are not known about simply because they haven't been
+---
+> interactions, that are unknown simply because they haven't been
+1842,1851c1897,1965
+< That said, for the kinds of queries we looked at, the factors that we
+< identified in our model: optimizer complexity, query complexity, and plan
+< space complexity, in concert\linebreak predicted a significant portion of the variance
+< of\linebreak suboptimality.  It is doubtful that any other factor, as yet unknown,
+< will itself predict as much variance as the factors we studied in this
+< paper. And it is certain that there remain several unknown causal factors;
+< identifying those factors will undoubtedly also have important engineering
+< implications.\shorten{restate: Again, the purpose of our work is to present
+<   a methodological perspective that can be further improved to study more
+<   complex interactions present in the input to query optimizers.}
+---
+> By employing an extensible causal model, many complex factors can be studied
+> via a systematic, statistically sound, scientific manner to better
+> understand the causal factors and their interactions.
+> 
+> In addition to the refinements of the causal model just discussed, our
+> research has provided specific directions for implementation interventions,
+> which we now elaborate upon.
+> 
+> Our research indicates that costing of \hbox{discontinuous}
+> operators is a root cause of query suboptimality, and is thus particularly challenging to a query optimizer. If the cost
+> model is even a little bit off, the optimizer might be on the wrong side of
+> the ``jump,'' thereby selecting the wrong plan.  More
+> research should be done to improve the cost model for such operators, such
+> as careful calibration that tunes the cost model with more accurate resource
+> knowledge.
+> 
+> Another identified root cause of query suboptimality was the plan search
+> process.\shorten{one preliminary finding was that a heuristic
+> search process was implicated in 10--20\% of optimizer variance.} In cases
+> where the \hbox{DBMS} is not as sure about the cardinalities of the underlying
+> relations or the speed of the disk (e.g.,~if such relations migrated
+> frequently~\cite{reiss03}), 
+> perhaps the optimizer should\shorten{not try as hard to produce out the ``perfect'' plan. 
+> It might help if optimizers instead}
+> explicitly take uncertainty into account. Indeed, others have started to
+> \hbox{argue} that uncertainties in the query planning process should be
+> acknowledged and exploited~\cite{Babcock05}.
+> 
+> \shorten{The number of operators a \hbox{DBMS} supports is implicated in both root causes,
+> as well as explicitly in the causal model. Consider the following {\em
+>   gedankenexperiment}. We add an \linebreak\hbox{operator} to a DBMS. Doing so will certainly
+> reduce the running time of some queries, those that benefit from the new
+> operator, and will not affect the running time of those query plans that do
+> not include the new operator. That sounds like a sure-fire path to improving
+> the performance the DBMS.
+> 
+> However, due to the factors discussed above, sometimes the query
+> optimizer will choose a non-optimal plan. In fact, our analysis shows that as the number
+> of operators goes up, a suboptimal plan is chosen more frequently, so
+> the percentage of suboptimal plans will increase. Also, each new operator will
+> impact a smaller set of queries, but the set of suboptimal queries will grow.
+> At some point, the beneficial impact of each new operator will be
+> offset by the increased prevalence of suboptimality, and the \hbox{DBMS} will get
+> {\em slower, on average}. Of course, that inflection point is different for
+> each DBMS, but the fact that suboptimality is widespread across all the
+> DBMSes for the simple queries in this paper raises the possibility that we
+> are already there.
+> }
+> 
+> We mentioned dynamic query optimization \shorten{in Section~\ref{sec:related}}earlier.
+> Dynamic query-reoptimization normally
+> requires a significant amount of information to be recorded during query
+> execution, which can incur non-negligible overhead on the overall query
+> performance~\cite{Avnur,kabra98}.
+> We envision that by
+> utilizing the proposed predictive model for suboptimality, it may be
+> possible to enhance reoptimization techniques such that given a particular
+> query, a particular data distribution, and a specific plan operator, just
+> the important statistics that affect the operator's performance can be
+> identified and should be recorded, thereby reducing the overhead of
+> bookkeeping\linebreak irrelevant \hbox{information}.
+> 
+> The methodology introduced in this paper and the causal model that results
+> has suggested both the scope of the problem of query suboptimality and a
+> number of specific engineering efforts that can now be carried out. Our
+> ultimate goal is a refined causal model that can fully explain how query
+> suboptimality arises in cost-based optimizers, thereby enabling engineering
+> solutions that reduce and eventually
+> effectively eliminate query suboptimality.
+1864c1978
+< \vfill\pagebreak
+---
+> %\vfill\pagebreak
+1879c1993
+< Processing'', in {\em Proceedings of the ACM SIGMOD conference},
+---
+> Processing'', in {\em Proceedings of the ACM SIGMOD Conference},
+1937c2051,2060
+< Information Systems Research,'' {\em MIS Quarterly}, 28(1), pp.~75--105, 2004.
+---
+> Information Systems Research,'' {\em MIS Quarterly} 28(1):75--105, 2004.
+> 
+> \bibitem{Hulgen03}
+> A.~Hulgen and S. Sudarshan, ``AniPQO: almost non-intrusive query optimization
+> for nonlinear cost functions,'' in {\em Proceedings VLDB Conference},
+> pp.~766-777, 2003,
+> 
+> \bibitem{Ioannidis96}
+> Y.~Ioannidis, ``Query Optimization,'' {\em ACM Computing Surveys}
+> 23(1):121--123, June 1996.
+1946c2069
+< ISO, ``ISO SQL:2008 International Standard,'' July 17, 2008.
+---
+> ISO, ``ISO SQL:2008 International Standard,'' 2008.
+1947a2071,2073
+> \bibitem{Jarke84}
+> M.~Jarke and J.~Koch, ``Query Optimization in Database Systems,'' {\em ACM
+>   Conputing Surveys} 16(2):111--152, June 1984.

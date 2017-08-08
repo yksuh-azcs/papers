@@ -1,0 +1,50 @@
+\section{Methodology}
+
+\input{model.tex}
+
+\input{detecting.tex}
+
+\input{measuring.tex}
+
+\input{repeatability.tex}
+
+%\input{monotonicity.tex}
+
+\subsection{Summary of Sub-Optimality}
+\shorten{
+In this paper we utilize a new methodology to ask new
+questions about a mature topic, query optimization, in \hbox{order} to develop and
+test a novel model and theory about when suboptimality arises, to
+arrive at a new understanding of query optimization. This may later enable
+new engineering approaches as well as a better understanding of the limits
+of existing approaches.
+
+\begin{figure}[bth]\centering
+\includegraphics[width=0.50\textwidth]{figures/understanding.eps}
+\caption{Empirical generalization ([3, page~5])\label{fig:empirical}}
+\end{figure}
+
+This paper utilizes {\em empirical
+  generalization}, in which understanding proceeds along two conceptual
+dimensions, as shown in Figure~\ref{fig:empirical}. As Cohen~\c2j{\cite{cohenbook}}{[1995]} has
+articulated, science (in general, and this paper specifically) progresses
+(in the figure, on the 
+$y$-axis) from studies of a particular system (e.g, a particular database
+query optimization algorithm in the context of a particular database
+management system), through studies of a class of systems (e.g.,~a study
+{\em across} several disparate DBMSs), to statements about computational
+tools in general (e.g.,~a theory that holds for rule-based optimizers,
+whether in DBMSs, AI systems, or compilers). This progression increases the
+domain of applicability, and thus the generality, of a theory. Science also
+progresses (in the figure, on the 
+$x$-axis) from description of the phenomenon, to prediction, and eventually
+through causal explanation, within an articulated, thoroughly-tested theory.
+We seek the rather ambitious outcome of the articulation of a general theory
+of suboptimality that applies to the entire class of DBMSes and which
+provides causal explanation of suboptimality: when it will arise and why.
+
+Note that this line of study is very different from conventional
+approaches summarized above from the literature. We are trying to understand
+cost-based query optimizers as a {\em general} class of computational artifacts,
+to come up with insights and ultimately with predictive theories about how such
+optimizers, again, as a general class, behave~\cite{davies}.}

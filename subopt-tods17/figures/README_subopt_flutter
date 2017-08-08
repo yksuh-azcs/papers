@@ -1,0 +1,44 @@
+from:	 Young-Kyoon Suh <yksuh@cs.arizona.edu>
+to:	 Richard Snodgrass <rts@cs.arizona.edu>
+date:	 Sun, Jul 14, 2013 at 11:31 PM
+subject:	 the new figure 1 in the subopt paper
+
+Rick,
+
+I managed to find a good example in redrawing figure 1 in the subopt
+paper. The data concerns a query executed on PostgreSQL.
+
+In op-1M-100q-6, we have
+
+Query Number 13: SELECT t0.id1, t0.id2, t2.id4, t1.id1 FROM ft_HT3 t2,
+ft_HT2 t1, ft_HT1 t0 WHERE (t2.id4=t1.id1 AND t1.id1=t0.id1).
+
+Its Q@C data are shown below.
+
+      CARD     PLANID    MED_CQT
+---------- ---------- ----------
+   2000000 -7.805E+18     4976.5
+   1840000 -7.805E+18     4589.5
+   1830000 9.0971E+18     4902.1
+   1650000 9.0971E+18     4548.9
+   1640000 -7.805E+18     4482.1
+   1450000 -7.805E+18     4050.9
+   1440000 9.0971E+18     4582.5
+    930000 9.0971E+18     3590.2
+    920000 -9.166E+18     3534.7
+    830000 -9.166E+18     3636.5
+    820000 -7.805E+18     3480.1
+    730000 -7.805E+18     3220.1
+    720000 -9.166E+18     3437.6
+     50000 -9.166E+18             1436.7
+     40000 4.3031E+18     1318.7
+
+The attached renders the change points and their respective Q@C times,
+as discussed at our last meeting. Please let me know if the query and
+data are fine with you.
+Then, I'll update the description and the figure.
+
+Sincerely,
+
+Young
+

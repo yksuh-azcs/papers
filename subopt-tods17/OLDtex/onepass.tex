@@ -1,0 +1,66 @@
+
+\subsection{{\tt OnePass} Scenario}\label{sec:onepass}
+
+In {\tt OnePass} Scenario, a query is studied for suboptimality by keeping track 
+of the {\em states} on the variable-table. 
+In other words, we locate different query plans at adjacent cardinalities 
+defined by the {\em even} or {\em odd} states, 
+and query executions are made at both of the states simultaneously, 
+while decreasing the variable-table cardinality in one pass. 
+
+Indeed, the adjacent cardinalities are not really called even and odd, 
+but they are next to each other. 
+They, thus, are simply separated by whether a given cardinality over 
+granularity is even or odd. 
+For instance, the even state will have 2M, 1.98M, 1.96M, $\cdots$, 1M cardinalities 
+in order, while the odd state will take 1.99M, 1.97M, $\cdots$, 1.01M cardinalities 
+(decremented by granularity (10K) from the even state's cardinality). 
+
+Each state initializes its table(s) same as the variable-table(s). 
+In addition, it has the {\em pre-compiled} query plan at its own cardinality 
+so that the given query can be executed by the {\em prepared} plan at the cardinality 
+without any compiling overhead.
+
+While stepping down from the max to the min cardinality, 
+if different query plans are observed at the even and odd states, 
+then the prepared query execution at both states is made at the same time 
+unless the query has been executed at the cardinality before. 
+In this regard, for repeatability we time the same query up to 10 times. 
+The timing results at each state are inserted into the labshelf for 
+suboptimality analysis. 
+For more details about timing single query execution, 
+please refer to Section~\ref{sec:timing}.
+
+\begin{figure}[t]
+\begin{center}
+\begin{algorithmic}
+{\bf Algorithm} analyzeQuery($q$, $varTables$):
+\STATE $evenState$.$initialize$($varTables$) \\
+\STATE $oddState$.$initialize$($varTables$) \\
+\FOR{$card$ = 2M to 1M by 10K}
+	\IF{$\dfrac{card}{10K}$ is $even$}
+		\STATE $evenState$.$card$ $\leftarrow$ $card$ \\
+    	\STATE $evenState$.$plan$ $\leftarrow$ $evenState$.$getPreparedQueryPlan$($q$) \\
+    \ELSE
+ 	    \STATE $oddState$.$card$ $\leftarrow$ $card$ \\
+	    \STATE $oddState$.$plan$ $\leftarrow$ $oddState$.$getPreparedQueryPlan$($q$) \\
+    \ENDIF
+    \IF{($evenState$.$plan$ $\neq$ $oddState$.$plan$)}
+		\IF{$\neg${$evenState$}.$isExecuted$()}
+			\FOR{$i$ $\leftarrow$ 1 {\bf to} 10}
+				\STATE $timeSingleQueryExecution$($i$, $q$,  \\
+						\hspace{14.0mm}$evenState$.$plan$, $evenState$.$card$) \\
+			\ENDFOR
+		\ENDIF
+		\IF{$\neg${$oddState$}.$isExecuted$()}
+			\FOR{$i$ $\leftarrow$ 1 {\bf to} 10}
+				\STATE $timeSingleQueryExecution$($i$, $q$,  \\
+						\hspace{14.0mm}$oddState$.$plan$, $oddState$.$card$) \\	
+			\ENDFOR
+		\ENDIF
+	\ENDIF
+\ENDFOR 
+\end{algorithmic}
+\caption{Algorithm for Analyzing a Query by {\tt OnePass} Scenario\label{alg:onepass}}
+\end{center}
+\end{figure}

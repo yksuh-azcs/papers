@@ -1,0 +1,118 @@
+\section{Motivation}
+\todo{Rick has modify token}
+Consider a simple select-project-join (SPJ) query, with a few attributes in
+the SELECT clause, a few tables referenced in the FROM clause,
+and a few equality predicates in the WHERE clause. This might be an
+excerpt from a more complex query, with the tables being intermediate
+results from other computations. We'll use as an example Query 769 from the
+study to be described in Section~\ref{sec:detecting}. This query was one of 1000
+queries that were randomly generated.
+
+\vspace*{-2ex}
+{\small\begin{verbatim}
+        SELECT t2.id3 
+        FROM ft_HT1 t3, ft_HT3 t2, ft_HT1 t0, ft_HT1 t1 
+        WHERE (t3.id2=t2.id1 AND t2.id1=t0.id4 AND t0.id4=t1.id4)
+\end{verbatim}
+}
+
+\vspace*{-2ex}
+\noindent
+This query utilizes four correlation names in the FROM clause, three of
+which were associated with the same table, {\tt ft\_HT1}, whose cardinality
+statistics were varied. Hence this query is on two tables. Due to predicates
+in the WHERE clause, the joins between {\tt t0}, {\tt t1}, and {\tt t3} are
+in fact self-joins, and with {\tt t2}, an equi-join. The optimizer generates
+different plans for this query as the estimated cardinality of the {\tt
+  ft\_HT1} table varies.
+\shorten{
+Assume initially that the cardinalities (actual cardinalities for the simple
+query as an isolated query, estimated cardinalities when the query is an
+excerpt) are entirely accurate. In this case, the cardinalities of the two
+tables named in the FROM clause were 1,000,000 tuples. With this information,
+the cost-based query optimizer presumably generates the best plan for this
+query. We'll call this the {\em actual plan}, or simply Plan~0.
+
+However, perhaps the cardinality estimates are inaccurate. Perhaps they do
+not reflect the number of tuples in a base or intermediate table. With
+this inaccurate information, the cost-based query optimizer generates
+perhaps the same plan (that would be nice!) or, more likely, a somewhat less
+efficient plan when evaluated on the {\em actual} base or intermediate
+table. In this particular experiment, all the cardinalities are accurate
+except for one of the tables in the from clause, \verb.ft_HT1.. Let's vary the
+inaccuracy from exact to increasingly inaccurate by overriding the
+cardinality statistics for \verb.ft_HT1. without changing the physical table. We
+then examine the sequence of increasingly poorer plans that result.
+
+One would expect that this sequence of plans is stable. Specifically, for
+minor inaccuracy, one would expect that the same plan, Plan~0, to be
+produced. And indeed, as the cardinality estimate becomes less and less accurate,
+ranging from 570,000 tuples to 1,230,000 tuples, the optimizer continues with
+Plan~0. At some point, the
+inaccuracy passes a threshold and the optimizer chooses a different plan,
+Plan~1 at 1,240,000 tuples and Plan~2 at 560,000 tuples.
+Later we hit another threshold (here, at 480,000 tuples), and enter into
+a new regime, where Plan~3 is chosen.
+ 
+For some queries, we see an interesting phenomenon. For these queries
+(generally different queries for each DBMS), as we increase the inaccuracy,
+the optimizer returns to an {\em earlier} plan! Sometimes, in fact, the
+optimizer starts oscillating between two plans, sometimes even switching
+back and forth when the cardinality estimate changes by a small percentage.
+We had no idea that such strange behavior would occur until we came across
+it while testing our experiment manager. We call this phenomenon, in which
+the query optimizer returns to a previous plan as the inaccuracy increases,
+``query optimizer flutter,'' or simply ``flutter.''}  In fact, for this
+query, the query optimizer returns to a previous plan as the inaccuracy
+increases, which we call ``query optimizer flutter,'' or simply ``flutter.''
+
+\begin{figure*}[tb]
+\centering
+%originally 30pc
+\epsfig{figure=figures/plan769.eps,width=36pc}
+\caption{Suboptimality and Fluttering in Query 769\label{fig:query769}}
+\end{figure*}
+
+\shorten{This behavior occurs in Query~769, as shown in}In Figure~\ref{fig:query769},
+\shorten{which we term a {\em flutter diagram}. Here,} the \hbox{$x$-axis} depicts the
+estimated cardinality and the $y$-axis the execution time of the plan on the
+actual cardinality, which is 1,000,000 tuples, denoted by $x=10$. So for example Plan~3 is
+selected when the optimizer {\em thought} that the cardinality of table {\tt
+  ft\_HT1} was 400K rows; when that plan was run on a table with 1M rows, it
+was twice as fast as Plan~0, the plan the optimizer selected when the
+optimizer had an accurate cardinality estimate of 1M rows.
+
+\shorten{In this flutter diagram, w}We see that as the cardinality is {\em
+  over-}estimated, the optimizer switches to Plan~1 (which in fact is better than Plan~0) 
+and stays reliably with that plan. As the cardinality 
+is {\em under-}estimated, the optimizer switches to a better one, 
+Plan~2 (as this plan is in fact faster than Plan~0, when run on a table with
+1,000,000 tuples), and then to an even better one, Plan~3, and eventually,
+reaches a sub-optimal plan, Plan~4. 
+It is as if the optimizer can't make up its mind. This
+behavior is somewhat unnerving.
+
+As we will see shortly, flutter and suboptimality are all around us: {\em
+  every} \hbox{DBMS} that we have examined, including several open source
+\hbox{DBMSes} and several proprietary \shorten{commercial} \hbox{DBMSes},
+covering much of the installed base worldwide, exhibit these phenomena, even
+when optimizing very simple queries. Hence, such phenomena are not dependent
+on a particular implementation of cost-based optimization. Rather, they seem
+to be common to {\em any} cost-based optimizer, independent of the specific
+cardinality estimation or plan costing or plan enumeration algorithm or
+implementation.
+
+This is where the shift to a new methodology comes in. We want to understand
+cost-based optimization deeply, in this case to determine if a fundamental
+limitation exists, which means that we need to study multiple instances of
+that optimization architecture. To do so, we will articulate a model for how
+and in what circumstances suboptimality arises and will provide compelling
+evidence via hypothesis testing that this model can predict the behavior of
+these several \hbox{DBMSes}. This is what we mean by ``empirical
+generalization'' and why it is needed to answer such questions.\shorten{ In
+  the long history of research in database query optimization, or even of
+  databases in general, our model and its hypothesis tests are the first
+  predictive results that we are aware of that apply {\em across}
+  \hbox{DBMSes}, rather than on a single, specific \hbox{DBMS} or on a
+  specific algorithm. This is due to the adoption of a new research
+  methodology, that of empirical generalization.}

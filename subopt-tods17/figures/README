@@ -1,0 +1,25 @@
+To convert the model diagram from powerpoint drawing into eps, the drawing
+needs first to be saved as PNG format. Then run the following.
+  convert model.png model.eps
+
+** Discontinuity Figure Generation Procedure ***
+
+1. Goto /cs/projects/tau/installations/azdblab/20120905_v5_31 .
+
+2. Run runObserver .
+
+3. Select labshelf v5_19 .
+
+4. Under "Users, select "Sabah->Defined Queries."
+
+5. Select tab "Instantiated Queries."
+
+6. Click on "q135_2(500K_vldb2013_discontinuity)" from the list.
+
+7. Click "Run."
+
+8. In the "Figure" tab, set "CARDINALITY" for "x-axis value" and "VALUE" for "y-axis value," respectively. Choose "PLANOPERATORID" for "color value." Then click "Go."
+
+9. ps2pdf figure_name.ps 
+
+10. figure_name.pdf will be generated. (You may want to get rid of its white-margin by pdf editor.)

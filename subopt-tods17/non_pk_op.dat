@@ -1,0 +1,26 @@
+DBMS	OPNAME	TOTALUSED
+db2	TBSCAN	4941
+db2	HSJOIN	2982
+db2	RETURN	1224
+db2	GRPBY	1114
+db2	SORT	666
+db2	FILTER	69
+db2	MSJOIN	69
+mysql	ALL:Full Table Scan with Join	609
+mysql	ALL:Full Table Scan	274
+oracle	HASH JOIN	1548
+oracle	SELECT STATEMENT	622
+oracle	HASH	249
+oracle	SORT	164
+oracle	VIEW:VW_GBC_13	33
+oracle	MERGE JOIN	18
+oracle	VIEW:VW_GBF_13	12
+oracle	VIEW:VW_GBC_9	6
+oracle	VIEW:VW_GBF_9	6
+oracle	VIEW:VW_GBF_5	2
+pgsql	Seq Scan	8917
+pgsql	Hash	6251
+pgsql	Hash Join	6251
+pgsql	Sort	773
+pgsql	Merge Join	68
+pgsql	HashAggregate	30

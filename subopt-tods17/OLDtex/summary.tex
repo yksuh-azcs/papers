@@ -1,0 +1,131 @@
+\section{Summary and Future Work}\label{sec:future}
+{\todo{Rick has the modify token}
+\todo{Talk about where more work is needed, based on the results}
+This paper studies an important
+component of a DBMS, the query optimizer. This component is an amazingly
+sophisticated piece of code, but is still not well understood after decades
+of research and development.
+
+This paper makes the following contributions in
+an attempt to gain a new understanding of this component.
+\begin{itemize}
+\item Introduces a new methodological
+perspective, that of {\em empirical generalization}.
+\item Uses that perspective to study {\em query suboptimality}, a problem
+  not previously investigated.
+\item Proposes a {\em predictive model} that attempts a causal explanation of
+  suboptimality. 
+\item Utilizes a novel {\em research infrastructure}, \azdb, to express, run, and
+  analyze experiments.
+\item Tests several hypotheses deductively derived from the causal model; in
+  each case, the null hypothesis was rejected.
+\item Provides a {\em space of hypotheses} that in concert through further
+  investigation can refine and support (or not) this model or suggest a
+  better model.
+\item Thereby provides a path toward scientific progress in the
+  understanding of a key enabling technology.
+\end{itemize}
+
+We studied a particular
+phenomenon, that of the optimizer selecting a wrong plan, indicated by the existence of a query plan that performs more efficiently
+than the DBMS' chosen plan, for the same query. From the engineering
+perspective, it is of critical importance to understand the prevalence
+of suboptimality and its origin(s). Our theory is that suboptimality
+is caused in part by the inherent complexity of these system and the
+concomitant unanticipated interactions between various rules in the
+optimizer.
+
+Through a series of experiments managed by a novel Laboratory
+Information Management System termed \azdb, we uncovered compelling evidence 
+(a) that suboptimality occurs, (b)~that  suboptimality
+correlates with an aspect of query complexity, that of the number of
+correlation names used in the query, (c)~that suboptimality correlates
+with the cardinality of the effective plan space 
+(CEPS)---another (query-specific) measure of optimizer complexity, and (d)~that
+query complexity negatively correlates with query complexity and with optimizer
+complexity. All of these findings were predicted by our theory.
+
+\comment{
+We presented a taxonomy of flutter types and found that the three DBMSes
+we studied differed greatly in the types of flutter they produced. We found
+that, as expected, flutter was correlated to the number of correlation names 
+in the FROM clause. We also found a correlation between the number of 
+self-joins and flutter prevalence, and a negative correlation between 
+self-joins on the variable table and flutter prevalence. On both, our theory is silent.
+
+Hence, every interaction predicted by our theory was borne out by this experiment, 
+thus providing support for our theory.
+
+We also uncovered the surprising result that for many queries, a majority of
+the ones we considered, the optimizer picked the wrong query, even when the
+cardinality estimates were completely accurate and even for our simplistic
+queries. (Note, however, that these results are for only one DBMS.)
+
+One potential engineering ramification of this new understanding is that, 
+in cases where the DBMS isn't as sure about the cardinalities of the underlying 
+relations or the speed of the disk (if such relations migrated frequently~\cite{reiss03}), the optimizer
+shouldn't try as hard to wring out the ``perfect plan,'' Perhaps optimizers
+should instead explicitly take uncertainty into account. Indeed, others have
+started to argue that uncertainties in the query planning process should be
+acknowledged and exploited~\cite{Babcock05}. But those are engineering
+considerations; our focus in this work is on the science and on
+understanding at a fundamental level these complex systems. Good engineering
+should build on solid scientific results.
+}
+Note that our theory doesn't apply to just one algorithm or to one DBMS.
+Rather, it is quite broad, applying to any DBMS with a cost-based
+optimizer. We plan to augment \azdb\ to enable other DBMSes to be studied; 
+our theory makes specific predictions on what we may observe with these other systems.
+
+\comment{These results also raise several unsettling concerns. These particularly simple
+queries used only a few plans within any DBMS. Other more complex queries
+will certainly use more plans. These results imply that as a DBMS becomes
+more sophisticated, by adding operators, it also become more unstable, as
+the prevalence of flutter grows. Perhaps there is a fixed level of
+complexity beyond which a cost-based optimizer will be inexorably unstable.}
+
+There are several directions we wish to take this work. 
+\c2j{}{Our study raise interesting questions about self-joins, with correlations 
+in opposite directions observed. Might this be DBMS-specific? Or is there 
+an overarching theory to explain this phenomenon?
+}
+These investigations are based on very simple SPJ (select-project-join)
+queries.  We wish to look at {\em schema complexity}:
+the influence of foreign keys and indexes, {\em query complexity}: complex
+predicates, subqueries, and aggregates, and {\em instance complexity}:
+skewed data.
+We also want to manipulate DBMSes internally (at least for
+those that are open-source), turning on and off the rules and observing
+suboptimality.
+%\todo{Rick: DeWitt: anecdotal, broken: first scientific evidence}
+Might there be other unanticipated interactions,
+that are not known about
+simply because they haven't been looked for?
+
+A second concern is the prevalence of sub-optimal plans uncovered in this
+work. 
+We plan to examine sub-optimality within the other
+DBMSes. We need to look at the three complexities listed above also within
+this investigation scenario. Does sub-optimality increase with complexity?
+Is there a complexity whereby sub-optimality is the rule?
+
+Our predictive model postulates two causal factors to suboptimality:
+optimizer complexity and the cost model, the latter specifically, non-linearity of
+the cost formul\ae\ and any cost model inaccuracies. In this paper we
+considered portions of both factors, but showed only that optimizer
+complexity definitely plays a role. It is important to also evaluate the
+contribution of non-linearity and cost model inaccuracies. For some DBMSes,
+the result of {\tt EXPLAIN PLAN} includes estimated cost of the plan, or even of
+each stage of the plan. For these systems, that cost (estimate) is a
+dependent variable, one that can be observed. If multiple plans include the
+same operator, it may be possible to assemble, from outside the DBMS, an
+approximation of the cost formula for that operator, and thus directly
+observe whether it is non-linear and/or inaccurate, and then to understand
+the impact of that dependent variable on suboptimality. In doing so, one
+could test additional hypotheses derived from the causal model introduced in
+this paper, ascertain the relative contributions of these two central
+factors of the model to suboptimality, and perhaps also identify other
+general factors that contribute to suboptimality across DBMSes. The result
+would be a truly general, predictive, causal model of this vital component
+of a DBMS.
+
