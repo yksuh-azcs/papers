@@ -309,7 +309,7 @@ dev.off()
 
 x = read.csv(file="8192_sec.dat",head=TRUE,sep="\t")
 setEPS()
-postscript("8192_sec_pt_hist.eps")
+postscript("8192_sec_pt_hist2.eps")
 x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
 x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
 #x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
@@ -318,6 +318,8 @@ xmin <-min(x$PRTIME)
 xmin <- xmin-2
 xmax <-max(x$PRTIME)
 xmax <- xmax+1
+task_len <-8192
+sd(x$PRTIME)/task_len 
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -331,9 +333,12 @@ dev.off()
 
 x = read.csv(file="16384_sec.dat",head=TRUE,sep="\t")
 setEPS()
+task_len <-16384
 postscript("16384_sec_pt_hist.eps")
 x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
 x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+task_len <-16384
+sd(x$PRTIME)/task_len 
 #x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
 binsize=10
 xmin <-min(x$PRTIME)

@@ -12,6 +12,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 1000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -34,6 +36,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 2000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -63,6 +67,8 @@ ymax <- ceiling(ymax/100)*100
 #ymax <- 200
 xmin <-min(x$PRTIME)
 xmax <-max(x$PRTIME)
+task_len <- 4000
+sd(x$PRTIME)/task_len
 binsize=1
 plot(h, ylim=c(0,ymax), xaxt="n",freq=TRUE,col="green", main='PT frequency on INC4', 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
@@ -83,6 +89,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 8000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -108,6 +116,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 16000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -132,6 +142,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 32000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -156,6 +168,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 64000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -182,6 +196,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 128000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -205,6 +221,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 256000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -230,6 +248,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 512000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -253,6 +273,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 1024000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -276,6 +298,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 2048000
+sd(x$PRTIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -300,6 +324,8 @@ xmin <-min(x$PRTIME)
 xmin
 xmax <-max(x$PRTIME)
 xmax
+task_len <- 4096000
+sd(x$PRTIME)/task_len
 h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100

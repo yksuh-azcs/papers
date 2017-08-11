@@ -325,6 +325,8 @@ xmin <-min(x$METIME)
 xmin <- xmin-2
 xmax <-max(x$METIME)
 xmax <- xmax+2
+task_len <-8192
+sd(x$METIME)/task_len
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
@@ -349,6 +351,8 @@ xmin <-min(x$METIME)
 xmin <- xmin-6
 xmax <-max(x$METIME)
 xmax <- xmax+2
+task_len <-16384
+sd(x$METIME)/task_len 
 nbins <- ceiling((xmax-xmin) / binsize)
 h = hist(x$METIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 ymax <- max(h$counts)
