@@ -164,7 +164,7 @@ sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""),
 xlab='PT (ms)', ylab=expression('Frequency'))
 axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
-
+numSamples<-300
 x = read.csv(file="128_sec.dat",head=TRUE,sep="\t")
 x <- subset(x, x$ITERNUM <= numSamples)
 setEPS()
@@ -309,7 +309,7 @@ dev.off()
 
 x = read.csv(file="8192_sec.dat",head=TRUE,sep="\t")
 setEPS()
-postscript("8192_sec_pt_hist2.eps")
+postscript("8192_sec_pt_hist.eps")
 x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
 x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
 #x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
