@@ -1,7 +1,7 @@
 \section{Further Investigation of the Existing Runs and Some Additional Runs~\label{sec:u_s_time_hist}} 
 This section exhibits user and system time histograms on the first run of 
-INC with its task length increasing from 1 second to 1024 seconds 
-and the second run of INC from 2048 seconds to 16384 seconds via EMPv5 with no Step 2.
+INC with its task length increasing from 1 second to 4096 seconds 
+and the second run of INC from 8192 seconds to 16384 seconds via EMPv5 with no Step 2.
 The detailed description of the base data is from Table~\ref{tab:exp_notes1}, 
 and for some additional data, the corresponding description is given in Table~\ref{tab:exp_notes4}.
 
@@ -21,18 +21,33 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 \end{table}
 
 \subsection{Summary of Histograms}
+Figure~\ref{fig:hist3d} represents a 3D plot of collecting 
+the selected histograms from the first and second runs: 
+Figures ~\ref{fig:s9_r1_pt_hist1},~\ref{fig:s9_r1_pt_hist2},~\ref{fig:s9_r1_pt_hist3}, and ~\ref{fig:s9_r1_pt_hist4} (associated with INC1$\sim$INC4096 of the first run) and~\ref{fig:inc8192_r2_hist_v5} and~\ref{fig:inc16384_r2_hist_v5} (associated with  INC8192$\sim$INC16384 of the second run). The x-, y-, z-axes 
+indicate bins (PT range), task length, 
+and relative frequency of each histogram.
 
 \begin{figure}[htp!]
 \vspace{-.3in}
 	\centering
-	\includegraphics[scale=0.6,angle=270]{u_s_time/3d_plot.eps}\label{fig:3d_plot}
+	%\includegraphics[scale=0.6,angle=270]{u_s_time/3d_plot.eps}\label{fig:3d_plot}
+	\includegraphics[scale=0.6]{u_s_time/new_3d_plot}\label{fig:3d_plot}
 	\caption{3D histograms on INC~\label{fig:hist3d}}
 \end{figure}
 
 \clearpage
 \pagebreak
 
-\subsection{Absolute and Relative Variance over Increasing Task Length}
+\subsection{Absolute and Relative Variance over Increasing Task Lengths}
+Figure~\ref{fig:cv_inc} exhibits absolute and relative variances over increasing task lengths. 
+More specifically, Figures~\ref{fig:overall_std} and~\ref{fig:overall_std_log} 
+concern the PT standard deviations on INC1$\sim$INC4096 of the first run and 
+INC8192$\sim$INC16384 on the second run, as well as those from 
+the intermediate task lengths described in Table~\ref{tab:exp_notes4}. 
+The y-axis in Figure~\ref{fig:overall_std_log} is taken in log scale.
+Figures~\ref{fig:overall_re} and~\ref{fig:overall_re2} shows 
+the relative variance of the same data set---{\em coefficient of variation} (= standard deviation 
+/ task length or mean). Both the x and y axes in these two figures are taken in log scale.
 
 \begin{figure}[htp!]
 	\centering
@@ -46,7 +61,7 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 		\includegraphics[scale=0.6]{u_s_time/new_overall_pt_std_log.eps}
 		\label{fig:overall_std_log}
 	}
-	\subfigure[Coefficient of variation in log scale (relative)]{
+	\subfigure[Coefficient of variation in log scale (relative): divisor=mean]{
 		\includegraphics[scale=0.6]{u_s_time/overall_re.eps}
 		\label{fig:overall_re}
 	}

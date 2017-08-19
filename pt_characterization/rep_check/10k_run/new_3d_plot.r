@@ -9,7 +9,8 @@ xmin <-min(x1$PRTIME)
 xmax <-max(x1$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h1 = hist(x1$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x1_pt <- (h1$mids-1000)/1
+#x1_pt <- (h1$mids-1000)/1
+x1_pt <- (h1$mids-min(h1$mids))
 y1_raw_pt <- 1
 y1_pt <- 0
 z1_pt <- h1$counts/numSamples
@@ -23,7 +24,8 @@ xmin <-min(x2$PRTIME)
 xmax <-max(x2$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h2 = hist(x2$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x2_pt <- (h2$mids-2000)/2
+#x2_pt <- (h2$mids-2000)/2
+x2_pt <- (h2$mids-min(h2$mids))
 y2_raw_pt <- 2
 y2_pt <- 1
 z2_pt <- h2$counts/numSamples
@@ -37,7 +39,8 @@ xmin <-min(x4$PRTIME)
 xmax <-max(x4$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h4 = hist(x4$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x4_pt <- (h4$mids-4000)/4
+#x4_pt <- (h4$mids-4000)/4
+x4_pt <- (h4$mids-min(h4$mids))
 y4_raw_pt <- 4
 y4_pt <- 2
 z4_pt <- h4$counts/numSamples
@@ -52,7 +55,8 @@ xmin <-min(x8$PRTIME)
 xmax <-max(x8$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h8 = hist(x8$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x8_pt <- (h8$mids-8000)/8
+#x8_pt <- (h8$mids-8000)/8
+x8_pt <- (h8$mids-min(h8$mids))
 y8_raw_pt <- 8
 y8_pt <- 3
 z8_pt <- h8$counts/numSamples
@@ -66,7 +70,8 @@ xmin <-min(x16$PRTIME)
 xmax <-max(x16$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h16 = hist(x16$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x16_pt <- (h16$mids-16000)/16
+#x16_pt <- (h16$mids-16000)/16
+x16_pt <- (h16$mids-min(h16$mids))
 y16_raw_pt <- 16
 y16_pt <- 4
 z16_pt <- h16$counts/numSamples
@@ -82,7 +87,8 @@ xmin <-min(x32$PRTIME)
 xmax <-max(x32$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h32 = hist(x32$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x32_pt <- (h32$mids-32000)/32
+#x32_pt <- (h32$mids-32000)/32
+x32_pt <- (h32$mids-min(h32$mids))
 y32_raw_pt <- 32
 y32_pt <- 5
 z32_pt <- h32$counts/numSamples
@@ -96,7 +102,8 @@ xmin <-min(x64$PRTIME)
 xmax <-max(x64$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h64 = hist(x64$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x64_pt <- (h64$mids-64000)/64
+#x64_pt <- (h64$mids-64000)/64
+x64_pt <- (h64$mids-min(h64$mids))
 y64_raw_pt <- 64
 y64_pt <- 6
 z64_pt <- h64$counts/numSamples
@@ -114,7 +121,8 @@ xmax <-max(x128$PRTIME)
 binsize=2
 nbins <- ceiling((xmax-xmin) / binsize)
 h128 = hist(x128$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x128_pt <- (h128$mids-128000)/128
+#x128_pt <- (h128$mids-128000)/128
+x128_pt <- (h128$mids-min(h128$mids))
 y128_raw_pt <- 128
 y128_pt <- 7
 z128_pt <- h128$counts/numSamples
@@ -129,7 +137,8 @@ xmin <-min(x256$PRTIME)
 xmax <-max(x256$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h256 = hist(x256$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x256_pt <- (h256$mids-256000)/256
+#x256_pt <- (h256$mids-256000)/256
+x256_pt <- (h256$mids-min(h256$mids))
 y256_raw_pt <- 256
 y256_pt <- 8
 z256_pt <- h256$counts/numSamples
@@ -145,7 +154,8 @@ xmax <-max(x512$PRTIME)
 binsize=5
 nbins <- ceiling((xmax-xmin) / binsize)
 h512 = hist(x512$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x512_pt <- (h512$mids-512000)/512
+#x512_pt <- (h512$mids-512000)/512
+x512_pt <- (h512$mids-min(h512$mids))
 y512_raw_pt <- 512
 y512_pt <- 9
 z512_pt <- h512$counts/numSamples
@@ -162,7 +172,8 @@ xmin <-min(x1024$PRTIME)
 xmax <-max(x1024$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h1024 = hist(x1024$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x1024_pt <- (h1024$mids-1024000)/1024
+#x1024_pt <- (h1024$mids-1024000)/1024
+x1024_pt <- (h1024$mids-min(h1024$mids))
 y1024_raw_pt <- 1024
 y1024_pt <- 10
 z1024_pt <- h1024$counts/numSamples
@@ -177,7 +188,8 @@ xmin <-min(x2048$PRTIME)
 xmax <-max(x2048$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h2048 = hist(x2048$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x2048_pt <- (h2048$mids-2048000)/2048
+#x2048_pt <- (h2048$mids-2048000)/2048
+x2048_pt <- (h2048$mids-min(h2048$mids))
 y2048_raw_pt <- 2048
 y2048_pt <- 11
 z2048_pt <- h2048$counts/numSamples
@@ -194,7 +206,8 @@ xmin <-min(x4096$PRTIME)
 xmax <-max(x4096$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h4096 = hist(x4096$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x4096_pt <- (h4096$mids-4096000)/4096
+#x4096_pt <- (h4096$mids-4096000)/4096
+x4096_pt <- (h4096$mids-min(h4096$mids))
 y4096_raw_pt <- 4096
 y4096_pt <- 12
 z4096_pt <- h4096$counts/numSamples
@@ -221,7 +234,8 @@ xmax <-max(x8192$PRTIME)
 xmax <- xmax+1
 nbins <- ceiling((xmax-xmin) / binsize)
 h8192 = hist(x8192$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x8192_pt <- (h8192$mids-8192000)/8192
+#x8192_pt <- (h8192$mids-8192000)/8192
+x8192_pt <- (h8192$mids-min(h8192$mids))
 y8192_raw_pt <- 8192
 y8192_pt <- 13
 z8192_pt <- h8192$counts/numSamples
@@ -232,18 +246,13 @@ ss_inc8192 <- rep(numSamples,length(h8192$mids))
 numSamples <- 130
 x16384 = read.csv(file="16384_sec.dat",head=TRUE,sep="\t")
 x16384 <- subset(x16384, x16384$ITERNUM <= numSamples)
-x16384_up = mean(x16384$PRTIME) + 2*sd(x16384$PRTIME)
-x16384_dn = mean(x16384$PRTIME) - 2*sd(x16384$PRTIME)
-x16384 = subset(x16384, x16384$PRTIME >= x16384_dn & x16384$PRTIME <= x16384_up)
-sd(x16384$PRTIME)
-sd(x16384$PRTIME)/mean(x16384$PRTIME)
-x16384_up = mean(x16384$METIME) + 2*sd(x16384$METIME)
-x16384_dn = mean(x16384$METIME) - 2*sd(x16384$METIME)
-x16384 = subset(x16384, x16384$METIME >= x16384_dn & x16384$METIME <= x16384_up)
-sd(x16384$METIME)
-sd(x16384$METIME)/mean(x16384$METIME)
-xmin <-min(x16384$PRTIME)
-xmax <-max(x16384$PRTIME)
+#x16384_up = mean(x16384$PRTIME) + 2*sd(x16384$PRTIME)
+#x16384_dn = mean(x16384$PRTIME) - 2*sd(x16384$PRTIME)
+#x16384 = subset(x16384, x16384$PRTIME >= x16384_dn & x16384$PRTIME <= x16384_up)
+#sd(x16384$PRTIME)
+#sd(x16384$PRTIME)/mean(x16384$PRTIME)
+#xmin <-min(x16384$PRTIME)
+#xmax <-max(x16384$PRTIME)
 binsize=10
 xmin <-min(x16384$PRTIME)
 xmin <- xmin-7
@@ -251,7 +260,8 @@ xmax <-max(x16384$PRTIME)
 xmax <- xmax+5
 nbins <- ceiling((xmax-xmin) / binsize)
 h16384 = hist(x16384$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x16384_pt <- (h16384$mids-16384000)/16384
+#x16384_pt <- (h16384$mids-16384000)/16384
+x16384_pt <- (h16384$mids-min(h16384$mids))
 y16384_raw_pt <- 16384
 y16384_pt <- 14
 z16384_pt <- h16384$counts/numSamples
@@ -259,66 +269,64 @@ z16384_raw_pt <- h16384$counts
 inc16384 <- rep(16384,length(h16384$mids))
 ss_inc16384 <- rep(numSamples,length(h16384$mids)) 
 ######## now let's generate 3D-plot ####
-ny <- c(x1_pt,x2_pt,x4_pt,x8_pt,x16_pt,x32_pt,x64_pt,x128_pt,x256_pt,x512_pt,x1024_pt,x2048_pt,x4096_pt,x8192_pt,x16384_pt)
-nx <- c(y1_pt,y2_pt,y4_pt,y8_pt,y16_pt,y32_pt,y64_pt,y128_pt,y256_pt,y512_pt,y1024_pt,y2048_pt,y4096_pt,y8192_pt,y16384_pt)
+nx <- c(x1_pt,x2_pt,x4_pt,x8_pt,x16_pt,x32_pt,x64_pt,x128_pt,x256_pt,x512_pt,x1024_pt,x2048_pt,x4096_pt,x8192_pt,x16384_pt)
+ny <- c(y1_pt,y2_pt,y4_pt,y8_pt,y16_pt,y32_pt,y64_pt,y128_pt,y256_pt,y512_pt,y1024_pt,y2048_pt,y4096_pt,y8192_pt,y16384_pt)
 nz <- c(z1_pt,z2_pt,z4_pt,z8_pt,z16_pt,z32_pt,z64_pt,z128_pt,z256_pt,z512_pt,z1024_pt,z2048_pt,z4096_pt,z8192_pt,z16384_pt)
-#### RAW DATA
-ny_raw <- c(h1$mids,h2$mids,h4$mids,h8$mids,h16$mids,h32$mids,h64$mids,h128$mids,h256$mids,h512$mids,h1024$mids,h2048$mids,h4096$mids,h8192$mids,h16384$mids)
-nx_raw <- c(y1_raw_pt,y2_raw_pt,y4_raw_pt,y8_raw_pt,y16_raw_pt,y32_raw_pt,y64_raw_pt,y128_raw_pt,y256_raw_pt,y512_raw_pt,y1024_raw_pt,y2048_raw_pt,y4096_raw_pt,y8192_raw_pt,y16384_raw_pt)
-nz_raw <- c(z1_raw_pt,z2_raw_pt,z4_raw_pt,z8_raw_pt,z16_raw_pt,z32_raw_pt,z64_raw_pt,z128_raw_pt,z256_raw_pt,z512_raw_pt,z1024_raw_pt,z2048_raw_pt,z4096_raw_pt,z8192_raw_pt,z16384_raw_pt)
-all_inc <- c(inc1,inc2,inc4,inc8,inc16,inc32,inc64,inc128,inc256,inc512,inc1024,inc2048,inc4096,inc8192,inc16384)
-all_ss <- c(ss_inc1,ss_inc2,ss_inc4,ss_inc8,ss_inc16,ss_inc32,ss_inc64,ss_inc128,ss_inc256,ss_inc512,ss_inc1024,ss_inc2048,ss_inc4096,ss_inc8192,ss_inc16384)
-#### FOR OUTPUT
-all_data <- cbind(all_inc,all_ss,ny_raw,nz_raw,ny,nz)
-colnames(all_data) <- c("TASK_LEN (in s)","SAMPLE_SIZE","RAW_BIN (in ms)","RAW_FREQ","NOR_PT","REL_FREQ")
-write.table(all_data, "all_freq_data.txt", sep="\t",row.names = F)
+nz <- c(z1_pt,z2_pt,z4_pt,z8_pt,z16_pt,z32_pt,z64_pt,z128_pt,z256_pt,z512_pt,z1024_pt,z2048_pt,z4096_pt,z8192_pt,z16384_pt)/max(nz)
 ##### Render 3D plot ###
 ## row-wise
 mz=matrix(nz, nrow=length(nx),ncol=length(ny), byrow=F)
 ## 1 sec
-mz[1, (length(x1_pt)+1):(length(nx))] <- 0
+mz[(length(x1_pt)+1):(length(nx)),1] <- 0
 ## 2 sec
-mz[2,1:length(x1_pt)] <- 0
-mz[2, (length(x1_pt)+length(x2_pt)+1):(length(nx))] <- 0
+mz[1:length(x1_pt),2] <- 0
+mz[(length(x1_pt)+length(x2_pt)+1):(length(nx)),2] <- 0
 ## 4 sec
-mz[3, 1:(length(x1_pt)+length(x2_pt))] <- 0
-mz[3, (length(x1_pt)+length(x2_pt)+length(x4_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)),3] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+1):(length(nx)),3] <- 0
 ## 8 sec
-mz[4, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt))] <- 0
-mz[4, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)),4] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+1):(length(nx)),4] <- 0
 ## 16 sec
-mz[5, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt))] <- 0
-mz[5, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)),5] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+1):(length(nx)),5] <- 0
 ## 32 sec
-mz[6, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt))] <- 0
-mz[6, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)),6] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+1):(length(nx)),6] <- 0
 ## 64 sec
-mz[7, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt))] <- 0
-mz[7, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)),7] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+1):(length(nx)),7] <- 0
 ## 128 sec
-mz[8, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt))] <- 0
-mz[8, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)),8] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+1):(length(nx)),8] <- 0
 ## 256 sec
-mz[9, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt))] <- 0
-mz[9, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)),9] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+1):(length(nx)),9] <- 0
 ## 512 sec
-mz[10, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt))] <- 0
-mz[10, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)),10] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+1):(length(nx)),10] <- 0
 ## 1024 sec
-mz[11, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt))] <- 0
-mz[11, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)),11] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+1):(length(nx)),11] <- 0
 ## 2048 sec
-mz[12, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt))] <- 0
-mz[12, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+1):(length(nx))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)),12] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+1):(length(nx)),12] <- 0
 ## 4096 sec
-mz[13, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt))] <- 0
-mz[13, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)),13] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt)),13] <- 0
 ## 8192 sec
-mz[14, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt))] <- 0
-mz[14, (length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt)+length(x8192_pt))] <- 0
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt)),14] <- 0
+mz[(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt)+length(x8192_pt)),14] <- 0
 ## 16384 sec
-mz[15, 1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt)+length(x8192_pt))] <- 0
-write.table(mz, "all_freq_data.txt", sep="\t",row.names = F)
-postscript("3d_plot.eps")
-hist3D(nx,ny,mz,colkey = F, theta=35,phi=20,zlim=c(0,0.8), xlab="Task Length in Log Scale (sec)",ylab="Normalized INC PT",zlab="Relative Frequency", border = "black", axes=TRUE,label=TRUE,space=0.5,ticktype="detailed",nticks=15,shade=0.5) 
+mz[1:(length(x1_pt)+length(x2_pt)+length(x4_pt)+length(x8_pt)+length(x16_pt)+length(x32_pt)+length(x64_pt)+length(x128_pt)+length(x256_pt)+length(x512_pt)+length(x1024_pt)+length(x2048_pt)+length(x4096_pt)+length(x8192_pt)),15] <- 0
+library(plotly)
+plot_ly(z=mz, type="surface") %>% 
+layout(
+    title = "3D histograms",
+    scene = list(
+      xaxis = list(title = "Log(task length)"),
+      yaxis = list(title = "Normalized PT"),
+      zaxis = list(title = "Relative frequency")
+    ))
+#hist3D(nx,ny,mz,colkey = F, theta=25,phi=10,zlim=c(0,0.8), ylab="Task Length in Log Scale (sec)",xlab="Normalized INC PT",zlab="Relative Frequency", border = "black", axes=TRUE,label=TRUE,space=0.5,ticktype="detailed",nticks=15,shade=0.5) 
 dev.off()
