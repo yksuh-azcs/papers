@@ -233,6 +233,33 @@ z16384_pt <- h16384$counts/numSamples
 z16384_raw_pt <- h16384$counts
 inc16384 <- rep(16384,length(h16384$mids))
 ss_inc16384 <- rep(numSamples,length(h16384$mids)) 
+######## start 3x3x3 ####
+nx <- c(x1_pt,x2_pt,x4_pt)
+ny <- c(y1_pt,y2_pt,y4_pt)
+nz <- c(z1_pt,z2_pt,z4_pt)
+mz=matrix(nz, nrow=length(nx),ncol=length(ny), byrow=F)
+## 1 sec
+mz[(length(x1_pt)+1):(length(nx)),1] <- 0
+## 2 sec
+mz[1:length(x1_pt),2] <- 0
+mz[(length(x1_pt)+length(x2_pt)+1):(length(nx)),2] <- 0
+## 4 sec
+mz[1:(length(x1_pt)+length(x2_pt)),3] <- 0
+library(plotly)
+p <- plot_ly(z=mz, type="surface") %>%
+layout(p,
+    title = "3D histograms",
+    scene = list(
+      xaxis = list(title = "Log(TL)"),
+      yaxis = list(title = "Norm. PT"),
+      zaxis = list(title = "RF")
+    ))
+#help(signup, package = 'plotly')
+Sys.setenv("plotly_username"="yksuh")
+Sys.setenv("plotly_api_key"="4jaag7lYwdndqs5J5CLK")
+api_create(p, filename = "3dplot")
+dev.off()
+
 ######## now let's generate 3D-plot ####
 nx <- c(x1_pt,x2_pt,x4_pt,x8_pt,x16_pt,x32_pt,x64_pt,x128_pt,x256_pt,x512_pt,x1024_pt,x2048_pt,x4096_pt,x8192_pt,x16384_pt)
 ny <- c(y1_pt,y2_pt,y4_pt,y8_pt,y16_pt,y32_pt,y64_pt,y128_pt,y256_pt,y512_pt,y1024_pt,y2048_pt,y4096_pt,y8192_pt,y16384_pt)
