@@ -1,8 +1,8 @@
 #### An R script for 3D plot
 numSamples <- 1000
+binsize=1
 ### 1 sec
 x1 = read.csv(file="1_sec.dat",head=TRUE,sep="\t")
-binsize=1
 xmin <-min(x1$PRTIME)
 xmax <-max(x1$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
@@ -53,6 +53,8 @@ xmin <-min(x8$PRTIME)
 xmax <-max(x8$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h8 = hist(x8$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h8$breaks-min(h8$breaks)
+h8
 x8_pt <- (h8$mids-min(h8$mids))
 y8_raw_pt <- 8
 y8_pt <- 3
@@ -67,6 +69,8 @@ xmin <-min(x16$PRTIME)
 xmax <-max(x16$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h16 = hist(x16$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h16$breaks-min(h16$breaks)
+h16
 x16_pt <- (h16$mids-min(h16$mids))
 y16_raw_pt <- 16
 y16_pt <- 4
@@ -81,6 +85,8 @@ xmin <-min(x32$PRTIME)
 xmax <-max(x32$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h32 = hist(x32$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h32$breaks-min(h32$breaks)
+h32
 x32_pt <- (h32$mids-min(h32$mids))
 y32_raw_pt <- 32
 y32_pt <- 5
@@ -95,6 +101,8 @@ xmin <-min(x64$PRTIME)
 xmax <-max(x64$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h64 = hist(x64$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h64$breaks-min(h64$breaks)
+h64
 x64_pt <- (h64$mids-min(h64$mids))
 y64_raw_pt <- 64
 y64_pt <- 6
@@ -113,6 +121,8 @@ xmax <-max(x128$PRTIME)
 binsize=2
 nbins <- ceiling((xmax-xmin) / binsize)
 h128 = hist(x128$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h128$breaks-min(h128$breaks)
+h128
 x128_pt <- (h128$mids-min(h128$mids))
 y128_raw_pt <- 128
 y128_pt <- 7
@@ -128,6 +138,8 @@ xmin <-min(x256$PRTIME)
 xmax <-max(x256$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h256 = hist(x256$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h256$breaks-min(h256$breaks)
+h256
 x256_pt <- (h256$mids-min(h256$mids))
 y256_raw_pt <- 256
 y256_pt <- 8
@@ -145,6 +157,8 @@ binsize=5
 nbins <- ceiling((xmax-xmin) / binsize)
 h512 = hist(x512$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 x512_pt <- (h512$mids-min(h512$mids))
+h512$breaks-min(h512$breaks)
+h512
 y512_raw_pt <- 512
 y512_pt <- 9
 z512_pt <- h512$counts/numSamples
@@ -161,6 +175,8 @@ xmin <-min(x1024$PRTIME)
 xmax <-max(x1024$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h1024 = hist(x1024$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h1024$breaks-min(h1024$breaks)
+h1024
 x1024_pt <- (h1024$mids-min(h1024$mids))
 y1024_raw_pt <- 1024
 y1024_pt <- 10
@@ -176,6 +192,8 @@ xmin <-min(x2048$PRTIME)
 xmax <-max(x2048$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h2048 = hist(x2048$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h2048$breaks-min(h2048$breaks)
+h2048
 x2048_pt <- (h2048$mids-min(h2048$mids))
 y2048_raw_pt <- 2048
 y2048_pt <- 11
@@ -193,6 +211,8 @@ xmin <-min(x4096$PRTIME)
 xmax <-max(x4096$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h4096 = hist(x4096$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h4096$breaks-min(h4096$breaks)
+h4096
 x4096_pt <- (h4096$mids-min(h4096$mids))
 y4096_raw_pt <- 4096
 y4096_pt <- 12
@@ -210,6 +230,8 @@ xmax <-max(x8192$PRTIME)
 xmax <- xmax+1
 nbins <- ceiling((xmax-xmin) / binsize)
 h8192 = hist(x8192$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h8192$breaks-min(h8192$breaks)
+h8192
 x8192_pt <- (h8192$mids-min(h8192$mids))
 y8192_raw_pt <- 8192
 y8192_pt <- 13
@@ -228,6 +250,8 @@ xmax <-max(x16384$PRTIME)
 xmax <- xmax+5
 nbins <- ceiling((xmax-xmin) / binsize)
 h16384 = hist(x16384$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h16384$breaks-min(h16384$breaks)
+h16384
 x16384_pt <- (h16384$mids-min(h16384$mids))
 y16384_raw_pt <- 16384
 y16384_pt <- 14
