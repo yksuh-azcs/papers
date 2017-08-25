@@ -36,6 +36,8 @@ xmin <-min(x4$PRTIME)
 xmax <-max(x4$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h4 = hist(x4$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+h4$breaks-min(h4$breaks)
+h4
 x4_pt <- (h4$mids-min(h4$mids))
 y4_raw_pt <- 4
 y4_pt <- 2
