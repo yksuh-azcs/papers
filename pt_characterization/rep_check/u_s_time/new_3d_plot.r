@@ -7,13 +7,10 @@ xmin <-min(x1$PRTIME)
 xmax <-max(x1$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h1 = hist(x1$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x1_pt <- (h1$mids-min(h1$mids))
-y1_raw_pt <- 1
-y1_pt <- 0
-z1_pt <- h1$counts/numSamples
-z1_raw_pt <- h1$counts
-inc1 <- rep(1,length(h1$mids))
-ss_inc1 <- rep(numSamples,length(h1$mids)) 
+x1_pt <- round((h1$breaks-min(h1$breaks))/(max(h1$breaks-min(h1$breaks)))*100,0)
+x1_pt
+z1_pt <- round(h1$counts/max(h1$counts)*100,0)
+z1_pt
 ### 2 sec
 x2 = read.csv(file="2_sec.dat",head=TRUE,sep="\t")
 x2 <- subset(x2, x2$ITERNUM <= numSamples)
@@ -21,14 +18,10 @@ xmin <-min(x2$PRTIME)
 xmax <-max(x2$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h2 = hist(x2$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-#x2_pt <- (h2$mids-2000)/2
-x2_pt <- (h2$mids-min(h2$mids))
-y2_raw_pt <- 2
-y2_pt <- 1
-z2_pt <- h2$counts/numSamples
-z2_raw_pt <- h2$counts
-inc2 <- rep(2,length(h2$mids))
-ss_inc2 <- rep(numSamples,length(h2$mids)) 
+x2_pt <- round((h2$breaks-min(h2$breaks))/(max(h2$breaks-min(h2$breaks)))*100,0)
+x2_pt
+z2_pt <- round(h2$counts/max(h2$counts)*100,0)
+z2_pt
 ### 4 sec
 x4 = read.csv(file="4_sec.dat",head=TRUE,sep="\t")
 x4 <- subset(x4, x4$ITERNUM <= numSamples)
@@ -36,15 +29,10 @@ xmin <-min(x4$PRTIME)
 xmax <-max(x4$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h4 = hist(x4$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h4$breaks-min(h4$breaks)
-h4
-x4_pt <- (h4$mids-min(h4$mids))
-y4_raw_pt <- 4
-y4_pt <- 2
-z4_pt <- h4$counts/numSamples
-z4_raw_pt <- h4$counts
-inc4 <- rep(4,length(h4$mids))
-ss_inc4 <- rep(numSamples,length(h4$mids)) 
+x4_pt <- round((h4$breaks-min(h4$breaks))/(max(h4$breaks-min(h4$breaks)))*100,0)
+x4_pt
+z4_pt <- round(h4$counts/max(h4$counts)*100,0)
+z4_pt
 ### 8 sec
 x8 = read.csv(file="8_sec.dat",head=TRUE,sep="\t")
 x8 <- subset(x8, x8$ITERNUM <= numSamples)
@@ -53,15 +41,10 @@ xmin <-min(x8$PRTIME)
 xmax <-max(x8$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h8 = hist(x8$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h8$breaks-min(h8$breaks)
-h8
-x8_pt <- (h8$mids-min(h8$mids))
-y8_raw_pt <- 8
-y8_pt <- 3
-z8_pt <- h8$counts/numSamples
-z8_raw_pt <- h8$counts
-inc8 <- rep(8,length(h8$mids))
-ss_inc8 <- rep(numSamples,length(h8$mids)) 
+x8_pt <- round((h8$breaks-min(h8$breaks))/(max(h8$breaks-min(h8$breaks)))*100,0)
+x8_pt
+z8_pt <- round(h8$counts/max(h8$counts)*100,0)
+z8_pt
 ### 16 sec
 x16 = read.csv(file="16_sec.dat",head=TRUE,sep="\t")
 x16 <- subset(x16, x16$ITERNUM <= numSamples)
@@ -70,14 +53,10 @@ xmax <-max(x16$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h16 = hist(x16$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 h16$breaks-min(h16$breaks)
-h16
-x16_pt <- (h16$mids-min(h16$mids))
-y16_raw_pt <- 16
-y16_pt <- 4
-z16_pt <- h16$counts/numSamples
-z16_raw_pt <- h16$counts
-inc16 <- rep(16,length(h16$mids))
-ss_inc16 <- rep(numSamples,length(h16$mids)) 
+x16_pt <- round((h16$breaks-min(h16$breaks))/(max(h16$breaks-min(h16$breaks)))*100,0)
+x16_pt
+z16_pt <- round(h16$counts/max(h16$counts)*100,0)
+z16_pt
 ### 32 sec
 binsize=1
 x32 = read.csv(file="32_sec.dat",head=TRUE,sep="\t")
@@ -86,14 +65,10 @@ xmax <-max(x32$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h32 = hist(x32$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 h32$breaks-min(h32$breaks)
-h32
-x32_pt <- (h32$mids-min(h32$mids))
-y32_raw_pt <- 32
-y32_pt <- 5
-z32_pt <- h32$counts/numSamples
-z32_raw_pt <- h32$counts
-inc32 <- rep(32,length(h32$mids))
-ss_inc32 <- rep(numSamples,length(h32$mids)) 
+x32_pt <- round((h32$breaks-min(h32$breaks))/(max(h32$breaks-min(h32$breaks)))*100,0)
+x32_pt
+z32_pt <- round(h32$counts/max(h32$counts)*100,0)
+z32_pt
 ### 64 sec
 x64 = read.csv(file="64_sec.dat",head=TRUE,sep="\t")
 x64 <- subset(x64, x64$ITERNUM <= numSamples)
@@ -101,15 +76,10 @@ xmin <-min(x64$PRTIME)
 xmax <-max(x64$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h64 = hist(x64$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h64$breaks-min(h64$breaks)
-h64
-x64_pt <- (h64$mids-min(h64$mids))
-y64_raw_pt <- 64
-y64_pt <- 6
-z64_pt <- h64$counts/numSamples
-z64_raw_pt <- h64$counts
-inc64 <- rep(64,length(h64$mids))
-ss_inc64 <- rep(numSamples,length(h64$mids)) 
+x64_pt <- round((h64$breaks-min(h64$breaks))/(max(h64$breaks-min(h64$breaks)))*100,0)
+x64_pt
+z64_pt <- round(h64$counts/max(h64$counts)*100,0)
+z64_pt
 #### INC128 --- INC2048
 numSamples <- 300
 ### 128 sec
@@ -121,15 +91,10 @@ xmax <-max(x128$PRTIME)
 binsize=2
 nbins <- ceiling((xmax-xmin) / binsize)
 h128 = hist(x128$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h128$breaks-min(h128$breaks)
-h128
-x128_pt <- (h128$mids-min(h128$mids))
-y128_raw_pt <- 128
-y128_pt <- 7
-z128_pt <- h128$counts/numSamples
-z128_raw_pt <- h128$counts
-inc128 <- rep(128,length(h128$mids))
-ss_inc128 <- rep(numSamples,length(h128$mids)) 
+x128_pt <- round((h128$breaks-min(h128$breaks))/(max(h128$breaks-min(h128$breaks)))*100,0)
+x128_pt
+z128_pt <- round(h128$counts/max(h128$counts)*100,0)
+z128_pt
 ### 256 sec
 x256 = read.csv(file="256_sec.dat",head=TRUE,sep="\t")
 x256 <- subset(x256, x256$ITERNUM <= numSamples)
@@ -139,14 +104,10 @@ xmax <-max(x256$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h256 = hist(x256$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
 h256$breaks-min(h256$breaks)
-h256
-x256_pt <- (h256$mids-min(h256$mids))
-y256_raw_pt <- 256
-y256_pt <- 8
-z256_pt <- h256$counts/numSamples
-z256_raw_pt <- h256$counts
-inc256 <- rep(256,length(h256$mids))
-ss_inc256 <- rep(numSamples,length(h256$mids)) 
+x256_pt <- round((h256$breaks-min(h256$breaks))/(max(h256$breaks-min(h256$breaks)))*100,0)
+x256_pt
+z256_pt <- round(h256$counts/max(h256$counts)*100,0)
+z256_pt
 ### 512 sec
 x512 = read.csv(file="512_sec.dat",head=TRUE,sep="\t")
 x512 <- subset(x512, x512$ITERNUM <= numSamples)
@@ -156,15 +117,10 @@ xmax <-max(x512$PRTIME)
 binsize=5
 nbins <- ceiling((xmax-xmin) / binsize)
 h512 = hist(x512$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-x512_pt <- (h512$mids-min(h512$mids))
-h512$breaks-min(h512$breaks)
-h512
-y512_raw_pt <- 512
-y512_pt <- 9
-z512_pt <- h512$counts/numSamples
-z512_raw_pt <- h512$counts
-inc512 <- rep(512,length(h512$mids))
-ss_inc512 <- rep(numSamples,length(h512$mids)) 
+x512_pt <- round((h512$breaks-min(h512$breaks))/(max(h512$breaks-min(h512$breaks)))*100,0)
+x512_pt
+z512_pt <- round(h512$counts/max(h512$counts)*100,0)
+z512_pt
 ### 1024 sec
 binsize=5
 numSamples = 300
@@ -175,15 +131,10 @@ xmin <-min(x1024$PRTIME)
 xmax <-max(x1024$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h1024 = hist(x1024$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h1024$breaks-min(h1024$breaks)
-h1024
-x1024_pt <- (h1024$mids-min(h1024$mids))
-y1024_raw_pt <- 1024
-y1024_pt <- 10
-z1024_pt <- h1024$counts/numSamples
-z1024_raw_pt <- h1024$counts
-inc1024 <- rep(1024,length(h1024$mids))
-ss_inc1024 <- rep(numSamples,length(h1024$mids)) 
+x1024_pt <- round((h1024$breaks-min(h1024$breaks))/(max(h1024$breaks-min(h1024$breaks)))*100,0)
+x1024_pt
+z1024_pt <- round(h1024$counts/max(h1024$counts)*100,0)
+z1024_pt 
 ### 2048 sec
 binsize=5
 x2048 = read.csv(file="2048_sec.dat",head=TRUE,sep="\t")
@@ -192,15 +143,10 @@ xmin <-min(x2048$PRTIME)
 xmax <-max(x2048$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h2048 = hist(x2048$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h2048$breaks-min(h2048$breaks)
-h2048
-x2048_pt <- (h2048$mids-min(h2048$mids))
-y2048_raw_pt <- 2048
-y2048_pt <- 11
-z2048_pt <- h2048$counts/numSamples
-z2048_raw_pt <- h2048$counts
-inc2048 <- rep(2048,length(h2048$mids))
-ss_inc2048 <- rep(numSamples,length(h2048$mids)) 
+x2048_pt <- round((h2048$breaks-min(h2048$breaks))/(max(h2048$breaks-min(h2048$breaks)))*100,0)
+x2048_pt
+z2048_pt <- round(h2048$counts/max(h2048$counts)*100,0)
+z2048_pt
 ### 4096 sec
 numSamples <- 300
 x4096 = read.csv(file="4096_sec.dat",head=TRUE,sep="\t")
@@ -211,15 +157,10 @@ xmin <-min(x4096$PRTIME)
 xmax <-max(x4096$PRTIME)
 nbins <- ceiling((xmax-xmin) / binsize)
 h4096 = hist(x4096$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h4096$breaks-min(h4096$breaks)
-h4096
-x4096_pt <- (h4096$mids-min(h4096$mids))
-y4096_raw_pt <- 4096
-y4096_pt <- 12
-z4096_pt <- h4096$counts/numSamples
-z4096_raw_pt <- h4096$counts
-inc4096 <- rep(4096,length(h4096$mids))
-ss_inc4096 <- rep(numSamples,length(h4096$mids)) 
+x4096_pt <- round((h4096$breaks-min(h4096$breaks))/(max(h4096$breaks-min(h4096$breaks)))*100,0)
+x4096_pt
+z4096_pt <- round(h4096$counts/max(h4096$counts)*100,0)
+z4096_pt
 ### 8192 sec
 numSamples <- 260
 x8192 = read.csv(file="8192_sec.dat",head=TRUE,sep="\t")
@@ -230,15 +171,10 @@ xmax <-max(x8192$PRTIME)
 xmax <- xmax+1
 nbins <- ceiling((xmax-xmin) / binsize)
 h8192 = hist(x8192$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h8192$breaks-min(h8192$breaks)
-h8192
-x8192_pt <- (h8192$mids-min(h8192$mids))
-y8192_raw_pt <- 8192
-y8192_pt <- 13
-z8192_pt <- h8192$counts/numSamples
-z8192_raw_pt <- h8192$counts
-inc8192 <- rep(8192,length(h8192$mids))
-ss_inc8192 <- rep(numSamples,length(h8192$mids)) 
+x8192_pt <- round((h8192$breaks-min(h8192$breaks))/(max(h8192$breaks-min(h8192$breaks)))*100,0)
+x8192_pt
+z8192_pt <- round(h8192$counts/max(h8192$counts)*100,0)
+z8192_pt
 ### 16384 sec
 numSamples <- 130
 x16384 = read.csv(file="16384_sec.dat",head=TRUE,sep="\t")
@@ -250,15 +186,10 @@ xmax <-max(x16384$PRTIME)
 xmax <- xmax+5
 nbins <- ceiling((xmax-xmin) / binsize)
 h16384 = hist(x16384$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-h16384$breaks-min(h16384$breaks)
-h16384
-x16384_pt <- (h16384$mids-min(h16384$mids))
-y16384_raw_pt <- 16384
-y16384_pt <- 14
-z16384_pt <- h16384$counts/numSamples
-z16384_raw_pt <- h16384$counts
-inc16384 <- rep(16384,length(h16384$mids))
-ss_inc16384 <- rep(numSamples,length(h16384$mids)) 
+x16384_pt <- round((h16384$breaks-min(h16384$breaks))/(max(h16384$breaks-min(h16384$breaks)))*100,0)
+x16384_pt
+z16384_pt <- round(h16384$counts/max(h16384$counts)*100,0)
+z16384_pt
 ######## start 3x3x3 ####
 nx <- c(x1_pt,x2_pt,x4_pt)
 ny <- c(y1_pt,y2_pt,y4_pt)
