@@ -24,13 +24,14 @@ Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}
 Figure~\ref{fig:hist3d} represents a 3D plot of collecting 
 the selected histograms from the first and second runs: 
 Figures ~\ref{fig:s9_r1_pt_hist1},~\ref{fig:s9_r1_pt_hist2},~\ref{fig:s9_r1_pt_hist3}, and ~\ref{fig:s9_r1_pt_hist4} (associated with INC1$\sim$INC4096 of the first run) and~\ref{fig:inc8192_r2_hist_v5} and~\ref{fig:inc16384_r2_hist_v5} (associated with  INC8192$\sim$INC16384 of the second run). The x-, y-, z-axes 
-indicate the normalized PT relative to the minimum PT, task length in log scale, 
-and relative frequency of each histogram.
+indicate the normalized PT ranging from 0 to 100, task length in log scale, 
+and relative frequency of each histogram, such that for each INC it is scaled from 0 (the shortest) to 100 (the highest).
 
 \begin{figure}[htp!]
-\vspace{-.3in}
+%\vspace{-.3in}
 	\centering
 	%\includegraphics[scale=0.6,angle=270]{u_s_time/3d_plot.eps}\label{fig:3d_plot}
+	%\includegraphics[scale=0.6]{u_s_time/new_3d_plot}\label{fig:3d_plot}
 	\includegraphics[scale=0.6]{u_s_time/new_3d_plot}\label{fig:3d_plot}
 	\caption{3D histograms on INC~\label{fig:hist3d}}
 \end{figure}
@@ -62,7 +63,7 @@ the relative variance of the same data set---{\em coefficient of variation} (= s
 		\label{fig:overall_std_log}
 	}
 	\subfigure[Coefficient of variation in log scale (relative): divisor=mean]{
-		\includegraphics[scale=0.6]{u_s_time/overall_re.eps}
+		\includegraphics[scale=0.6]{u_s_time/overall_pt_re.eps}
 		\label{fig:overall_re}
 	}
 	\subfigure[Coefficient of variation in log scale (relative): divisor=task length]{
