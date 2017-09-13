@@ -1,184 +1,7 @@
-\section{Further Investigation of the Existing Runs and Some Additional Runs~\label{sec:u_s_time_hist}} 
-This section exhibits user and system time histograms on the first run of 
-INC with its task length increasing from 1 second to 4096 seconds 
-and the second run of INC from 8192 seconds to 16384 seconds via EMPv5 with no Step 2.
-The detailed description of the base data is from Table~\ref{tab:exp_notes1}, 
-and for some additional data, the corresponding description is given in Table~\ref{tab:exp_notes4}.
+\subsection{Histograms of User and System Time~\label{sec:u_s_time_hist}} 
+This section exhibits histograms on user and system time of the INC runs described in Table~\ref{tab:exp_notes1}. 
 
-\begin{table}[h]
-\begin{center}
-\begin{tabular}{|p{2cm}|p{3cm}|p{3cm}|p{4cm}|p{3.5cm}|} \hline
-Machine & Task Length (sec) & Description & Experiment Period & Relevant \linebreak Histograms\\ \hline
-{\tt sodb9} &  INC96$\sim$INC256 & 1000 samples, each & 2017-05-24 $\sim$ 2017-06-06 & 
-Figs.~\ref{fig:ut_hist3}, \ref{fig:inc224_ut_hist}, and~\ref{fig:inc256_ut_hist}\\ \hline
-					&  INC3, 6, 12, 24, 48, 72, 80, 88, 104, 112, and 120 & 1000 samples, each & 2017-06-07 $\sim$ 2017-06-16 & Figs.~\ref{fig:inc3_ut_hist}, ~\ref{fig:inc6_ut_hist}, ~\ref{fig:inc12_ut_hist}, ~\ref{fig:inc24_ut_hist},
-~\ref{fig:inc48_ut_hist}, ~\ref{fig:inc72_ut_hist}, ~\ref{fig:inc80_ut_hist}, ~\ref{fig:inc88_ut_hist}, ~\ref{fig:inc104_ut_hist},~\ref{fig:inc112_ut_hist}, and~\ref{fig:inc120_ut_hist}\\ \hline
-%%%%% INC2048 and INC4096 come from the second run
-\end{tabular}
-\end{center}
-\vspace{-.2in}
-\caption{Notes on experiment runs used for histograms\label{tab:exp_notes4}}
-\end{table}
-
-\subsection{Summary of Histograms}
-Figure~\ref{fig:hist3d} represents a 3D plot of collecting 
-the selected histograms from the first and second runs: 
-Figures ~\ref{fig:s9_r1_pt_hist1},~\ref{fig:s9_r1_pt_hist2},~\ref{fig:s9_r1_pt_hist3}, and ~\ref{fig:s9_r1_pt_hist4} (associated with INC1$\sim$INC4096 of the first run) and~\ref{fig:inc8192_r2_hist_v5} and~\ref{fig:inc16384_r2_hist_v5} (associated with  INC8192$\sim$INC16384 of the second run). The x-, y-, z-axes 
-indicate the normalized PT ranging from 0 to 100, task length in log scale, 
-and relative frequency of each histogram, such that for each INC it is scaled from 0 (the shortest) to 100 (the highest).
-
-\begin{figure}[htp!]
-%\vspace{-.3in}
-	\centering
-	%\includegraphics[scale=0.6,angle=270]{u_s_time/3d_plot.eps}\label{fig:3d_plot}
-	%\includegraphics[scale=0.6]{u_s_time/new_3d_plot}\label{fig:3d_plot}
-	\includegraphics[scale=0.6]{u_s_time/new_3d_plot}\label{fig:3d_plot}
-	\caption{3D histograms on INC~\label{fig:hist3d}}
-\end{figure}
-
-\clearpage
-\pagebreak
-
-\subsection{Absolute and Relative Variance over Increasing Task Lengths}
-Figure~\ref{fig:cv_inc} exhibits absolute and relative variances over increasing task lengths. 
-More specifically, Figures~\ref{fig:overall_std} and~\ref{fig:overall_std_log} 
-concern the PT standard deviations on INC1$\sim$INC4096 of the first run and 
-INC8192$\sim$INC16384 on the second run, as well as those from 
-the intermediate task lengths described in Table~\ref{tab:exp_notes4}. 
-The y-axis in Figure~\ref{fig:overall_std_log} is taken in log scale.
-Figures~\ref{fig:overall_re} and~\ref{fig:overall_re2} shows 
-the relative variance of the same data set---{\em coefficient of variation} (= standard deviation 
-/ task length or mean). Both the x and y axes in these two figures are taken in log scale.
-
-\begin{figure}[htp!]
-	\centering
-	\subfigure[Standard deviation (absolute)]{
-		%\includegraphics[scale=0.6]{u_s_time/overall_std.eps}
-		\includegraphics[scale=0.6]{u_s_time/new_overall_pt_std.eps}
-		\label{fig:overall_std}
-	}
-	\subfigure[Standard deviation (absolute) in log scale]{
-		%\includegraphics[scale=0.6]{u_s_time/overall_std_log.eps}
-		\includegraphics[scale=0.6]{u_s_time/new_overall_pt_std_log.eps}
-		\label{fig:overall_std_log}
-	}
-	\subfigure[Coefficient of variation in log scale (relative): divisor=mean]{
-		\includegraphics[scale=0.6]{u_s_time/overall_pt_re.eps}
-		\label{fig:overall_re}
-	}
-	\subfigure[Coefficient of variation in log scale (relative): divisor=task length]{
-		\includegraphics[scale=0.6]{u_s_time/new_overall_pt_re.eps}
-		\label{fig:overall_re2}
-	}
-	\caption{Absolute and relative variances~\label{fig:cv_inc}}
-\end{figure}
-
-\pagebreak
-\newpage
-
-\subsection{Additional Histograms}
-
-\subsubsection{ET}
-Not available at this point, due to the labshelf server's unavailability for the time being.
-
-\subsubsection{PT}
-The histograms of INC1 through INC4096 are 
-the same as those of Figures~\ref{fig:s9_r1_pt_hist1},~\ref{fig:s9_r1_pt_hist2},~\ref{fig:s9_r1_pt_hist3}, and~\ref{fig:s9_r1_pt_hist4}. 
-The following are the histograms of INC with some intermediate task lengths.
-
-\begin{figure}[hp!]
-	\centering
-	\subfigure[PT frequency on INC3]{
-		\includegraphics[scale=0.43]{u_s_time/3_sec_pt_hist.eps}
-		\label{fig:inc3_pt_hist}
-	}
-	\subfigure[PT frequency on INC6]{
-		\includegraphics[scale=0.43]{u_s_time/6_sec_pt_hist.eps}
-		\label{fig:inc6_pt_hist}
-	}
-	\subfigure[PT frequency on INC12]{
-		\includegraphics[scale=0.43]{u_s_time/12_sec_pt_hist.eps}
-		\label{fig:inc12_pt_hist}
-	}
-	\subfigure[PT frequency on INC24]{
-		\includegraphics[scale=0.43]{u_s_time/24_sec_pt_hist.eps}
-		\label{fig:inc24_pt_hist}
-	}
-	\caption{PT Histograms of INC3 ... INC24~\label{fig:new_pt_hist1}}
-\end{figure}
-
-\pagebreak
-\newpage
-
-\begin{figure}[hp!]
-	\centering
-	\subfigure[PT frequency on INC48]{
-		\includegraphics[scale=0.43]{u_s_time/48_sec_pt_hist.eps}
-		\label{fig:inc48_pt_hist}
-	}
-	\subfigure[PT frequency on INC72]{
-		\includegraphics[scale=0.43]{u_s_time/72_sec_pt_hist.eps}
-		\label{fig:inc72_pt_hist}
-	}
-	\subfigure[PT frequency on INC80]{
-		\includegraphics[scale=0.43]{u_s_time/80_sec_pt_hist.eps}
-		\label{fig:inc80_pt_hist}
-	}
-	\subfigure[PT frequency on INC88]{
-		\includegraphics[scale=0.43]{u_s_time/88_sec_pt_hist.eps}
-		\label{fig:inc88_pt_hist}
-	}
-	\caption{PT Histograms of INC48 ... INC88~\label{fig:new_pt_hist2}}
-\end{figure}
-
-\pagebreak
-\newpage
-
-\begin{figure}[hp!]
-	\centering
-	\subfigure[PT frequency on INC96]{
-		\includegraphics[scale=0.43]{u_s_time/96_sec_pt_hist.eps}
-		\label{fig:inc96_pt_hist}
-	}
-	\subfigure[PT frequency on INC104]{
-		\includegraphics[scale=0.43]{u_s_time/104_sec_pt_hist.eps}
-		\label{fig:inc104_pt_hist}
-	}
-	\subfigure[PT frequency on INC112]{
-		\includegraphics[scale=0.43]{u_s_time/112_sec_pt_hist.eps}
-		\label{fig:inc112_pt_hist}
-	}
-	\subfigure[PT frequency on INC120]{
-		\includegraphics[scale=0.43]{u_s_time/120_sec_pt_hist.eps}
-		\label{fig:inc120_pt_hist}
-	}
-	\caption{PT Histograms of INC96 ... INC120~\label{fig:new_pt_hist3}}
-\end{figure}
-
-\pagebreak
-\newpage
-
-\begin{figure}[hp!]
-	\centering
-	\subfigure[PT frequency on INC160]{
-		\includegraphics[scale=0.43]{u_s_time/160_sec_pt_hist.eps}
-		\label{fig:inc160_pt_hist}
-	}
-	\subfigure[PT frequency on INC192]{
-		\includegraphics[scale=0.43]{u_s_time/192_sec_pt_hist.eps}
-		\label{fig:inc192_pt_hist}
-	}
-	\subfigure[PT frequency on INC224]{
-		\includegraphics[scale=0.43]{u_s_time/224_sec_pt_hist.eps}
-		\label{fig:inc224_pt_hist}
-	}
-	\caption{PT Histograms of INC169 ... INC224~\label{fig:new_pt_hist4}}
-\end{figure}
-
-\pagebreak
-\newpage
-
-\subsection{User Time}
+\subsubsection{User Time}
 
 \begin{figure}[hp!]
 	\centering
@@ -283,7 +106,8 @@ The following are the histograms of INC with some intermediate task lengths.
 		\includegraphics[scale=0.43]{u_s_time/120_sec_ut_hist.eps}
 		\label{fig:inc120_ut_hist}
 	}
-	\caption{User Time Histograms of INC104 and INC120~\label{fig:ut_hist5}}
+	\caption{User Time Histograms of INC104 and INC120: for the same 120-sec task length, 
+	we used {\it two different} bin sizes to see the influence of the choice of the bin size on the shape of histogram.~\label{fig:ut_hist5}}
 \end{figure}
 
 \begin{figure}[hp!]
@@ -340,7 +164,7 @@ The following are the histograms of INC with some intermediate task lengths.
 \vspace\fill
 \clearpage
 
-\subsection{System Time}
+\subsubsection{System Time}
 
 \begin{figure}[hp!]
 	\centering
@@ -414,10 +238,13 @@ The following are the histograms of INC with some intermediate task lengths.
 	\caption{System Time Histograms of INC2048 and INC4096~\label{fig:st_hist4}}
 \end{figure}
 
-\clearpage
 \pagebreak
+\clearpage
 
-\subsection{Correlation}
+\subsubsection{Correlational Analysis on Selected Runs}
+In this section we perform correlational analysis 
+between the user and system time of INC2048 and INC4096 runs 
+and selected measures of the daemons captured on the two runs.
 
 \begin{table}[h]
 \begin{center}
@@ -463,7 +290,8 @@ daemon write char & 0.11 & {\bf 0.32}\\ \hline
 \clearpage
 \newpage
 
-\subsection{Scatter Plots on Some Significant Correlations}
+%\subsection{Scatter Plots on Some Significant Correlations}
+\paragraph{Scatter Plots on Some Significant Correlations:} 
 The following scatter plots correspond to the correlations bold in Table~\ref{tab:corr_table}.
 
 \begin{figure}[htp!]
@@ -509,12 +337,14 @@ The following scatter plots correspond to the correlations bold in Table~\ref{ta
 \end{figure}
 
 \clearpage
+\pagebreak
 
-\subsection{Further Investigation of Some Samples}
+\paragraph{Detailed Measures on Some Significant Samples:} 
+The following tables show the breakdown of 
+measures of processes observed on some distinct samples (leftmost or rightmost) 
+in the selected runs.
 
-\subsubsection{Samples in Fig.~\ref{fig:corr_u_mnf}}
-
-\begin{table}[h]
+\begin{table}[htp!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 proc name (id) & u time & s time & min flt & maj flt & r bytes & r char & r sysc & w bytes & w char & w sysc\\ \hline
@@ -530,7 +360,7 @@ ntpd (28232) & 0 & 1 & 1 & 0 & 0 & 0 & 42 & 4096 & 7 & 0 \\ \hline
 \caption{Observed values of measures of processes on the leftmost sample in Fig.~\ref{fig:corr_u_mnf}~\label{tab:breakdown}}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htp!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 proc name (id) & u time & s time & min flt & maj flt & r bytes & r char & r sysc & w bytes & w char & w sysc\\ \hline
@@ -545,7 +375,7 @@ java (4108) & 0 & 0  & 20 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
 \caption{Observed values of measures of processes on the second rightmost sample in Fig.~\ref{fig:corr_u_mnf}~\label{tab:breakdown2}}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htp!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 proc name (id) & u time & s time & min flt & maj flt & r bytes & r char & r sysc & w bytes & w char & w sysc\\ \hline
@@ -575,12 +405,7 @@ bash (3616) & 0 & 0 & 131 & 0 & 0 & 0 & 0 & 0 & 61 & 0 \\ \hline
 \caption{Observed values of measures of processes on the rightmost sample in Fig.~\ref{fig:corr_u_mnf}~\label{tab:breakdown1}}
 \end{table}
 
-\clearpage
-\newpage
-
-\subsubsection{Samples in Fig.~\ref{fig:corr_s_wbytes}}
-
-\begin{table}[h]
+\begin{table}[htp!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 proc name (id) & u time & s time & min flt & maj flt & r bytes & r char & r sysc & w bytes & w char & w sysc\\ \hline
@@ -596,7 +421,7 @@ java (4585) & 0 & 0 & 20 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
 \caption{Observed values of measures of processes on the leftmost sample in Fig.~\ref{fig:corr_s_wbytes}~\label{tab:breakdown4}}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htp!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 proc name (id) & u time & s time & min flt & maj flt & r bytes & r char & r sysc & w bytes & w char & w sysc\\ \hline
@@ -633,7 +458,7 @@ bash (4889) & 0 & 0 & 165 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
 \caption{Observed values of measures of processes on the second rightmost sample in Fig.~\ref{fig:corr_s_wbytes}~\label{tab:breakdown5}}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htp!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 proc name (id) & u time & s time & min flt & maj flt & r bytes & r char & r sysc & w bytes & w char & w sysc\\ \hline
@@ -650,3 +475,6 @@ ntpd (28232) & 0 & 0 & 1 & 0 & 0 & 0 & 42 & 4096 & 7 & 0 \\ \hline
 \end{center}
 \caption{Observed values of measures of processes on the rightmost sample in Fig.~\ref{fig:corr_s_wbytes}~\label{tab:breakdown6}}
 \end{table}
+
+\clearpage
+\pagebreak
