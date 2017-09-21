@@ -339,6 +339,36 @@ exhibited in Section~\ref{sec:first_run}.
 \clearpage
 \pagebreak
 
+\paragraph{Fitting the Histograms in Bi-normal Distributions:}
+We ran Rob's code to obtain a bi-normal fit for each INC's run. 
+Table~\ref{tab:binormal_fit} exhibits the two means (modes), standard deviations, and scales for each of the INC runs.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|} \hline
+INC        & Mean 1 & Mean 2 & Std 1 & Std 2 & Scale 1 & Scale 2\\ \hline
+INC1      & 1.66  & 4.73 & 1.03 & 0.54 & 0.104788 & 0.895212\\ \hline
+INC2      & 2.33  & 7.07 & 2.38 & 0.54 & 0.159807 & 0.840193\\ \hline
+INC4      & 2.17  & 7.89 & 0.99 & 0.86 & 0.209242 & 0.790758\\ \hline
+INC8      & 3.51  & 9.15 & 1.10 & 1.08 & 0.388976 & 0.611024\\ \hline
+INC16    & 4.04  & 9.53 & 0.98 & 1.28 & 0.828952 & 0.171048\\ \hline
+INC32    & 2.76  & 8.26 & 1.28 & 1.12 & 0.725687 & 0.274313\\ \hline
+INC64    & 6.36  & 12.02 & 1.64 & 1.62 &  0.347095 & 0.652905\\ \hline
+INC128  & 4.21  & 8.64 & 1.82 & 3.40 & 0.410859 & 0.589141\\ \hline
+INC256  & 6.08  & 14.61  & 3.59 & 3.75 & 0.124312 & 0.875688\\ \hline
+INC512  & 1.60  & 12.43   & 11.51 & 4.47 & 0.075758 & 0.924242\\ \hline
+INC1024 & 1.13  & 18.88  & 14.99 & 6.01 & 0.055255 & 0.944745\\ \hline
+INC2048 & 29.93 & 52.92 & 8.53 & 6.59 & 1.001873 & -0.00187\\ \hline
+INC4096 & 39.57 & 98.00 & 12.41 & 8.19 & 0.939756 & 0.060244\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Two means in mode computed for each INC~\label{tab:binormal_fit}}
+\end{table}
+
+\clearpage
+\pagebreak
+
 %\subsection{Absolute and Relative Variance over Increasing Task Lengths}
 \paragraph{Absolute and Relative Variance over Increasing Task Lengths:}
 Figure~\ref{fig:cv_inc} exhibits absolute and relative variances over increasing task lengths. 
@@ -372,3 +402,4 @@ We also overlap a linear-square-fit of each case on the same figure.
 	}
 	\caption{Absolute and relative variances~\label{fig:cv_inc}}
 \end{figure}
+
