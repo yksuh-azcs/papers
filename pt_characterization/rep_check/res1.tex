@@ -339,7 +339,7 @@ exhibited in Section~\ref{sec:first_run}.
 \clearpage
 \pagebreak
 
-\paragraph{Fitting the Histograms in Bi-normal Distributions:}
+\paragraph{Fitting Histograms in Bi-Normal Distributions:}
 We ran Rob's code to obtain a bi-normal fit for each INC's run. 
 Table~\ref{tab:binormal_fit} exhibits the two means (modes), standard deviations, and scales for each of the INC runs.
 
@@ -365,6 +365,27 @@ INC4096 & 39.57 & 98.00 & 12.41 & 8.19 & 0.939756 & 0.060244\\ \hline
 \vspace{-.2in}
 \caption{Two means in mode computed for each INC~\label{tab:binormal_fit}}
 \end{table}
+
+\pagebreak
+\clearpage
+
+\begin{figure}[htp!]
+	\centering
+	\subfigure[Mean]{
+		\includegraphics[scale=0.6]{u_s_time/binormal_fit_mean.eps}
+		\label{fig:binormal_mean}
+	}
+	\subfigure[Standard Deviation]{
+		\includegraphics[scale=0.6]{u_s_time/binormal_fit_std.eps}
+		\label{fig:binormal_std}
+	}
+	\subfigure[Scale]{
+		\includegraphics[scale=0.6]{u_s_time/binormal_fit_scale.eps}
+		\label{fig:binormal_scale}
+	}
+	\caption{Plots of two means, standard deviations, and scales for each INC 
+	over increasing task length: based on Table~\ref{tab:binormal_fit}\label{fig:bnormal_Fit}}
+\end{figure}
 
 \clearpage
 \pagebreak
