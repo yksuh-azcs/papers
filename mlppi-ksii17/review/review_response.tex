@@ -184,38 +184,46 @@ We totally agree with you. The old Fig. 1 is not at a real figure. We feel that 
 The presented Wizard Architecture in Fig. 2 needs to be expanded. 
 }
 
-We significantly expanded the architecture, which is now {\color{blue}\underline{Fig. 1}}, with a specified description of each phase. In addition, 
-the figure now includes (1) the query workload example on the top and (2) the output solution 
-produced by the wizard on the bottom, for better clarification.
+We significantly expanded the architecture, which is now {\color{blue}\underline{Fig. 1}} on page~7, with a specified description of each phase. In addition, the figure now includes (1) the query workload text exemplified in the paper (on the top) and (2) the output solution 
+produced by the wizard (on the bottom), for better clarification.
 
 \rev{
 The table in Page3 does not have any caption to introduces besides, its location is badly organized.
 }
-Thanks for the comments. To address your concern, we put in tabular form not only that table with no caption but also 
-some other provided examples. We then positioned those new tables on the top of each page in the introduction in the revised.
+Thanks for the comments. To address your concern, we put in tabular form the table with its caption on page~2 (now, {\color{blue}Tab.~2}). 
+Note that we tabularized other examples for better exposition in the introduction.
 
 \rev{
 The main contribution of the paper is so limited and needs to be extended in Section 1. 
 } 
-
 We took out some contributions mentioned in Section 2 (now Section 3) and then incorporated them into the contribution paragraph (on page~5 
 in the revision), which is now substantially extended. 
 
 \rev{ 
 In the experiment environmental setting, the deployment in realistic datasets are missing and must be indicated for the reproduction of the future readers.  
 }
+
+%Even though our query workloads (similar to {\em q1} in Tab.~3) are synthetic, the queries were generated from a realistic query template, 
+%which is from customer cases like reports and form templates. The queries are of type joining a fact table and a dimension table in a popular benchmark, representing a real analytical workload. In addition, the proposed wizard allows for general expressions for partitioning definition as addressed in the solution paragraph in the introduction. Hence, the results on our workloads do not lose their validity on a real environment. Please refer to the third and subsequent paragraphs in Section~5.1 (on page 16).
+The synthetic queries used for our experiments were generated from a realistic query template, which is from customer cases like reports and form templates. The queries are of type joining a fact table and a dimension table in a popular benchmark, representing a real analytical workload. 
+In addition, the proposed wizard allows for general expressions for partitioning definition as addressed in the solution paragraph in the introduction. Hence, the results on our workloads do not lose their validity on a real environment. For more details, please refer to the Solution paragraph in the introduction and the third and subsequent paragraphs in Section~5.1.
  
 \rev{
 According to the bar-shaped results, the WIZARD does not provide optimal results compared to the state-of the arts. They must clearly be expressed how this cases can be used in the real-time scenarios. 
 }
 
+Your confusion comes from Figure 5 in the original submission. The proposed wizard obviously outperforms the compared approaches: no partitioning (NO PPI) and a human expert (EXP). For better clarification, we removed that figure and instead provided a comparison table. Again, our query workloads are from the real benchmark, SSB, and our algorithm is still applicable to any other type of analytical workload, since the search space is driven by the query predicates extracted from the workload.
+
 \rev{
-Also, Authors should give a more clear definition of the "application type" used in the paper. For example, what information of applications are used and how to obtain this information. 
+Also, Authors should give a more clear definition of the ``application type" used in the paper. For example, what information of applications are used and how to obtain this information. 
 }
+
+We understand your concern. The application type of the proposed wizard is a \underline{physical database design tool} (fundamentally different from several existing works [4--6]. Also note that any complex workload, giving many different partitioning options, can benefit from the automated wizard to find almost an optimal solution. For more details, please refer to the first, third, and fourth bullets in the Contribution paragraphs in the Introduction.
 
 \rev{
 Last but not least backs to the background which is limited and some hot-related works are missing that are listed in i)"Using imperialist competition algorithm for independent task scheduling in grid computing" and ii) "A hybrid metaheuristic algorithm for Job scheduling on computational grids" that addressed the analytical workload exploitation in the real case studies that must be added in the background to make your work holistic for the future readers.
 }
+
 OK, we now have some mentions of the above two works compared to our work. Also, we added these two in the references in the revision.
 
 \clearpage
@@ -239,6 +247,8 @@ A great suggestion. We have relocated the related work section right after the i
 \rev{
 3. Providing a comparison table could be useful for readers.
 }
+
+Yes, we do now provide Tab. 9 for better clarity on the comparison. 
 
 \rev{
 4. Conclusion is too long.
