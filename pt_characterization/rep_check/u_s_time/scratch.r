@@ -1,3 +1,12 @@
+#### FOR OUTPUT
+all_data <- cbind(all_inc,all_ss,ny_raw,nz_raw,ny,nz)
+colnames(all_data) <- c("TASK_LEN (in s)","SAMPLE_SIZE","RAW_BIN (in ms)","RAW_FREQ","NOR_PT","REL_FREQ")
+write.table(all_data, "all_freq_data.txt", sep="\t",row.names = F)
+
+x1 = read.csv(file="1_sec.dat",head=TRUE,sep="\t")
+
+
+
 nx <- c(x1_pt,x2_pt,x4_pt,x8_pt)
 ny <- c(y1_pt,y2_pt,y4_pt,y8_pt)
 nz <- c(z1_pt,z2_pt,z4_pt,z8_pt)

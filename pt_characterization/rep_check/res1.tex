@@ -307,14 +307,12 @@ Not available at this point, due to the labshelf server's unavailability for the
 \subsection{Summary}
 
 \paragraph{Stacked Histograms in a 3D Plot:}
-Figure~\ref{fig:hist3d} represents a 3D plot of collecting the histograms of PT 
-exhibited in Section~\ref{sec:1st_pt}. 
-Note that the histograms from the task lengths of 8192 and 16384 seconds 
-to be shown in Figures~\ref{fig:inc8192_r2_hist_v5} and~\ref{fig:inc16384_r2_hist_v5}. 
-are brought into Figure~\ref{fig:hist3d} for completeness. The x-, y-, z-axes 
-indicate the normalized PT ranging from 0 to 100, task length in log scale, 
-and relative frequency of each histogram, such that for each INC 
-it is scaled from 0 (the shortest) to 100 (the highest). 
+Figure~\ref{fig:hist3d} represents a 3D plot of collecting the histograms of PT in Section~\ref{sec:1st_pt}. 
+Note that we additionally include the histograms from the task lengths of 8192 and 16384 seconds, which will be shown in Figures~\ref{fig:inc8192_r2_hist_v5} and~\ref{fig:inc16384_r2_hist_v5} (on page~47). See the legend in the right hand side of the figure, for more details about specific task length information.
+%To obtain the better shape, we remove from those histograms outliers identified via the second step of EMPv5.
+The x-axis corresponds to the normalized PT relative to the minimum, ranging 0 to 100, the y-axis to task length in log scale, and the z-axis to the normalized frequency relative to the highest bar for each histogram. 
+
+There are several interesting things to notice. First, INC32 has some empty bins in the raw histogram in Figure ~\ref{fig:inc32_r1_et_hist_v5}, thereby zero value on the x-axis for that histogram in brown in Figure~\ref{fig:hist3d}.
 
 \begin{figure}[htp!]
 %\vspace{-.3in}
@@ -322,7 +320,7 @@ it is scaled from 0 (the shortest) to 100 (the highest).
 	%\includegraphics[scale=0.6,angle=270]{u_s_time/3d_plot.eps}\label{fig:3d_plot}
 	%\includegraphics[scale=0.6]{u_s_time/new_3d_plot}\label{fig:3d_plot}
 	\includegraphics[scale=1]{u_s_time/new_3d_plot}\label{fig:3d_plot}
-	\caption{3D histograms on INC~\label{fig:hist3d}}
+	\caption{3D histograms of PT on doubly-increasing INC~\label{fig:hist3d}}
 \end{figure}
 
 \pagebreak
@@ -339,9 +337,10 @@ exhibited in Section~\ref{sec:first_run}.
 \clearpage
 \pagebreak
 
-\paragraph{Fitting Histograms in Bi-Normal Distributions:}
-We ran Rob's code to obtain a bi-normal fit for each INC's run. 
-Table~\ref{tab:binormal_fit} exhibits the two means (modes), standard deviations, and scales for each of the INC runs.
+\paragraph{Fitting PT Histograms in Bi-Normal Distributions:}
+We ran Rob's code to obtain a bi-normal fit for each INC's PT histogram 
+in Section~\ref{sec:first_run}. 
+Table~\ref{tab:binormal_fit} exhibits the two means (modes), standard deviations, and scales for the PT histogram associated with each INC.
 
 \begin{table}[h]
 \begin{center}
