@@ -205,9 +205,11 @@ In the experiment environmental setting, the deployment in realistic datasets ar
 
 %Even though our query workloads (similar to {\em q1} in Tab.~3) are synthetic, the queries were generated from a realistic query template, 
 %which is from customer cases like reports and form templates. The queries are of type joining a fact table and a dimension table in a popular benchmark, representing a real analytical workload. In addition, the proposed wizard allows for general expressions for partitioning definition as addressed in the solution paragraph in the introduction. Hence, the results on our workloads do not lose their validity on a real environment. Please refer to the third and subsequent paragraphs in Section~5.1 (on page 16).
-The synthetic queries used for our experiments were generated from a realistic query template, which is from customer cases like reports and form templates. The queries are of type joining a fact table and a dimension table in a popular benchmark, representing a real analytical workload. 
-In addition, the proposed wizard allows for general expressions for partitioning definition as addressed in the solution paragraph in the introduction. Hence, the results on our workloads do not lose their validity on a real environment. For more details, please refer to the Solution paragraph in the introduction and the third and subsequent paragraphs in Section~5.1.
- 
+%The synthetic queries used for our experiments were generated from a realistic query template, which is from customer cases like reports and form templates. The queries are of type joining a fact table and a dimension table in a popular benchmark, representing a real analytical workload. 
+%In addition, the proposed wizard allows for general expressions for partitioning definition as addressed in the solution paragraph in the introduction. Hence, the results on our workloads do not lose their validity on a real environment. For more details, please refer to the Solution paragraph in the introduction and the third and subsequent paragraphs in Section~5.1.
+Please see the paragraph of `Workload Generation \& Deployment' in Section~5.1: more specifically, the third---fifth
+paragraphs in that section, where we address the use of synthetic queries in general from to represent a realistic scenario and have a mention of reproducibility of our work.
+
 \rev{
 According to the bar-shaped results, the WIZARD does not provide optimal results compared to the state-of the arts. They must clearly be expressed how this cases can be used in the real-time scenarios. 
 }
@@ -218,7 +220,7 @@ Your confusion comes from Figure 5 in the original submission. The proposed wiza
 Also, Authors should give a more clear definition of the ``application type" used in the paper. For example, what information of applications are used and how to obtain this information. 
 }
 
-We understand your concern. The application type of the proposed wizard is a \underline{physical database design tool} (fundamentally different from several existing works [4--6]. Also note that any complex workload, giving many different partitioning options, can benefit from the automated wizard to find almost an optimal solution. For more details, please refer to the first, third, and fourth bullets in the Contribution paragraphs in the Introduction.
+The application type of the proposed wizard is a \underline{physical database design tool} (fundamentally different from several existing works [4--6]. Also note that any complex workload, giving many different partitioning options, can benefit from the automated wizard to find almost an optimal solution. For more details, please refer to the first, third, and fourth bullets in the Contribution paragraphs in the Introduction.
 
 \rev{
 Last but not least backs to the background which is limited and some hot-related works are missing that are listed in i)"Using imperialist competition algorithm for independent task scheduling in grid computing" and ii) "A hybrid metaheuristic algorithm for Job scheduling on computational grids" that addressed the analytical workload exploitation in the real case studies that must be added in the background to make your work holistic for the future readers.
@@ -238,21 +240,25 @@ The paper could be published after addressing following comments:
 1. Abstract could be better write, in this reviewer point of view, the current abstract is not comprehensive.
 }
  
+OK, we rewrote the abstract. 
+ 
 \rev{
 2. The manuscript could be better organize as well. For instance, the related works section could be placed after introduction section no before conclusion.
 }
-A great suggestion. We have relocated the related work section right after the introduction in the revised manuscript. Note that there are also some  references newly added in that section for completeness.
+A great suggestion. We have relocated the related work section right after the introduction in the revised manuscript. Note also that there are some new references mentioned in the last paragraph of the related work.
 
 
 \rev{
 3. Providing a comparison table could be useful for readers.
 }
 
-Yes, we do now provide Tab. 9 for better clarity on the comparison. 
+Yes, we do now provide Tab. 9 for better clarity on the comparison.
 
 \rev{
 4. Conclusion is too long.
 }
+
+We shortened the Conclusion section. Please check page~20.
 
 \rev{
 5. Introduction section need more references.
