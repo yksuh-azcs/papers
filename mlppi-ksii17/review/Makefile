@@ -64,6 +64,7 @@ clean:
 		    -name "*.bbl" -or \
 		    -name "*converted*.pdf" -or \
 		    -name "*.ps" -or \
+		    -name "*.gz" -or \
 		    -name "*.spl" -or \
 		    -name "*.blg" -or \
 		    -name "*.brf" -or \
