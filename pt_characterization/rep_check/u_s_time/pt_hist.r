@@ -512,8 +512,8 @@ x = read.csv(file="120_sec.dat",head=TRUE,sep="\t")
 x <- subset(x, x$ITERNUM <= numSamples)
 setEPS()
 postscript("120_sec_pt_hist.eps")
-binsize=1
-#binsize=2
+#binsize=1
+binsize=2
 x <- subset(x, x$ITERNUM != 80 & x$ITERNUM != 797)
 sd(x$PRTIME)
 xmin <-min(x$PRTIME)
