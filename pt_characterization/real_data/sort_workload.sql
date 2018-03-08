@@ -1,5 +1,5 @@
 -- Writer: Young-Kyoon Suh (yksuh@cs.arizona.edu)
--- Date: 10/11/16
+-- Date: 02/24/18
 -- Description: Define tables/views for EMP evaluation on spec cpu programs 
 
 DROP TABLE SORT_RUN_PROC_INFO CASCADE CONSTRAINTS;
@@ -20,7 +20,11 @@ CREATE TABLE SORT_RUN_PROC_INFO AS
 	--and proc.processname NOT IN ('specCpu')
 	and arr.algrunid IN (
                 -- SORT100K, SORT200K, SORT400K, SORT800K, SORT1600K, SORT3200K, SORT6400K
-                13200,12760,13620,12800,13800,13860,13960  
+                --13200,12760,13620,12800,13800,13860,13960  
+		-- 250,500,6400,12800
+		19820,19860,19940,21920,
+		-- 1160,2320
+		22740,22741
         )
 	group by arr.algrunid, ar.exp_run_time, arr.iternum, arr.runtime, proc.processname
 	order by iternum, pt desc;
@@ -45,7 +49,7 @@ CREATE TABLE SORT_RUN_Stat AS
 	group by erpi.algrunid, erpi.exp_run_time, erpi.processname
 	order by exp_run_time;
 ALTER TABLE SORT_RUN_Stat ADD PRIMARY KEY (algrunid, exp_run_time);
--- select * from SORT_RUN_Stat;
+-- select * from SORT_RUN_Stat
 
 DROP TABLE SORT_RUN_TASK_TIME CASCADE CONSTRAINTS;
 CREATE TABLE SORT_RUN_TASK_TIME AS
@@ -76,7 +80,14 @@ ALTER TABLE SORT_RUN_TASK_TIME ADD PRIMARY KEY (algrunid, exp_run_time);
      13860	   3200    4410719
      13960	   6400   17684424
 
-7 rows selected.
+  ALGRUNID EXP_RUN_TIME  TASK_TIME
+---------- ------------ ----------
+     19820	     25        229
+     19860	     50       1019
+     22740	   1160     582308
+     22741	   2320    2316517
+     19940	   6400   17709464
+
 
 DROP TABLE SORT_CUTOFF_Info CASCADE CONSTRAINTS;
 CREATE TABLE SORT_CUTOFF_Info AS
@@ -116,7 +127,8 @@ CREATE TABLE SORT_CUTOFF_Info AS
     and dpi.pt > ild.cutoff_pt 
     order by exp_run_time, iternum;
 ALTER TABLE SORT_CUTOFF_Info ADD PRIMARY KEY (exp_run_time, iternum);
--- select * from SORT_CUTOFF_Info where iternum <= 10 order by exp_run_time, iternum
+-- select * from SORT_CUTOFF_Info where iternum <= 10 order by exp_run_time, iternum 
+select * from SORT_CUTOFF_Info order by exp_run_time, iternum
 
 EXP_RUN_TIME	ITERNUM
 ------------ ----------
@@ -135,6 +147,10 @@ EXP_RUN_TIME	ITERNUM
 	6400	     10
 
 13 rows selected.
+
+EXP_RUN_TIME	ITERNUM
+------------ ----------
+	6400	      2
 
 select t1.exp_run_time, coalesce(count(distinct t0.iternum), 0) as numOutliers, max(t1.iternum) as numTrials
 from SORT_RUN_PROC_INFO t1 
