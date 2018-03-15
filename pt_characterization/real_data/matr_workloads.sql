@@ -23,7 +23,8 @@ CREATE TABLE MATR2_RUN_PROC_INFO AS
 		-- and arr.iternum <= 10 -- the first 10 
                 -- MATR2K
                 --13400
-		22280, 22300,22320,22340,22420,22480,21860
+		--22280, 22300,22320,22340,22420,22480,21860
+		23201,23261,23301,23361
 	   -- and arr.iternum > 20 and arr.iternum <= 30 -- middle 10 
         )
 	group by arr.algrunid, ar.exp_run_time, arr.iternum, arr.runtime, proc.processname
@@ -86,7 +87,12 @@ ALTER TABLE MATR2_RUN_TASK_TIME ADD PRIMARY KEY (algrunid, exp_run_time);
      22480	   8192      11249
      21860	  16000      21971
 
-7 rows selected.
+  ALGRUNID EXP_RUN_TIME  TASK_TIME
+---------- ------------ ----------
+     23201	   1024       3027
+     23261	   2048      24275
+     23301	   4096     224137
+     23361	   8192    6478179
 
 
 DROP TABLE MATR_CUTOFF_Info CASCADE CONSTRAINTS;
@@ -131,14 +137,72 @@ ALTER TABLE MATR_CUTOFF_Info ADD PRIMARY KEY (exp_run_time, iternum);
 
 EXP_RUN_TIME	ITERNUM
 ------------ ----------
-	8000	      1
-	8000	     10
-	8000	     18
-	8000	     25
-	8000	     26
-	8000	     34
+	4096	    285
+	8192	      1
+	8192	     16
+	8192	     28
+	8192	     33
+	8192	     36
+	8192	     43
+	8192	     45
+	8192	     60
+	8192	     69
+	8192	     75
 
-6 rows selected.
+EXP_RUN_TIME	ITERNUM
+------------ ----------
+	8192	     76
+	8192	     77
+	8192	     82
+	8192	     83
+	8192	     84
+	8192	     91
+	8192	     92
+	8192	     98
+	8192	    103
+	8192	    110
+	8192	    114
+
+EXP_RUN_TIME	ITERNUM
+------------ ----------
+	8192	    119
+	8192	    127
+	8192	    148
+	8192	    149
+	8192	    151
+	8192	    153
+	8192	    155
+	8192	    157
+	8192	    158
+	8192	    159
+	8192	    167
+
+EXP_RUN_TIME	ITERNUM
+------------ ----------
+	8192	    173
+	8192	    176
+	8192	    178
+	8192	    184
+	8192	    187
+	8192	    190
+	8192	    191
+	8192	    201
+	8192	    210
+	8192	    225
+	8192	    231
+
+EXP_RUN_TIME	ITERNUM
+------------ ----------
+	8192	    232
+	8192	    234
+	8192	    249
+	8192	    254
+	8192	    255
+	8192	    260
+	8192	    283
+	8192	    288
+
+52 rows selected.
 
 DROP TABLE MATR2_RUN_V4_Stat CASCADE CONSTRAINTS;
 CREATE TABLE MATR2_RUN_V4_Stat AS

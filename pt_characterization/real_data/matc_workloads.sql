@@ -24,7 +24,8 @@ CREATE TABLE MATR2_RUN_PROC_INFO AS
                 --MATC2K
                --13420
                 -- MATC250, MATC500, MATC1K, MATC2K, MATC4K, MATC8K, MATC16K
-                22280,22300,22320,22340,22420,22480,21840
+                --22280,22300,22320,22340,22420,22480,21840
+		23181,23241,23321,23401
 	   -- and arr.iternum > 20 and arr.iternum <= 30 -- middle 10 
         )
 	group by arr.algrunid, ar.exp_run_time, arr.iternum, arr.runtime, proc.processname
@@ -83,7 +84,12 @@ ALTER TABLE MATC2_RUN_TASK_TIME ADD PRIMARY KEY (algrunid, exp_run_time);
      22480	   8192      11249
      21840	  16000      21965
 
-7 rows selected.
+  ALGRUNID EXP_RUN_TIME  TASK_TIME
+---------- ------------ ----------
+     23181	   1024       3014
+     23241	   2048      33167
+     23321	   4096     344097
+     23401	   8192    2057740
 
 DROP TABLE MATC_CUTOFF_Info CASCADE CONSTRAINTS;
 CREATE TABLE MATC_CUTOFF_Info AS
