@@ -57,12 +57,99 @@ axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
 ### MATC1024
-numSamples <- 40
+numSamples <- 300
 x = read.csv(file="MATC1024.dat",head=TRUE,sep="\t")
-x <- subset(x, x$ITERNUM <= numSamples)
+x <- subset(x, x$ITERNUM <= numSamples & x$ITERNUM > 15)
 setEPS()
-postscript("matc1024_dist2.eps")
+postscript("matc1024_dist.eps")
 binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+xmin
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 150
+plot(h, xaxt='n', freq=TRUE,ylim=c(0,ymax), col="blue", main=paste("PT frequency on MATC1024 (sample size: ",numSamples,")"), 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+#axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+### MATC2048
+numSamples <- 300
+x = read.csv(file="MATC2048.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples & x$ITERNUM > 5)
+setEPS()
+postscript("matc2048_dist.eps")
+binsize=1
+#x <- subset(x, x$ITERNUM != 9394)
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+xmin
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 100
+plot(h, xaxt='n', freq=TRUE,ylim=c(0,ymax), col="blue", main=paste("PT frequency on MATC2048 (sample size: ",numSamples,")"), 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+#axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+### MATC4096
+numSamples <- 300
+x = read.csv(file="MATC4096.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples & x$ITERNUM > 2)
+setEPS()
+postscript("matc4096_dist.eps")
+binsize=1
+#x <- subset(x, x$ITERNUM != 9394)
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+xmin
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 30
+plot(h, xaxt='n', freq=TRUE,ylim=c(0,ymax), col="blue", main=paste("PT frequency on MATC4096 (sample size: ",numSamples,")"), 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+#axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,binsize))
+dev.off()
+
+### MATC8192
+numSamples <- 300
+x = read.csv(file="MATC8192.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples & x$ITERNUM > 2)
+setEPS()
+postscript("matc8192_dist.eps")
+binsize=2
+#x <- subset(x, x$ITERNUM != 9394)
 x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
 x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
 x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
@@ -77,98 +164,11 @@ xmax <-max(x$PRTIME)
 ymax <- max(h$counts)
 ymax <- ceiling(ymax/100)*100
 ymax <- 25
-plot(h, xaxt='n', freq=TRUE,ylim=c(0,ymax), col="blue", main='PT frequency on MATC1024 with 40 samples', 
+plot(h, xaxt='n', freq=TRUE,ylim=c(0,ymax), col="blue", main=paste("PT frequency on MATC8192 (sample size: ",numSamples,")"), 
 sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
 xlab='PT (ms)', ylab=expression('Frequency'))
 #axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
-dev.off()
-
-### MATC2048
-numSamples <- 40
-x = read.csv(file="MATC2048.dat",head=TRUE,sep="\t")
-x <- subset(x, x$ITERNUM <= numSamples)
-setEPS()
-postscript("matc2048_dist2.eps")
-binsize=1
-#x <- subset(x, x$ITERNUM != 9394)
-x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
-x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
-x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
-xmin <-min(x$PRTIME)
-xmax <-max(x$PRTIME)
-xmin
-xmax
-nbins <- ceiling((xmax-xmin) / binsize)
-h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-xmin <-min(x$PRTIME)
-xmax <-max(x$PRTIME)
-ymax <- max(h$counts)
-ymax <- ceiling(ymax/100)*100
-ymax <- 20
-plot(h, xaxt='n', freq=TRUE,ylim=c(0,ymax), col="blue", main='PT frequency on MATC2048 with 40 samples', 
-sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
-xlab='PT (ms)', ylab=expression('Frequency'))
-#axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
-dev.off()
-
-### MATC4096
-numSamples <- 40
-x = read.csv(file="MATC4096.dat",head=TRUE,sep="\t")
-x <- subset(x, x$ITERNUM <= numSamples)
-setEPS()
-postscript("matc4096_dist2.eps")
-binsize=1
-#x <- subset(x, x$ITERNUM != 9394)
-x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
-x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
-x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
-xmin <-min(x$PRTIME)
-xmax <-max(x$PRTIME)
-xmin
-xmax
-nbins <- ceiling((xmax-xmin) / binsize)
-h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-xmin <-min(x$PRTIME)
-xmax <-max(x$PRTIME)
-ymax <- max(h$counts)
-ymax <- ceiling(ymax/100)*100
-ymax <- 10
-plot(h, xaxt='n', freq=TRUE,ylim=c(0,ymax), col="blue", main='PT frequency on MATC4096 with 40 samples', 
-sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
-xlab='PT (ms)', ylab=expression('Frequency'))
-#axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
-dev.off()
-
-### MATC8192
-numSamples <- 40
-x = read.csv(file="MATC8192.dat",head=TRUE,sep="\t")
-x <- subset(x, x$ITERNUM <= numSamples)
-setEPS()
-postscript("matc8192_dist2.eps")
-binsize=1
-#x <- subset(x, x$ITERNUM != 9394)
-x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
-x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
-x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
-xmin <-min(x$PRTIME)
-xmax <-max(x$PRTIME)
-xmin
-xmax
-nbins <- ceiling((xmax-xmin) / binsize)
-h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
-xmin <-min(x$PRTIME)
-xmax <-max(x$PRTIME)
-ymax <- max(h$counts)
-ymax <- ceiling(ymax/100)*100
-ymax <- 15
-plot(h, xaxt='n', freq=TRUE,ylim=c(0,ymax), col="blue", main='PT frequency on MATC8192 with 40 samples', 
-sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
-xlab='PT (ms)', ylab=expression('Frequency'))
-#axis(side=1,at=seq(min(h$mids),max(h$mids)+binsize,binsize),labels=seq(ceiling(min(h$mids)),ceiling(max(h$mids))+binsize,binsize))
-axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,binsize))
 dev.off()
 
 numSamples <- 40

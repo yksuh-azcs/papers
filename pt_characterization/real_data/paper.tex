@@ -61,8 +61,8 @@ different real-world programs with varying input sizes.
 
 In this section we present histogram data 
 for two main programs: {\it insertion sort} and {\it matrix multiplication}. 
-For the runs of these programs, we varied their input sizes by 2{\small $\times$} 
-and measured execution times of the programs over each input size. 
+For the runs of these programs, we varied their input sizes by 2{\small $\times$} while trying 
+some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. 
 
 \subsection{Insertion sort~\label{sec:sort}} 
 This section shows a series of histograms of an insertion sorting program that 
@@ -82,23 +82,31 @@ resulted in disturbing the rendering of a clean distribution.
 
 \begin{figure}[h]
 	\centering
-	\subfigure[PT frequency on SORT25]{
-		\includegraphics[scale=0.43]{sort25_dist.eps}
-		\label{fig:sort25_dist}
-	}
-	\subfigure[PT frequency on SORT50]{
-		\includegraphics[scale=0.43]{sort50_dist.eps}
-		\label{fig:sort50_dist}
-	}
+%	\subfigure[PT frequency on SORT25]{
+%		\includegraphics[scale=0.43]{sort25_dist.eps}
+%		\label{fig:sort25_dist}
+%	}
+%	\subfigure[PT frequency on SORT50]{
+%		\includegraphics[scale=0.43]{sort50_dist.eps}
+%		\label{fig:sort50_dist}
+%	}
 	\subfigure[PT frequency on SORT100]{
 		\includegraphics[scale=0.43]{sort100_dist.eps}
 		\label{fig:sort100_dist}
+	}
+	\subfigure[PT frequency on SORT144]{
+		\includegraphics[scale=0.43]{sort144_dist.eps}
+		\label{fig:sort144_dist}
 	}
 	\subfigure[PT frequency on SORT200]{
 		\includegraphics[scale=0.43]{sort200_dist.eps}
 		\label{fig:sort200_dist}
 	}
-	\caption{PT Histograms of SORT25 ... SORT200~\label{fig:sort1}}
+	\subfigure[PT frequency on SORT288]{
+		\includegraphics[scale=0.43]{sort288_dist.eps}
+		\label{fig:sort288_dist}
+	}
+	\caption{PT Histograms of SORT25 ... SORT288~\label{fig:sort1}}
 \end{figure}
 
 \clearpage
@@ -110,43 +118,64 @@ resulted in disturbing the rendering of a clean distribution.
 		\includegraphics[scale=0.43]{sort400_dist.eps}
 		\label{fig:sort400_dist}
 	}
+	\subfigure[PT frequency on SORT580]{
+		\includegraphics[scale=0.43]{sort580_dist.eps}
+		\label{fig:sort588_dist}
+	}
 	\subfigure[PT frequency on SORT800]{
 		\includegraphics[scale=0.43]{sort800_dist.eps}
 		\label{fig:sort800_dist}
 	}
+	\subfigure[PT frequency on SORT1000]{
+		\includegraphics[scale=0.43]{sort1000_dist.eps}
+		\label{fig:sort1000_dist}
+	}
+	\caption{PT Histograms of SORT400 ... SORT1000~\label{fig:sort2}}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
 	\subfigure[PT frequency on SORT1160]{
 		\includegraphics[scale=0.43]{sort1160_dist.eps}
 		\label{fig:sort1160_dist}
 	}
-	\caption{PT Histograms of SORT400 ... SORT1160~\label{fig:sort2}}
-\end{figure}
-
-\begin{comment}
-\clearpage
-\pagebreak
-
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on SORT2320 (Will be updated with the rest.)]{
+	\subfigure[PT frequency on SORT2320 (not complete)]{
 		\includegraphics[scale=0.43]{sort2320_dist.eps}
 		\label{fig:sort2320_dist}
 	}
-	\subfigure[PT frequency on SORT3200]{
-		\includegraphics[scale=0.43]{sort3200_dist.eps}
-		\label{fig:sort3200_dist}
-	}
-	\\
-	\subfigure[PT frequency on SORT4640]{
-		%\includegraphics[scale=0.43]{sort4640_dist.eps}
-		\framebox(200,200){Will be available soon.}
-		\label{fig:sort4640_dist}
-	}
-	\subfigure[PT frequency on SORT6400]{
-		\includegraphics[scale=0.43]{sort6400_dist.eps}
-		\label{fig:sort6400_dist}
-	}
-	\caption{PT Histograms of SORT2320 ... SORT6400~\label{fig:sort3}}
+	\caption{PT Histograms of SORT1160 ... SORT2320~\label{fig:sort3}}
 \end{figure}
+
+%\begin{comment}
+
+%\clearpage
+%\pagebreak
+%
+%\begin{figure}[h]
+%	\centering
+%	\subfigure[PT frequency on SORT2320 (Will be updated with the rest.)]{
+%		\includegraphics[scale=0.43]{sort2320_dist.eps}
+%		\label{fig:sort2320_dist}
+%	}
+%	\subfigure[PT frequency on SORT3200]{
+%		\includegraphics[scale=0.43]{sort3200_dist.eps}
+%		\label{fig:sort3200_dist}
+%	}
+%	\\
+%	\subfigure[PT frequency on SORT4640]{
+%		%\includegraphics[scale=0.43]{sort4640_dist.eps}
+%		\framebox(200,200){Will be available soon.}
+%		\label{fig:sort4640_dist}
+%	}
+%	\subfigure[PT frequency on SORT6400]{
+%		\includegraphics[scale=0.43]{sort6400_dist.eps}
+%		\label{fig:sort6400_dist}
+%	}
+%	\caption{PT Histograms of SORT2320 ... SORT6400~\label{fig:sort3}}
+%\end{figure}
+
+\clearpage
+\pagebreak
 
 \subsection{Matrix Multiplication~\label{sec:mm}} 
 
@@ -171,89 +200,89 @@ histograms of the execution times measured on
 the same matrix multiplication program in column major 
 as the input sizes grows. 
 
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on MATC250]{
-		\includegraphics[scale=0.43]{matc250_dist.eps}
-		\label{fig:matc250_dist}
-	}
-	\subfigure[PT frequency on MATC500]{
-		\includegraphics[scale=0.43]{matc500_dist.eps}
-		\label{fig:matc500_dist}
-	}
-	\subfigure[PT frequency on MATC1024]{
-		\includegraphics[scale=0.43]{matc1024_dist2.eps}
-		\label{fig:matc1024_dist}
-	}
-	\subfigure[PT frequency on MATC1440]{
-		\includegraphics[scale=0.43]{matc1440_dist.eps}
-		\label{fig:matc1440_dist}
-	}
-	\caption{PT Histograms of MATC250 ... MATC1440~\label{fig:matc}}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on MATC2048]{
-		\includegraphics[scale=0.43]{matc2048_dist2.eps}
-		\label{fig:matc2048_dist}
-	}
-	\subfigure[PT frequency on MATC2880]{
-		\includegraphics[scale=0.43]{matc2880_dist.eps}
-		\label{fig:matc2880_dist}
-	}	
-	\subfigure[PT frequency on MATC4096]{
-		\includegraphics[scale=0.43]{matc4096_dist2.eps}
-		\label{fig:matc4096_dist}
-	}	
-	\subfigure[PT frequency on MATC5760]{
-		\includegraphics[scale=0.43]{matc5760_dist.eps}
-		\label{fig:matc5760_dist}
-	}	
-	\caption{PT Histograms of MATC2048 ... MATC5760~\label{fig:matc2}}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on MATC8192]{
-		\includegraphics[scale=0.43]{matc8192_dist2.eps}
-		\label{fig:matc8192_dist}
-	}
-	\subfigure[PT frequency on MATC11520]{
-		\includegraphics[scale=0.43]{matc11520_dist.eps}
-		\label{fig:matc11520_dist}
-	}
-	\subfigure[PT frequency on MATC16000]{
-		\includegraphics[scale=0.43]{matc16000_dist.eps}
-		\label{fig:matc16000_dist}
-	}
-	\subfigure[PT frequency on MATC23040]{
-		\includegraphics[scale=0.43]{matc23040_dist.eps}
-		\label{fig:matc23040_dist}
-	}
-	\caption{PT Histograms of MATC8192 ... MATC23040~\label{fig:matc3}}
-\end{figure}
-
 %\begin{figure}[h]
 %	\centering
-%	\subfigure[PT frequency on MATC1000]{
-%		\includegraphics[scale=0.43]{matc1000_dist.eps}
-%		\label{fig:matc100_dist}
+%	\subfigure[PT frequency on MATC250]{
+%		\includegraphics[scale=0.43]{matc250_dist.eps}
+%		\label{fig:matc250_dist}
 %	}
-%	\subfigure[PT frequency on MATC2000]{
-%		\includegraphics[scale=0.43]{matc2000_dist.eps}
-%		\label{fig:matc200_dist}
+%	\subfigure[PT frequency on MATC500]{
+%		\includegraphics[scale=0.43]{matc500_dist.eps}
+%		\label{fig:matc500_dist}
 %	}
-%	\subfigure[PT frequency on MATC4000]{
-%		\includegraphics[scale=0.43]{matc4000_dist.eps}
-%		\label{fig:matc400_dist}
+%	\subfigure[PT frequency on MATC1024]{
+%		\includegraphics[scale=0.43]{matc1024_dist2.eps}
+%		\label{fig:matc1024_dist}
 %	}
-%	\subfigure[PT frequency on MATC8000]{
-%		\includegraphics[scale=0.43]{matc8000_dist.eps}
-%		\label{fig:matc800_dist}
+%	\subfigure[PT frequency on MATC1440]{
+%		\includegraphics[scale=0.43]{matc1440_dist.eps}
+%		\label{fig:matc1440_dist}
 %	}
-%	\caption{PT Histograms of MATC1000 ... MATC8000~\label{fig:matc}}
+%	\caption{PT Histograms of MATC250 ... MATC1440~\label{fig:matc}}
 %\end{figure}
+%
+%\begin{figure}[h]
+%	\centering
+%	\subfigure[PT frequency on MATC2048]{
+%		\includegraphics[scale=0.43]{matc2048_dist2.eps}
+%		\label{fig:matc2048_dist}
+%	}
+%	\subfigure[PT frequency on MATC2880]{
+%		\includegraphics[scale=0.43]{matc2880_dist.eps}
+%		\label{fig:matc2880_dist}
+%	}	
+%	\subfigure[PT frequency on MATC4096]{
+%		\includegraphics[scale=0.43]{matc4096_dist2.eps}
+%		\label{fig:matc4096_dist}
+%	}	
+%	\subfigure[PT frequency on MATC5760]{
+%		\includegraphics[scale=0.43]{matc5760_dist.eps}
+%		\label{fig:matc5760_dist}
+%	}	
+%	\caption{PT Histograms of MATC2048 ... MATC5760~\label{fig:matc2}}
+%\end{figure}
+%
+%\begin{figure}[h]
+%	\centering
+%	\subfigure[PT frequency on MATC8192]{
+%		\includegraphics[scale=0.43]{matc8192_dist2.eps}
+%		\label{fig:matc8192_dist}
+%	}
+%	\subfigure[PT frequency on MATC11520]{
+%		\includegraphics[scale=0.43]{matc11520_dist.eps}
+%		\label{fig:matc11520_dist}
+%	}
+%	\subfigure[PT frequency on MATC16000]{
+%		\includegraphics[scale=0.43]{matc16000_dist.eps}
+%		\label{fig:matc16000_dist}
+%	}
+%	\subfigure[PT frequency on MATC23040]{
+%		\includegraphics[scale=0.43]{matc23040_dist.eps}
+%		\label{fig:matc23040_dist}
+%	}
+%	\caption{PT Histograms of MATC8192 ... MATC23040~\label{fig:matc3}}
+%\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on MATC1K]{
+		\includegraphics[scale=0.43]{matc1024_dist.eps}
+		\label{fig:matc1k_dist}
+	}
+	\subfigure[PT frequency on MATC2K]{
+		\includegraphics[scale=0.43]{matc2048_dist.eps}
+		\label{fig:matc2k_dist}
+	}
+	\subfigure[PT frequency on MATC4K]{
+		\includegraphics[scale=0.43]{matc4096_dist.eps}
+		\label{fig:matc4k_dist}
+	}
+	\subfigure[PT frequency on MATC8K]{
+		\includegraphics[scale=0.43]{matc8192_dist.eps}
+		\label{fig:matc8k_dist}
+	}
+	\caption{PT Histograms of MATC1024 ... MATC8192~\label{fig:matc}}
+\end{figure}
 
 \clearpage
 \pagebreak
@@ -264,94 +293,94 @@ Figure~\ref{fig:matc} shows a series of
 histograms of the execution times measured on 
 the same matrix multiplication program in row major as the input sizes grows. 
 
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on MATR250]{
-		\includegraphics[scale=0.43]{matr250_dist.eps}
-		\label{fig:matr250_dist}
-	}
-	\subfigure[PT frequency on MATR500]{
-		\includegraphics[scale=0.43]{matr500_dist.eps}
-		\label{fig:matr500_dist}
-	}
-	\subfigure[PT frequency on MATR1024]{
-		\includegraphics[scale=0.43]{matr1024_dist2.eps}
-		\label{fig:matr1024_dist}
-	}
-	\subfigure[PT frequency on MATR1440]{
-		\includegraphics[scale=0.43]{matr1440_dist.eps}
-		\label{fig:matr1440_dist}
-	}
-	\caption{PT Histograms of MATR250 ... MATR1440~\label{fig:matr}}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on MATR2048]{
-		\includegraphics[scale=0.43]{matr2048_dist2.eps}
-		\label{fig:matr2048_dist}
-	}
-	\subfigure[PT frequency on MATR2880]{
-		\includegraphics[scale=0.43]{matr2880_dist.eps}
-		\label{fig:matr2880_dist}
-	}	
-	\subfigure[PT frequency on MATR4096]{
-		\includegraphics[scale=0.43]{matr4096_dist2.eps}
-		\label{fig:matr4096_dist}
-	}	
-	\subfigure[PT frequency on MATR5760]{
-		\includegraphics[scale=0.43]{matr5760_dist.eps}
-		\label{fig:matr5760_dist}
-	}	
-	\caption{PT Histograms of MATR2048 ... MATR5760~\label{fig:matr2}}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on MATR8192]{
-		\includegraphics[scale=0.43]{matr8192_dist2.eps}
-		\label{fig:matr8192_dist}
-	}
-	\subfigure[PT frequency on MATR11520]{
-		\includegraphics[scale=0.43]{matr11520_dist.eps}
-		\label{fig:matr11520_dist}
-	}	
-	\subfigure[PT frequency on MATR16000]{
-		\includegraphics[scale=0.43]{matr16000_dist.eps}
-		\label{fig:matr16000_dist}
-	}
-	\subfigure[PT frequency on MATR23040]{
-		\includegraphics[scale=0.43]{matr23040_dist.eps}
-		\label{fig:matr23040_dist}
-	}
-	\caption{PT Histograms of MATR8192 ... MATR23040~\label{fig:matr3}}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\subfigure[PT frequency on MATR250]{
+%		\includegraphics[scale=0.43]{matr250_dist.eps}
+%		\label{fig:matr250_dist}
+%	}
+%	\subfigure[PT frequency on MATR500]{
+%		\includegraphics[scale=0.43]{matr500_dist.eps}
+%		\label{fig:matr500_dist}
+%	}
+%	\subfigure[PT frequency on MATR1024]{
+%		\includegraphics[scale=0.43]{matr1024_dist2.eps}
+%		\label{fig:matr1024_dist}
+%	}
+%	\subfigure[PT frequency on MATR1440]{
+%		\includegraphics[scale=0.43]{matr1440_dist.eps}
+%		\label{fig:matr1440_dist}
+%	}
+%	\caption{PT Histograms of MATR250 ... MATR1440~\label{fig:matr}}
+%\end{figure}
 
 %\begin{figure}[h]
 %	\centering
-%	\subfigure[PT frequency on MATR1000]{
-%		\includegraphics[scale=0.43]{matr1000_dist.eps}
-%		\label{fig:matr100_dist}
+%	\subfigure[PT frequency on MATR2048]{
+%		\includegraphics[scale=0.43]{matr2048_dist2.eps}
+%		\label{fig:matr2048_dist}
 %	}
-%	\subfigure[PT frequency on MATR2000]{
-%		\includegraphics[scale=0.43]{matr2000_dist.eps}
-%		\label{fig:matr200_dist}
-%	}
-%	\subfigure[PT frequency on MATR4000]{
-%		\includegraphics[scale=0.43]{matr4000_dist.eps}
-%		\label{fig:matr400_dist}
-%	}
-%	\subfigure[PT frequency on MATR8000]{
-%		\includegraphics[scale=0.43]{matr8000_dist.eps}
-%		\label{fig:matr800_dist}
-%	}
-%	\caption{PT Histograms of MATR1000 ... MATR8000~\label{fig:matr}}
+%	\subfigure[PT frequency on MATR2880]{
+%		\includegraphics[scale=0.43]{matr2880_dist.eps}
+%		\label{fig:matr2880_dist}
+%	}	
+%	\subfigure[PT frequency on MATR4096]{
+%		\includegraphics[scale=0.43]{matr4096_dist2.eps}
+%		\label{fig:matr4096_dist}
+%	}	
+%	\subfigure[PT frequency on MATR5760]{
+%		\includegraphics[scale=0.43]{matr5760_dist.eps}
+%		\label{fig:matr5760_dist}
+%	}	
+%	\caption{PT Histograms of MATR2048 ... MATR5760~\label{fig:matr2}}
 %\end{figure}
+%
+%\begin{figure}[h]
+%	\centering
+%	\subfigure[PT frequency on MATR8192]{
+%		\includegraphics[scale=0.43]{matr8192_dist2.eps}
+%		\label{fig:matr8192_dist}
+%	}
+%	\subfigure[PT frequency on MATR11520]{
+%		\includegraphics[scale=0.43]{matr11520_dist.eps}
+%		\label{fig:matr11520_dist}
+%	}	
+%	\subfigure[PT frequency on MATR16000]{
+%		\includegraphics[scale=0.43]{matr16000_dist.eps}
+%		\label{fig:matr16000_dist}
+%	}
+%	\subfigure[PT frequency on MATR23040]{
+%		\includegraphics[scale=0.43]{matr23040_dist.eps}
+%		\label{fig:matr23040_dist}
+%	}
+%	\caption{PT Histograms of MATR8192 ... MATR23040~\label{fig:matr3}}
+%\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on MATR1K]{
+		\includegraphics[scale=0.43]{matr1024_dist.eps}
+		\label{fig:matr1k_dist}
+	}
+	\subfigure[PT frequency on MATR2K]{
+		\includegraphics[scale=0.43]{matr2048_dist.eps}
+		\label{fig:matr2k_dist}
+	}
+	\subfigure[PT frequency on MATR4K]{
+		\includegraphics[scale=0.43]{matr4096_dist.eps}
+		\label{fig:matr4k_dist}
+	}
+	\subfigure[PT frequency on MATR8K]{
+		\includegraphics[scale=0.43]{matr8192_dist.eps}
+		\label{fig:matr8k_dist}
+	}
+	\caption{PT Histograms of MATR1K ... MATR8K~\label{fig:matr}}
+\end{figure}
 
 \clearpage
 \pagebreak
 
-\end{comment}
+%\end{comment}
 
 \bibliographystyle{abbrv}
 \newcommand{\etalchar}[1]{$^{#1}$}
