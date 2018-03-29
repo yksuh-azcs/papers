@@ -25,8 +25,12 @@ CREATE TABLE SORT_RUN_PROC_INFO AS
 		--19820,19860,19940,21920,
 		-- 1160,2320
 		--22740,22741
-		23101,23221,23281,23341,23381,
-		23441,23461,23481,23421,23501
+		--23101,23221,23281,23341,23381,
+		--23441,23461,23481,23421,23501
+		-- INC8.8 / 13 / 17.2 / 25.8 / 35 / 51.5
+		23781,23801,23821,23841,23861,23881
+		-- SORT144 (INC8.8),177 (INC13.4),244(INC25.8),344(INC51.5)
+		--23541,23581,23601,23761
         )
 	group by arr.algrunid, ar.exp_run_time, arr.iternum, arr.runtime, proc.processname
 	order by iternum, pt desc;
@@ -103,7 +107,17 @@ ALTER TABLE SORT_RUN_TASK_TIME ADD PRIMARY KEY (algrunid, exp_run_time);
      23421	   1160     578611
      23501	   2320    2316623
 
-10 rows selected.
+  ALGRUNID EXP_RUN_TIME  TASK_TIME
+---------- ------------ ----------
+     23781	    8.8       8819
+     23801	     13      13028
+     23821	   17.2      17237
+     23841	   25.8      25854
+     23861	     35      35075
+     23881	   51.5      51609
+
+6 rows selected.
+
 
 DROP TABLE SORT_CUTOFF_Info CASCADE CONSTRAINTS;
 CREATE TABLE SORT_CUTOFF_Info AS

@@ -64,21 +64,86 @@ for two main programs: {\it insertion sort} and {\it matrix multiplication}.
 For the runs of these programs, we varied their input sizes by 2{\small $\times$} while trying 
 some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. 
 
-\subsection{Insertion sort~\label{sec:sort}} 
-This section shows a series of histograms of an insertion sorting program that 
-sorts the elements of a given array in non-decreasing order. 
+\subsection{One-to-One Comparison between An Insertion Sort \& A Corresponding INC Programs~\label{sec:sort}} 
+This section compares program time histograms 
+of insertion sort and INC (a nested-for-loop) programs. 
+The insertion sort program 
+sorts the elements of a given array in non-decreasing order.  
 The program repeatedly runs 300 times for a given input size. 
-The input size for the program 
-varies from 100,000 to 1,160,000 integer elements, which are randomly generated. 
+The input size for the program varies from 144K to 344K integer elements, which are randomly generated. 
 Note that each sort program over a specific input size is termed SORT{\it x}: 
 for instance, SORT100 indicates the insertion sort program over 100K elements. 
+An INC program's task length is correspondingly determined by the program time 
+of an SORT program. In Figures~\ref{fig:sort1},~\ref{fig:sort2}, and~\ref{fig:sort3} 
+we perform a match on an SORT program and its corresponding INC program.
 
-Figures~\ref{fig:sort1} and ~\ref{fig:sort2} exhibit 
-histograms of the execution times measured on the same insertion sort program as 
-the input size grows from 100K to 1,160K elements.% by the steps of 2x. 
-Note that we used one standard deviation in Figure~\ref{fig:sort400_dist} as
-a couple of outliers, which were not eliminated by the original protocol, 
-resulted in disturbing the rendering of a clean distribution. 
+%
+%Figures~\ref{fig:sort1} and ~\ref{fig:sort2} exhibit 
+%histograms of the execution times measured on the same insertion sort program as 
+%the input size grows from 100K to 1,160K elements.% by the steps of 2x. 
+%Note that we used one standard deviation in Figure~\ref{fig:sort400_dist} as
+%a couple of outliers, which were not eliminated by the original protocol, 
+%resulted in disturbing the rendering of a clean distribution. 
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on SORT144]{
+		\includegraphics[scale=0.43]{sort144_dist.eps}
+		\label{fig:sort144_dist}
+	}	
+	\subfigure[PT frequency on INC8.8]{
+		\includegraphics[scale=0.43]{inc8.8_dist.eps}
+		\label{fig:inc8.8_dist}
+	}
+	\subfigure[PT frequency on SORT177]{
+		\includegraphics[scale=0.43]{sort177_dist.eps}
+		\label{fig:sort177_dist}
+	}	
+	\subfigure[PT frequency on INC13]{
+		\includegraphics[scale=0.43]{inc13.0_dist.eps}
+		\label{fig:inc13_dist}
+	}
+	\caption{PT Histograms I~\label{fig:sort1}}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on SORT144]{
+		\includegraphics[scale=0.43]{sort244_dist.eps}
+		\label{fig:sort144_dist}
+	}	
+	\subfigure[PT frequency on INC25.8]{
+		\includegraphics[scale=0.43]{inc25.8_dist.eps}
+		\label{fig:inc25.8_dist}
+	}
+	\subfigure[PT frequency on SORT288]{
+		\includegraphics[scale=0.43]{sort177_dist.eps}
+		\label{fig:sort177_dist}
+	}	
+	\subfigure[PT frequency on INC35]{
+		\includegraphics[scale=0.43]{inc13.0_dist.eps}
+		\label{fig:inc35_dist}
+	}
+	\caption{PT Histogram Comparison II~\label{fig:sort2}}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on SORT344]{
+		\includegraphics[scale=0.43]{sort344_dist.eps}
+		\label{fig:sort344_dist}
+	}	
+	\subfigure[PT frequency on INC51.5]{
+		\includegraphics[scale=0.43]{inc51.5_dist.eps}
+		\label{fig:inc51.5_dist}
+	}
+	\caption{PT Histogram Comparison III~\label{fig:sort3}}
+\end{figure}
+
+\clearpage
+\pagebreak
+
+\section{Additional Insertion Sort~\label{sec:add_new}} 
 
 \begin{figure}[h]
 	\centering
@@ -94,26 +159,6 @@ resulted in disturbing the rendering of a clean distribution.
 		\includegraphics[scale=0.43]{sort100_dist.eps}
 		\label{fig:sort100_dist}
 	}
-	\subfigure[PT frequency on SORT144]{
-		\includegraphics[scale=0.43]{sort144_dist.eps}
-		\label{fig:sort144_dist}
-	}
-	\subfigure[PT frequency on SORT200]{
-		\includegraphics[scale=0.43]{sort200_dist.eps}
-		\label{fig:sort200_dist}
-	}
-	\subfigure[PT frequency on SORT288]{
-		\includegraphics[scale=0.43]{sort288_dist.eps}
-		\label{fig:sort288_dist}
-	}
-	\caption{PT Histograms of SORT25 ... SORT288~\label{fig:sort1}}
-\end{figure}
-
-\clearpage
-\pagebreak
-
-\begin{figure}[h]
-	\centering
 	\subfigure[PT frequency on SORT400]{
 		\includegraphics[scale=0.43]{sort400_dist.eps}
 		\label{fig:sort400_dist}
@@ -122,6 +167,14 @@ resulted in disturbing the rendering of a clean distribution.
 		\includegraphics[scale=0.43]{sort580_dist.eps}
 		\label{fig:sort588_dist}
 	}
+	\caption{PT Histograms of SORT100 ... SORT580~\label{fig:n_sort1}}
+\end{figure}
+
+\clearpage
+\pagebreak
+
+\begin{figure}[h]
+	\centering
 	\subfigure[PT frequency on SORT800]{
 		\includegraphics[scale=0.43]{sort800_dist.eps}
 		\label{fig:sort800_dist}
@@ -130,11 +183,6 @@ resulted in disturbing the rendering of a clean distribution.
 		\includegraphics[scale=0.43]{sort1000_dist.eps}
 		\label{fig:sort1000_dist}
 	}
-	\caption{PT Histograms of SORT400 ... SORT1000~\label{fig:sort2}}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
 	\subfigure[PT frequency on SORT1160]{
 		\includegraphics[scale=0.43]{sort1160_dist.eps}
 		\label{fig:sort1160_dist}
@@ -143,8 +191,90 @@ resulted in disturbing the rendering of a clean distribution.
 		\includegraphics[scale=0.43]{sort2320_dist.eps}
 		\label{fig:sort2320_dist}
 	}
-	\caption{PT Histograms of SORT1160 ... SORT2320~\label{fig:sort3}}
+	\caption{PT Histograms of SORT800 ... SORT2320~\label{fig:n_sort2}}
 \end{figure}
+
+%\subsection{Insertion sort~\label{sec:sort}} 
+%This section shows a series of histograms of an insertion sorting program that 
+%sorts the elements of a given array in non-decreasing order. 
+%The program repeatedly runs 300 times for a given input size. 
+%The input size for the program 
+%varies from 100,000 to 1,160,000 integer elements, which are randomly generated. 
+%Note that each sort program over a specific input size is termed SORT{\it x}: 
+%for instance, SORT100 indicates the insertion sort program over 100K elements. 
+%
+%Figures~\ref{fig:sort1} and ~\ref{fig:sort2} exhibit 
+%histograms of the execution times measured on the same insertion sort program as 
+%the input size grows from 100K to 1,160K elements.% by the steps of 2x. 
+%Note that we used one standard deviation in Figure~\ref{fig:sort400_dist} as
+%a couple of outliers, which were not eliminated by the original protocol, 
+%resulted in disturbing the rendering of a clean distribution. 
+%
+%\begin{figure}[h]
+%	\centering
+%%	\subfigure[PT frequency on SORT25]{
+%%		\includegraphics[scale=0.43]{sort25_dist.eps}
+%%		\label{fig:sort25_dist}
+%%	}
+%%	\subfigure[PT frequency on SORT50]{
+%%		\includegraphics[scale=0.43]{sort50_dist.eps}
+%%		\label{fig:sort50_dist}
+%%	}
+%	\subfigure[PT frequency on SORT100]{
+%		\includegraphics[scale=0.43]{sort100_dist.eps}
+%		\label{fig:sort100_dist}
+%	}
+%	\subfigure[PT frequency on SORT144]{
+%		\includegraphics[scale=0.43]{sort144_dist.eps}
+%		\label{fig:sort144_dist}
+%	}
+%	\subfigure[PT frequency on SORT200]{
+%		\includegraphics[scale=0.43]{sort200_dist.eps}
+%		\label{fig:sort200_dist}
+%	}
+%	\subfigure[PT frequency on SORT288]{
+%		\includegraphics[scale=0.43]{sort288_dist.eps}
+%		\label{fig:sort288_dist}
+%	}
+%	\caption{PT Histograms of SORT25 ... SORT288~\label{fig:sort1}}
+%\end{figure}
+%
+%\clearpage
+%\pagebreak
+%
+%\begin{figure}[h]
+%	\centering
+%	\subfigure[PT frequency on SORT400]{
+%		\includegraphics[scale=0.43]{sort400_dist.eps}
+%		\label{fig:sort400_dist}
+%	}
+%	\subfigure[PT frequency on SORT580]{
+%		\includegraphics[scale=0.43]{sort580_dist.eps}
+%		\label{fig:sort588_dist}
+%	}
+%	\subfigure[PT frequency on SORT800]{
+%		\includegraphics[scale=0.43]{sort800_dist.eps}
+%		\label{fig:sort800_dist}
+%	}
+%	\subfigure[PT frequency on SORT1000]{
+%		\includegraphics[scale=0.43]{sort1000_dist.eps}
+%		\label{fig:sort1000_dist}
+%	}
+%	\caption{PT Histograms of SORT400 ... SORT1000~\label{fig:sort2}}
+%\end{figure}
+%
+%\begin{figure}[h]
+%	\centering
+%	\subfigure[PT frequency on SORT1160]{
+%		\includegraphics[scale=0.43]{sort1160_dist.eps}
+%		\label{fig:sort1160_dist}
+%	}
+%	\subfigure[PT frequency on SORT2320 (not complete)]{
+%		\includegraphics[scale=0.43]{sort2320_dist.eps}
+%		\label{fig:sort2320_dist}
+%	}
+%	\caption{PT Histograms of SORT1160 ... SORT2320~\label{fig:sort3}}
+%\end{figure}
 
 %\begin{comment}
 
