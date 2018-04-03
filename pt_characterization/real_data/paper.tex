@@ -59,10 +59,87 @@ different real-world programs with varying input sizes.
 
 \section{Histograms of the Execution Times on Real-World Programs~\label{sec:real-world}} 
 
-In this section we present histogram data 
-for two main programs: {\it insertion sort} and {\it matrix multiplication}. 
-For the runs of these programs, we varied their input sizes by 2{\small $\times$} while trying 
-some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. 
+In this section we run three kinds of programs: {\it nested for-loop}, {\it insertion sort} and {\it matrix multiplication}. For the runs of the latter two programs, we varied their input sizes by 2{\small $\times$} while trying some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. We then exhibit different kinds of histograms in the subsequent sections.
+
+\subsection{Inter-machine Repeatability Check~\label{sec:diff_machine}} 
+
+In this section we check if the use of different machines affects the distribution of execution (process) times on the same program. 
+In other words, we examine {\em inter-machine repeatability}. For this examination, we use the nested for loop program 
+with different task lengths: 16 seconds, 13 seconds, and 17.2 seconds, termed {\em INC16}, {\em INC13}, and {\em INC17.2}, respectively. 
+
+Figures~\ref{fig:dm_1}, ~\ref{fig:dm_2}, and ~\ref{fig:dm_3} display the process time (PT) histograms on INC16, INC13, and INC17.2 run on our machines (from {\tt sodb8} to {\tt sodb12}), respectively.
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on INC16]{
+		\includegraphics[scale=0.43]{sodb8_INC16_0_dist.eps}
+		\label{fig:s8_inc16_dist}
+	}	
+	\subfigure[PT frequency on INC16]{
+		\includegraphics[scale=0.43]{sodb9_INC16_0_dist.eps}
+		\label{fig:s9_inc16_dist}
+	}
+	\subfigure[PT frequency on INC16]{
+		\includegraphics[scale=0.43]{sodb10_INC16_0_dist.eps}
+		\label{fig:s10_inc16_dist}
+	}	
+	\subfigure[PT frequency on INC16]{
+		\includegraphics[scale=0.43]{sodb12_INC16_0_dist.eps}
+		\label{fig:s12_inc16_dist}
+	}
+	\caption{PT Histograms on INC16~\label{fig:dm_1}}
+\end{figure}
+
+\newpage
+\clearpage
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on INC13]{
+		\includegraphics[scale=0.43]{sodb8_INC13_0_dist.eps}
+		\label{fig:s8_inc13_dist}
+	}	
+	\subfigure[PT frequency on INC13]{
+		\includegraphics[scale=0.43]{sodb9_INC13_0_dist.eps}
+		\label{fig:s9_inc13_dist}
+	}
+	\subfigure[PT frequency on INC13]{
+		\includegraphics[scale=0.43]{sodb10_INC13_0_dist.eps}
+		\label{fig:s10_inc13_dist}
+	}	
+	\subfigure[PT frequency on INC13]{
+		\includegraphics[scale=0.43]{sodb12_INC13_0_dist.eps}
+		\label{fig:s12_inc13_dist}
+	}
+	\caption{PT Histograms on INC13~\label{fig:dm_2}}
+\end{figure}
+
+\newpage
+\clearpage
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on INC17.2]{
+		\includegraphics[scale=0.43]{sodb8_INC17_2_dist.eps}
+		\label{fig:s8_inc17_2_dist}
+	}	
+	\subfigure[PT frequency on INC17.2]{
+		\includegraphics[scale=0.43]{sodb9_INC17_2_dist.eps}
+		\label{fig:s9_inc17_2_dist}
+	}
+	\subfigure[PT frequency on INC17.2]{
+		\includegraphics[scale=0.43]{sodb10_INC17_2_dist.eps}
+		\label{fig:s10_inc17_2_dist}
+	}	
+	\subfigure[PT frequency on INC17.2]{
+		\includegraphics[scale=0.43]{sodb12_INC17_2_dist.eps}
+		\label{fig:s12_inc17_2_dist}
+	}
+	\caption{PT Histograms on INC17.2~\label{fig:dm_3}}
+\end{figure}
+
+\newpage
+\clearpage
 
 \subsection{One-to-One Comparison between An Insertion Sort \& A Corresponding INC Programs~\label{sec:sort}} 
 This section compares program time histograms 
