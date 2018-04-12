@@ -54,20 +54,15 @@ As a note, the execution times were measured along with the EMPv5~\cite{EMP} pro
 %as (i) there are equivalent measures available in the {\tt /proc} filesystem, 
 %and (ii) there's little constraint on the use as opposed to taskstats. 
 
-The following section shows histograms for runs on 
-different real-world programs with varying input sizes.
-
-\section{Histograms of the Execution Times on Real-World Programs~\label{sec:real-world}} 
-
-In this section we run three kinds of programs: {\it nested for-loop}, {\it insertion sort} and {\it matrix multiplication}. For the runs of the latter two programs, we varied their input sizes by 2{\small $\times$} while trying some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. We then exhibit different kinds of histograms in the subsequent sections.
+\section{Preliminary Experiments}
 
 \subsection{Inter-machine Repeatability Check~\label{sec:diff_machine}} 
 
 In this section we check if the use of different machines affects the distribution of execution (process) times on the same program. 
-In other words, we examine {\em inter-machine repeatability}. For this examination, we use the nested for loop program 
-with different task lengths: 16 seconds, 13 seconds, and 17.2 seconds, termed {\em INC16}, {\em INC13}, and {\em INC17.2}, respectively. 
+In other words, we examine {\em inter-machine repeatability}. For this examination, we use a nested for loop program, here termed INC, 
+with different task lengths: 16 seconds, 13 seconds, and 17.2 seconds, each termed {\em INC16}, {\em INC13}, and {\em INC17.2}, respectively. 
 
-Figures~\ref{fig:dm_1}, ~\ref{fig:dm_2}, and ~\ref{fig:dm_3} display the process time (PT) histograms on INC16, INC13, and INC17.2 run on our machines (from {\tt sodb8} to {\tt sodb12}), respectively.
+Figures~\ref{fig:dm_1}, ~\ref{fig:dm_2}, and ~\ref{fig:dm_3} display the process time (PT) histograms on INC16, INC13, and INC17.2 run on our machines (from {\tt sodb8} to {\tt sodb12}), respectively. Based on these figures, we conclude that we should stick to one machine  for consistency, and {\tt sodb9} should be chosen in a sense that the data measured there consistently reveals a distinct binormal pattern.
 
 \begin{figure}[h]
 	\centering
@@ -143,15 +138,7 @@ Figures~\ref{fig:dm_1}, ~\ref{fig:dm_2}, and ~\ref{fig:dm_3} display the process
 
 \subsection{One-to-One Comparison between An Insertion Sort \& A Corresponding INC Programs~\label{sec:sort}} 
 This section compares program time histograms 
-of insertion sort and INC (a nested-for-loop) programs. 
-The insertion sort program 
-sorts the elements of a given array in non-decreasing order.  
-The program repeatedly runs 300 times for a given input size. 
-The input size for the program varies from 144K to 344K integer elements, which are randomly generated. 
-Note that each sort program over a specific input size is termed SORT{\it x}: 
-for instance, SORT100 indicates the insertion sort program over 100K elements. 
-An INC program's task length is correspondingly determined by the program time 
-of an SORT program. In Figures~\ref{fig:sort1},~\ref{fig:sort2}, and~\ref{fig:sort3} 
+of an insertion sort and a nested-for-loop programs (termed INC) with different input sizes. The insertion sort program sorts the elements of a given array in non-decreasing order.  The program repeatedly runs 300 times for a given input size. The input size for the program varies from 144K to 344K integer elements, which are randomly generated. Note that each sort program over a specific input size is termed SORT{\it x}: for instance, SORT100 indicates the insertion sort program over 100K elements. An INC program's task length is correspondingly determined by the program time of an SORT program. In Figures~\ref{fig:sort1},~\ref{fig:sort2}, and~\ref{fig:sort3} 
 we perform a match on an SORT program and its corresponding INC program.
 
 %
@@ -164,53 +151,56 @@ we perform a match on an SORT program and its corresponding INC program.
 
 \begin{figure}[h]
 	\centering
-	\subfigure[PT frequency on SORT144]{
+	\subfigure[PT frequency on SORT144 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort144_dist.eps}
 		\label{fig:sort144_dist}
 	}	
-	\subfigure[PT frequency on INC8.8]{
+	\subfigure[PT frequency on INC8.8 on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{inc8.8_dist.eps}
 		\label{fig:inc8.8_dist}
 	}
-	\subfigure[PT frequency on SORT177]{
+	\subfigure[PT frequency on SORT177 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort177_dist.eps}
 		\label{fig:sort177_dist}
 	}	
-	\subfigure[PT frequency on INC13]{
+	\subfigure[PT frequency on INC13 on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{inc13.0_dist.eps}
 		\label{fig:inc13_dist}
 	}
 	\caption{PT Histograms I~\label{fig:sort1}}
 \end{figure}
 
+\clearpage
+\pagebreak
+
 \begin{figure}[h]
 	\centering
-	\subfigure[PT frequency on SORT144]{
+	\subfigure[PT frequency on SORT144 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort244_dist.eps}
 		\label{fig:sort144_dist}
 	}	
-	\subfigure[PT frequency on INC25.8]{
+	\subfigure[PT frequency on INC25.8 on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{inc25.8_dist.eps}
 		\label{fig:inc25.8_dist}
 	}
-	\subfigure[PT frequency on SORT288]{
+	\subfigure[PT frequency on SORT288  on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort177_dist.eps}
 		\label{fig:sort177_dist}
 	}	
-	\subfigure[PT frequency on INC35]{
+	\subfigure[PT frequency on INC35 on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{inc13.0_dist.eps}
 		\label{fig:inc35_dist}
 	}
 	\caption{PT Histogram Comparison II~\label{fig:sort2}}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\subfigure[PT frequency on SORT344]{
+	\subfigure[PT frequency on SORT344  on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort344_dist.eps}
 		\label{fig:sort344_dist}
 	}	
-	\subfigure[PT frequency on INC51.5]{
+	\subfigure[PT frequency on INC51.5 on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{inc51.5_dist.eps}
 		\label{fig:inc51.5_dist}
 	}
@@ -220,7 +210,59 @@ we perform a match on an SORT program and its corresponding INC program.
 \clearpage
 \pagebreak
 
-\section{Additional Insertion Sort~\label{sec:add_new}} 
+\section{Histograms of the Execution Times on Real-World Programs~\label{sec:real-world}} 
+This section shows histograms for runs on 
+different real-world programs with varying input sizes.  
+%We run three kinds of programs: {\it nested for-loop}, {\it insertion sort} and {\it matrix multiplication}.  
+In addition to the insertion sort program, we use another kind of program---{\it matrix multiplication}.
+For these programs, we varied their input sizes by 2{\small $\times$} while trying some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. We then exhibit different kinds of histograms in the subsequent sections.
+
+\clearpage
+\pagebreak
+
+\subsection{Insertion Sort on {\tt sodb9}~\label{sec:new_ins_sort}} 
+This section shows a series of histograms of an insertion sorting program that 
+sorts the elements of a given array in non-decreasing order. 
+The program repeatedly runs 300 times for a given input size. 
+Note that each sort program over a specific input size is termed SORT{\it x}: 
+for instance, SORT100 indicates the insertion sort program over 100K elements. 
+(This experiment was performed on {\tt sodb9}.)
+
+\begin{figure}[htp!]
+	\centering
+	\subfigure[PT frequency on SORT100 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{s9_sort100_dist.eps}
+		\label{fig:s9_sort100_dist}
+	}
+	\subfigure[PT frequency on SORT200 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{s9_sort200_dist.eps}
+		\label{fig:s9_sort200_dist}
+	}
+	\subfigure[PT frequency on SORT400 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{s9_sort400_dist.eps}
+		\label{fig:s9_sort400_dist}
+	}
+	\subfigure[PT frequency on SORT800 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{s9_sort800_dist.eps}
+		\label{fig:s9_sort800_dist}
+	}
+	\caption{PT Histograms of SORT100 ... SORT800 on {\tt sodb9}~\label{fig:new_s9_sort1}}
+\end{figure}
+
+\newpage
+\pagebreak
+
+\section{Appendix}
+
+\subsection{Insertion Sort on {\tt sodb8}~\label{sec:add_new}} 
+This section shows a series of histograms of an insertion sorting program that 
+sorts the elements of a given array in non-decreasing order. 
+The program repeatedly runs 300 times for a given input size. 
+The input size for the program 
+varies from 100,000 to 1,160,000 integer elements, which are randomly generated. 
+Note that each sort program over a specific input size is termed SORT{\it x}: 
+for instance, SORT100 indicates the insertion sort program over 100K elements. 
+This experiment was performed on {\tt sodb8}.
 
 \begin{figure}[h]
 	\centering
@@ -232,15 +274,15 @@ we perform a match on an SORT program and its corresponding INC program.
 %		\includegraphics[scale=0.43]{sort50_dist.eps}
 %		\label{fig:sort50_dist}
 %	}
-	\subfigure[PT frequency on SORT100]{
+	\subfigure[PT frequency on SORT100 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort100_dist.eps}
 		\label{fig:sort100_dist}
 	}
-	\subfigure[PT frequency on SORT400]{
+	\subfigure[PT frequency on SORT400 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort400_dist.eps}
 		\label{fig:sort400_dist}
 	}
-	\subfigure[PT frequency on SORT580]{
+	\subfigure[PT frequency on SORT580 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort580_dist.eps}
 		\label{fig:sort588_dist}
 	}
@@ -252,19 +294,19 @@ we perform a match on an SORT program and its corresponding INC program.
 
 \begin{figure}[h]
 	\centering
-	\subfigure[PT frequency on SORT800]{
+	\subfigure[PT frequency on SORT800 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort800_dist.eps}
 		\label{fig:sort800_dist}
 	}
-	\subfigure[PT frequency on SORT1000]{
+	\subfigure[PT frequency on SORT1000 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort1000_dist.eps}
 		\label{fig:sort1000_dist}
 	}
-	\subfigure[PT frequency on SORT1160]{
+	\subfigure[PT frequency on SORT1160 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort1160_dist.eps}
 		\label{fig:sort1160_dist}
 	}
-	\subfigure[PT frequency on SORT2320 (not complete)]{
+	\subfigure[PT frequency on SORT2320 on {\tt sodb8}]{
 		\includegraphics[scale=0.43]{sort2320_dist.eps}
 		\label{fig:sort2320_dist}
 	}
@@ -405,7 +447,7 @@ elements in a row (and a column).
 Figure~\ref{fig:matc} shows a series of 
 histograms of the execution times measured on 
 the same matrix multiplication program in column major 
-as the input sizes grows. 
+as the input sizes grows. The program was run on {\tt sodb10}.
 
 %\begin{figure}[h]
 %	\centering
@@ -472,19 +514,19 @@ as the input sizes grows.
 
 \begin{figure}[h]
 	\centering
-	\subfigure[PT frequency on MATC1K]{
+	\subfigure[PT frequency on MATC1K on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{matc1024_dist.eps}
 		\label{fig:matc1k_dist}
 	}
-	\subfigure[PT frequency on MATC2K]{
+	\subfigure[PT frequency on MATC2K on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{matc2048_dist.eps}
 		\label{fig:matc2k_dist}
 	}
-	\subfigure[PT frequency on MATC4K]{
+	\subfigure[PT frequency on MATC4K on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{matc4096_dist.eps}
 		\label{fig:matc4k_dist}
 	}
-	\subfigure[PT frequency on MATC8K]{
+	\subfigure[PT frequency on MATC8K on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{matc8192_dist.eps}
 		\label{fig:matc8k_dist}
 	}
@@ -499,6 +541,7 @@ as the input sizes grows.
 Figure~\ref{fig:matc} shows a series of 
 histograms of the execution times measured on 
 the same matrix multiplication program in row major as the input sizes grows. 
+The program was run on {\tt sodb12}.
 
 %\begin{figure}[h]
 %	\centering
@@ -565,29 +608,24 @@ the same matrix multiplication program in row major as the input sizes grows.
 
 \begin{figure}[h]
 	\centering
-	\subfigure[PT frequency on MATR1K]{
+	\subfigure[PT frequency on MATR1K on {\tt sodb12}]{
 		\includegraphics[scale=0.43]{matr1024_dist.eps}
 		\label{fig:matr1k_dist}
 	}
-	\subfigure[PT frequency on MATR2K]{
+	\subfigure[PT frequency on MATR2K on {\tt sodb12}]{
 		\includegraphics[scale=0.43]{matr2048_dist.eps}
 		\label{fig:matr2k_dist}
 	}
-	\subfigure[PT frequency on MATR4K]{
+	\subfigure[PT frequency on MATR4K on {\tt sodb12}]{
 		\includegraphics[scale=0.43]{matr4096_dist.eps}
 		\label{fig:matr4k_dist}
 	}
-	\subfigure[PT frequency on MATR8K]{
+	\subfigure[PT frequency on MATR8K on {\tt sodb12}]{
 		\includegraphics[scale=0.43]{matr8192_dist.eps}
 		\label{fig:matr8k_dist}
 	}
 	\caption{PT Histograms of MATR1K ... MATR8K~\label{fig:matr}}
 \end{figure}
-
-\clearpage
-\pagebreak
-
-%\end{comment}
 
 \bibliographystyle{abbrv}
 \newcommand{\etalchar}[1]{$^{#1}$}
