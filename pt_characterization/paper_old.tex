@@ -85,7 +85,6 @@ Figures~\ref{fig:dm_1}, ~\ref{fig:dm_2}, and ~\ref{fig:dm_3} display the process
 	\caption{PT Histograms on INC16~\label{fig:dm_1}}
 \end{figure}
 
-
 \newpage
 \clearpage
 
@@ -137,44 +136,6 @@ Figures~\ref{fig:dm_1}, ~\ref{fig:dm_2}, and ~\ref{fig:dm_3} display the process
 \newpage
 \clearpage
 
-\subsubsection{Investigation of Daemons' Influence on Program Time Distribution Regarding Machine Dependence~\label{sec:daemon}} 
-
-For the same task length, or INC16, 
-I examined in each of the four runs a few iterations at which more than three daemons (except INC and proc monitor processes) that had positive PT were captured.  
-From Table~\ref{fig:daemon}, I suspect that PT distribution seems most likely to be affected by two facts: {\it how longer the same daemon ran than usual}, and {\it how many different daemon processes appeared and how long it ran}.
-
-\begin{table}[htp!]
-\centering
-{
- \begin{tabular}{|p{1.5cm}|p{2cm}|p{12.5cm}|} \hline
-Machine Name & Iteration \# & Process Name (id, PT(msec))\\ \hline
-{\tt sodb8}  & 174 & {\tt java} ({\tt 2349}, 15), {\tt java} ({\tt 2335}, 2),  {\tt md127\_raid1} ({\tt 457}, 1), {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
- 					& 278 & {\tt java} ({\tt 2877}, 16), {\tt java} ({\tt 2335}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-			  &  486 & {\tt java} ({\tt 3190}, 21), {\tt java} ({\tt 2335}, 2),  {\tt md127\_raid1} ({\tt 457}, 1), {\tt kslowd000} ({\tt 166}, 1)\\ \cline{2-3}
-				  &  526 & {\tt md127\_raid1} ({\tt 457}, 1), {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1), {\tt jbd2/md127-8} ({\tt 470}, 1)\\ \cline{2-3}
-				  &  555 & {\tt java} ({\tt 3815}, 8), {\tt java} ({\tt 2335}, 2), {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1)\\ \hline
-{\tt sodb9}  & 105 & {\tt java} ({\tt 6634}, 16), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 175 & {\tt java} ({\tt 6942}, 7), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 245 & {\tt java} ({\tt 7259}, 6), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 280 & {\tt java} ({\tt 7365}, 3), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 350 & {\tt java} ({\tt 7577}, 3), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 420 & {\tt java} ({\tt 7683}, 3), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 490 & {\tt java} ({\tt 7894}, 4), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \hline
-{\tt sodb10}  & 105 & {\tt java} ({\tt 28394}, 14), {\tt java} ({\tt 28381}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-					 & 314 & {\tt java} ({\tt 28702}, 18), {\tt java} ({\tt 28381}, 2),  {\tt md127\_raid1} ({\tt 455}, 1),  {\tt kslowd001} ({\tt 167}, 1) \\ \hline
- {\tt sodb12}  & 280 &  {\tt kslowd001} ({\tt 167}, 154),  {\tt kslowd000} ({\tt 166}, 150), {\tt java} ({\tt 14820}, 37), {\tt java} ({\tt 14807}, 2) \\ \cline{2-3}
-	& 311 &  {\tt kslowd000} ({\tt 166}, 154),  {\tt kslowd001} ({\tt 167}, 153), {\tt java} ({\tt 14807}, 2), {\tt java} ({\tt 15653}, 1), {\tt khugepaged} ({\tt 30}, 1)\\ \cline{2-3}		& 373 &  {\tt kslowd000} ({\tt 166}, 154),  {\tt kslowd001} ({\tt 167}, 152), {\tt java} ({\tt 14807}, 2), {\tt java} ({\tt 15747}, 2)\\ \cline{2-3}
-& 435 &  {\tt kslowd000} ({\tt 166}, 154),  {\tt kslowd001} ({\tt 167}, 153), {\tt java} ({\tt 15934}, 6), {\tt java} ({\tt 14807}, 2)\\ \cline{2-3}
-& 466 &  {\tt kslowd000} ({\tt 166}, 152), {\tt java} ({\tt 16121}, 6), {\tt java} ({\tt 14807}, 2), {\tt kblockd/0} ({\tt 16}, 1)\\ \cline{2-3}
- \hline
- \end{tabular}
-  }
- \caption{Some daemon processes captured across different machines~\label{fig:daemon}}
-\end{table}
-
-\newpage
-\clearpage
-
 \subsection{One-to-One Comparison between An Insertion Sort \& A Corresponding INC Programs~\label{sec:sort}} 
 This section compares program time histograms 
 of an insertion sort and a nested-for-loop programs (termed INC) with different input sizes. The insertion sort program sorts the elements of a given array in non-decreasing order.  The program repeatedly runs 300 times for a given input size. The input size for the program varies from 144K to 344K integer elements, which are randomly generated. Note that each sort program over a specific input size is termed SORT{\it x}: for instance, SORT100 indicates the insertion sort program over 100K elements. An INC program's task length is correspondingly determined by the program time of an SORT program. In Figures~\ref{fig:sort1},~\ref{fig:sort2}, and~\ref{fig:sort3} 
@@ -214,34 +175,62 @@ we perform a match on an SORT program and its corresponding INC program.
 
 \begin{figure}[h]
 	\centering
-	\subfigure[PT frequency on SORT244 on {\tt sodb8}]{
+<<<<<<< Updated upstream:pt_characterization/real_data/paper.tex
+	\subfigure[PT frequency on SORT144 on {\tt sodb8}]{
+=======
+	\subfigure[PT frequency on SORT200]{
+		\includegraphics[scale=0.43]{sort200_dist.eps}
+		\label{fig:sort200_dist}
+	}	
+	\subfigure[PT frequency on INC17.2]{
+		\includegraphics[scale=0.43]{inc17.2_dist.eps}
+		\label{fig:inc17_2_dist}
+	}
+	\subfigure[PT frequency on SORT244]{
+>>>>>>> Stashed changes:pt_characterization/real_data/paper_old.tex
 		\includegraphics[scale=0.43]{sort244_dist.eps}
 		\label{fig:sort244_dist}
 	}	
 	\subfigure[PT frequency on INC25.8 on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{inc25.8_dist.eps}
+<<<<<<< Updated upstream:pt_characterization/real_data/paper.tex
 		\label{fig:inc25.8_dist}
 	}
 	\subfigure[PT frequency on SORT288  on {\tt sodb8}]{
-		\includegraphics[scale=0.43]{sort288_dist.eps}
-		\label{fig:sort288_dist}
+		\includegraphics[scale=0.43]{sort177_dist.eps}
+		\label{fig:sort177_dist}
 	}	
 	\subfigure[PT frequency on INC35 on {\tt sodb10}]{
-		\includegraphics[scale=0.43]{inc35.0_dist.eps}
+		\includegraphics[scale=0.43]{inc13.0_dist.eps}
 		\label{fig:inc35_dist}
+=======
+		\label{fig:inc25_8_dist}
+>>>>>>> Stashed changes:pt_characterization/real_data/paper_old.tex
 	}
 	\caption{PT Histogram Comparison II~\label{fig:sort2}}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
+<<<<<<< Updated upstream:pt_characterization/real_data/paper.tex
 	\subfigure[PT frequency on SORT344  on {\tt sodb8}]{
+=======
+	\subfigure[PT frequency on SORT288]{
+		\includegraphics[scale=0.43]{sort288_dist.eps}
+		\label{fig:sort288_dist}
+	}	
+	\subfigure[PT frequency on INC35.0]{
+		\includegraphics[scale=0.43]{inc35.0_dist.eps}
+		\label{fig:inc35_0_dist}
+	}
+	\subfigure[PT frequency on SORT344]{
+>>>>>>> Stashed changes:pt_characterization/real_data/paper_old.tex
 		\includegraphics[scale=0.43]{sort344_dist.eps}
 		\label{fig:sort344_dist}
 	}	
 	\subfigure[PT frequency on INC51.5 on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{inc51.5_dist.eps}
-		\label{fig:inc51.5_dist}
+		\label{fig:inc51_5_dist}
 	}
 	\caption{PT Histogram Comparison III~\label{fig:sort3}}
 \end{figure}

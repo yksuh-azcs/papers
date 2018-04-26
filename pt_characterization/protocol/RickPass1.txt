@@ -1,0 +1,334 @@
+"Fitting an Evolving Binormal Distribution to Program Running Times Sampled at Varying
+Input Sizes"
+
+In this paper, we specify a protocol that takes timing measurements for a
+program whose running time is a function of a single parameter that we call
+input size, where these measured running times are sampled at varying input
+sizes, and fits a binormal distribution (namely, a mixture of two normal
+distributions) at each input size. The protocol can also determine that the
+running times are fit by a single normal distribution (which is a special
+case of a binormal distribution).
+
+This protocol then yields a series of fitted binormal distributions across the
+varying input sizes, which alternatively can be viewed as an {\em evolving
+binormal distribution}. The dynamics of this evolving distribution with
+respect to input size can exhibit several possible behaviors. We highlight
+two general kinds of dynamics, based on the behavior of their means, and of their
+relative weighting in the mixture.
+
+I. The {\em means} of the two normal distributions in the mixture can
+evolve, as input size increases, in the following ways.
+
+(a) The two normal distributions remain {\em stable} (i.e. the distance
+between their means is relatively unchanged). 
+(b) The two normal distributions move {\em away} from each other (i.e., the
+distance between the means increases) as input size increases. 
+(c) The two normal distributions move {\em toward} each other.
+
+II. The {\em relative weighting} between the two normals can also evolve, in
+the following ways. 
+
+(a) The weighting can remain stable.
+(b) The weight of one distribution can {\em increase} and the other decrease.
+(c) The weight of one distribution can decrease to zero, {\em collapsing} a
+binormal distribution into a normal distribution.
+(d) A normal distribution can {\em split} into a binormal one, each with non-zero weights.
+
+We note that the dynamics can involve both kinds simultaneously. As an
+example, consider a binormal distribution where the left normal, whose mean
+is less than that of the other distribution, moves towards the right normal,
+while reducing in weight, eventually merging and disappearing into the right
+one.
+
+The dynamics of the evolution of the distributions, for increasing input
+size, may thus be described by a sequence of triples formed by (i) a
+specific range of input sizes, (ii) a choice of Ia, Ib, or Ic, describing
+how the means changed (or not) changed, and (iii) a choice of IIa, IIb, IIc,
+or IId, describing how the relative weighting changed (or not). We term this
+sequence an "evolving binormal distribution."
+
+TODO: Give a simple example, perhaps a subset of what we actually
+encountered
+
+PROTOCOL
+
+Our protocol, termed the "Evolving Binormal Running Time Characterization
+Protocol", or EBRTCP, characterizes the running time of a program. We term
+the program being studied the "program under test", which we abbreviate to
+PUT. The PUT takes an input and computes something, taking a time that we
+measure. The input has an "input size", which is something that will
+determine the running time of the program. The input size is a single
+integer such that the program is expected to take longer at a large input
+size. As an example, if the PUT sorts an input sequence of elements, the
+input size may be the number of elements in the input, or. for a fixed
+number of elements, the input size might be an indication of the degree that
+the sequence is out of order.
+
+EBRTCP requires that the input size is a single integer. At a given input
+size, we execute the PUT, and measure its running time. Such an execution is
+called a {\em run}. At each input size, we perform a given number of
+runs. The set of runs for a given input size are called a {\em batch}.
+
+At a high-level, EBRTCP performs for basic steps. First, it creates the
+batches, runs them, measures their running times. Second, for each batch,
+the protocol forms a histogram of the running times measured at that input
+size. Each such histogram is then modeled by a fitted binormal distribution:
+a weighted mixture of two normal distributions. At successively larger input
+sizes, this yields a {\em series} of transitions between different dynamics
+described earlier. The output of the EBRTCP is an evolving binormal
+distribution, captured as a sequence of the triples described above.
+
+The protocol considers input sizes that increase geometrically as M G^i, for
+i = 0, 1, .... (The sequence may be refined later, to determine the
+fine-grained structure of the evolution; the geometric progression simply
+provides the gross structure of the evolution.)
+
+The protocol uses the following set of constants:
+
+	M, the initial input size;
+	G, the geometric growth factor on input sizes (where G = 2 corresponds to doubling);
+	L, the largest exponent considered in the geometric growth on input sizes;
+	R, the resolution on timing measurements; and
+	B, the minimum batch size.
+
+(1) (Form batches) Determine the input sizes M G^i for i = 0, ..., L, that
+will be considered, and their corresponding batch sizes.
+
+(2) (Measure running times) For each batch, and each run in the batch, apply
+the EMPv4 timing protocol to obtain a clean measurement of the actual
+running time of the PUT, to whatever minimum resolution R is available.
+
+(3) (Remove outliers) At each input size, drop the extreme outliers from the batch: those runs whose measured time is more than two standard deviations from the batch mean.
+
+(4) (Form histograms) At each input size, for each batch resulting from step
+3, form histogram bins, and distribute the remaining running times for the
+batch into the bins. Choose the bin width as an integral number of R units
+so as to result in 6 to 15 bins. If this is not possible, due to there being
+too few distinct measured running times in the batch (on account of the
+minimum resolution R), then reject this batch.
+
+(5) (Fit binormal distributions) At each input size, for each batch
+resulting from step 4, fit the measurements of the batch into both a normal
+distribution, with two parameters, Mean and StdDev, as well as a binormal
+distribution, that is one with five parameters, Mean1, Mean2, StdDev1,
+StdDev2, and Scale1 that maximize the goodness of fit, computed as the sum
+of the squares of the differences between the measured histogram size and
+the computed value of the binormal distribution at that histogram's bin number.
+
+(6) (Accept or reject fitted distributions) This step determines whether a
+normal distribution is preferred over a binormal distribution. The rationale
+is that including a {\em small_ admixture} of a second, subdominant mode may
+not be appropriate.  (A fit can always be improved, by
+adding small additional modes, almost without end: a
+third mode, a fourth mode, etc.  One must stop
+somewhere!  The underlying problem is one of statistical
+uncertainty: the estimated strength of a mode is at
+least slightly unreliable, so that if the strength is
+estimated to be small, the true strength could actually
+be zero.)
+
+So, if Scale1 or (1-Scale1) is quite small, i.e. less than
+0.05, that justify dropping the corresponding
+mode, and regarding the running-time distribution as
+unimodal (by default, normal) rather than bimodal (in
+particular, binormal).  (Ultimately, the choice of 0.05
+as cutoff is related to the sample size and the number
+of bins: the underlying source of statistical
+uncertainty being the above square-root law dealing with
+fluctuations in bin occupancies.) 
+
+If either of the two modes' centers (i.e., Mean 1,
+Mean2) is located very close to the left edge (0) or the
+right edge (BN-1) of the range of bins, that also suggests
+rejecting the binormal fit.  (This is especially the
+case if the mode is a weak one: one with Scale < 0.1.)
+
+Here, `very close' means less than 10% of the total
+range of values.
+The rationale for this `cut' is that if one of the two
+modes is jammed against the left or right edge, and is
+small, a binormal fit may not be appropriate: it may be
+that all that the fitting software has done is move the
+location of the aleged mode as far out as it could, and
+reduce its size greatly, in an effort to make the fit
+slightly better than a unimodal fit would be. The word
+that comes up here is `parsimony', which is similar to
+Occam's Razor: don't try to make (statistical)
+explanations of data more complicated than necessary:
+there is a point of diminishing returns, beyond which
+enhancing and tweaking a statistical model isn't
+justified, the data available being limited.
+
+(Side note: It seems appropriate to use a slightly more restrictive
+constraint on the scale parameter (>0.1 rather than
+>0.05) if the mode is jammed against the left or right
+edge.  As estimated, the strengths of such left-edge or
+right-edge modes may be less reliable.  The dropping of
+all outliers surely has a greater effect near the left
+and right edges, than in the center of the range.)
+
+(Side note 2: If the scale parameter of a left-edge or right-edge mode
+is large rather than small, the mode is presumably real;
+but it may not be well described by a normal
+distribution, because a normal is symmetric.  Such a
+phenomenon should be flagged and investigated.)
+
+(8) (Characterize the dynamics)
+
+Once the above criteria for accepting bimodality (versus
+    unimodality) are adopted, one can decide whether two
+    modes are actually crossing each other by looking at the
+    dynamics of Mean1, Mean2 that appear as the INC#
+    increases.  However, it should be noted that the fitting
+    program always yields Mean1 < Mean2, which means that
+    distinguishing `crossing' modes from `bouncing' ones may
+    be difficult.  If there are two nearby modes and the
+    their locations (when plotted) appear to cross as INC#
+    increases, they should be disambiguated by examining
+    StdDev1,StdDev2 and Scale1,Scale2.  This is more readily
+    performed by a human being than by a (heuristic)
+    algorithm.
+
+    In this way, such phenomena involving `interacting
+    modes' as (b)--(g), mentioned above, can be identified.
+    There are other phenomena, dealing not with Mean1,Mean2
+    but the other binormal parameters, that can also be
+    investigated.  For instance, by examining whether
+    Scale1, Scale2 cross each other, i.e. oscillate, one can
+    decide whether the modes are interchanging their
+    strengths one or more times, as INC# increases.
+
+(9) (Refine the granularity of the measurements)
+
+TODO: replace a manual protocol with one fully specified
+
+Characterizing how the running-time distribution changes
+    as the INC# increases may require data at a finer
+    granularity than is produced by successively doubling
+    the nominal running time.  This is the case in the INC#
+    regions where it appears that some kind of
+    transformation of a binormal distribution is taking
+    place, such as types (b)--(g) above.
+
+    If such a transformation appears to take place between
+    two INC#'s, the region between them should be
+    investigated more intensively.  For example, to explore
+    the transition between PUT64 and PUT128, histograms
+    could be produced for PUT80, PUT96, and PUT112.  This
+    refinement step will need to be repeated, if further
+    interesting transitions appear.  By default, refinement
+    should consist of an investigation of the interval
+    between two previously examined INC#'s.  But it may be
+    desirable, when preparing a finely-grained plot of such
+    quantities as the Means, StdDevs, and Scales, as
+    functions of INC#, to refine the intervals on either
+    side, in the same way.
+
+    A parameter specifying the extent to which refinement
+    takes place (e.g., 4, in the preceding example) should
+    be set in advance.  With each refinement, the existence
+    of transformations such as (b)--(g) above, across a
+    smaller range of INC#'s, should be investigated by the
+    human who prepares and evaluates the plots.  In this
+    way, it should be possible to determine exactly how such
+    phenomena as `crossing', `bouncing', and `oscillating'
+    of the modes in a bimodal or binormal running-time
+    distribution take place.
+
+    This sort of `horizontal refinement' of plots could be
+    coupled with `vertical refinement', i.e., improvements
+    to their vertical accuracy.  The latter could be
+    obtained by increasing the sample size at any INC#,
+    decorating the plots by plotting empirical error bars,
+    etc.  But at this point, increasing the sample size may
+    be impractical, compared to the benefits of performing
+    horizontal refinement by increasing the PUT density.
+
+DISCUSSION
+
+In this section, we get into the details for how we decided on the various
+constants (e.g., number of runs needed, batch size, minimum admixture size)
+used in the protocol.
+
+For Step (1) of the protocol, "Form batches," each batch should have at
+least B = 300 runs, with each successive batch taking twice as long. The
+constants hardcoded below, such as 0.05 and 0.10, are appropriate for a
+batch size in the range 300, ..., 1000.
+
+The minimum batch size (B = 300) is necessary to perform the
+binormal fitting reliably; specifically, to get a sufficient number of
+histogram bins, ideally 10..15, in each of which the natural, random
+fluctuations in the bin occupancy, i.e., the standard deviation of the
+occupancy, is small enough not to interfere with the visibility of two modes
+[if present]; at least, if the two modes are sufficiently large and
+sufficiently well separated. The underlying law is the square root law: the
+natural size of the fluctuations in the occupancy of a bin is the square
+root of said occupancy.
+
+In choosing M (for example, an input size resulting in a running time of 1
+second) and G (2, or doubling) above, it must be remembered that the actual
+running times will be reported with some minimum resolution R (for instance,
+1 msec).  To get a good understanding of the variability of the actual
+running times at each investigated PUT#, M and G should be chosen so that at
+each investigated PUT#, actual running times that differ by many multiples
+of the minimum resolution should appear. (See Steps (2) and (3).)
+
+Step (3) of the protocol, "Remove outliers," may slightly reduce the
+sample size of each batch.  The justification for dropping extreme outliers
+is that at least in some cases, they may be due to special causes that
+differ from the causes that generate most of the variability of the observed
+running time.  In statistics, `two standard deviations' is a frequently used
+cutoff, because for any normal distribution, 95% of the individuals lie
+within two standard deviations of the mean.
+
+I suggest deleting this para: If the dropping of outliers reduces the range
+of observed running times (in terms of the minimum resolution) too much, in
+the sense that only a few distinct reported values remain, this INC# will
+need to be discarded; and the constants M and g in #1 above may need to be
+altered, so as to focus the investigation on larger INC#'s.
+
+[The above two paragraphs have not been edited yet for clarity.]
+
+In Step (4) of the protocol, "Form histograms," note that as the input size
+increases, the range of measured running times, and the chosen bin width,
+are expected to increase.  For some batches, the bin width may be as small as
+R, the minimum resolution; but at larger input sizes, it is expected that the bin
+width will grow.
+
+The occupancies of the bins can be viewed as making up an array of
+non-negative integers, indexed by the bin number, which can be viewed as
+0..BN-1 (if BN is the number of bins).  The remaining steps in this protocol
+take this array of integers as input.  The array could be called an {\em
+empirical} (as contrasted with {\em theoretical}) running-time distribution,
+trimmed of its extreme outliers.
+
+STUDY
+
+We apply this protocol to a PUT consisting of a single for-loop that simply
+increments an integer counter for a given number of iterations. We refer to
+this particular PUT by the name "INC". For INC, we determine the minimum
+number of iterations k of the for-loop such that the running time of INC on
+a given computer is not less than 1 second. We take the "input size" for INC
+to be a specified number of seconds t, which then sets the number of
+iterations of the for-loop to be tk. In our study, we refer to INC with a
+given input size t as INCt. (So INC1 runs for about 1 second.) We study
+batches of INC1 through INC16368.
+
+For the initial input size, we take M = 1.
+
+For the geometric growth factor on input sizes, we take G = 2. (So
+successive input sizes double in our study.)
+
+For the maximum exponent, we take L = 14. (So the largest input size we
+consider is 2^14, which corresponds to about 4.5 hours per run.)
+
+For the resolution on timing measurements in our study, we have R = 1.0 msec.
+
+For the number of bins in a histogram, we take 6 as the minimum, and 15 as the maximum.
+
+For the condition for rejecting a batch, we use 2 standard deviations.
+
+For the minimum scale factor, we use 0.05.
+
+For the condition for being "close to the edge", we take being within 10% of the values.
+
