@@ -54,126 +54,52 @@ As a note, the execution times were measured along with the EMPv5~\cite{EMP} pro
 %as (i) there are equivalent measures available in the {\tt /proc} filesystem, 
 %and (ii) there's little constraint on the use as opposed to taskstats. 
 
-\section{Preliminary Experiments}
-
-\subsection{Inter-machine Repeatability Check~\label{sec:diff_machine}} 
-
-In this section we check if the use of different machines affects the distribution of execution (process) times on the same program. 
-In other words, we examine {\em inter-machine repeatability}. For this examination, we use a nested for loop program, here termed INC, 
-with different task lengths: 16 seconds, 13 seconds, and 17.2 seconds, each termed {\em INC16}, {\em INC13}, and {\em INC17.2}, respectively. 
-
-Figures~\ref{fig:dm_1}, ~\ref{fig:dm_2}, and ~\ref{fig:dm_3} display the process time (PT) histograms on INC16, INC13, and INC17.2 run on our machines (from {\tt sodb8} to {\tt sodb12}), respectively. Based on these figures, we conclude that we should stick to one machine  for consistency, and {\tt sodb9} should be chosen in a sense that the data measured there consistently reveals a distinct binormal pattern.
-
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on INC16]{
-		\includegraphics[scale=0.43]{sodb8_INC16_0_dist.eps}
-		\label{fig:s8_inc16_dist}
-	}	
-	\subfigure[PT frequency on INC16]{
-		\includegraphics[scale=0.43]{sodb9_INC16_0_dist.eps}
-		\label{fig:s9_inc16_dist}
-	}
-	\subfigure[PT frequency on INC16]{
-		\includegraphics[scale=0.43]{sodb10_INC16_0_dist.eps}
-		\label{fig:s10_inc16_dist}
-	}	
-	\subfigure[PT frequency on INC16]{
-		\includegraphics[scale=0.43]{sodb12_INC16_0_dist.eps}
-		\label{fig:s12_inc16_dist}
-	}
-	\caption{PT Histograms on INC16~\label{fig:dm_1}}
-\end{figure}
-
-
-\newpage
 \clearpage
+\pagebreak
 
-\begin{figure}[h]
+\section{Histograms of the Execution Times on Real-World Programs~\label{sec:real-world}} 
+This section shows histograms for runs on 
+different real-world programs with varying input sizes.  
+%We run three kinds of programs: {\it nested for-loop}, {\it insertion sort} and {\it matrix multiplication}.  
+In addition to the insertion sort program, we use another kind of program---{\it matrix multiplication}.
+For these programs, we varied their input sizes by 2{\small $\times$} while trying some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. We then exhibit different kinds of histograms in the subsequent sections.
+
+\clearpage
+\pagebreak
+
+\subsection{Insertion Sort on {\tt sodb9}~\label{sec:new_ins_sort}} 
+This section shows a series of histograms of an insertion sorting program that 
+sorts the elements of a given array in non-decreasing order. 
+The program repeatedly runs 300 times for a given input size. 
+Note that each sort program over a specific input size is termed SORT{\it x}: 
+for instance, SORT100 indicates the insertion sort program over 100K elements. 
+(This experiment was performed on {\tt sodb9}.)
+
+\begin{figure}[htp!]
 	\centering
-	\subfigure[PT frequency on INC13]{
-		\includegraphics[scale=0.43]{sodb8_INC13_0_dist.eps}
-		\label{fig:s8_inc13_dist}
-	}	
-	\subfigure[PT frequency on INC13]{
-		\includegraphics[scale=0.43]{sodb9_INC13_0_dist.eps}
-		\label{fig:s9_inc13_dist}
+	\subfigure[PT frequency on SORT100 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{s9_sort100_dist.eps}
+		\label{fig:s9_sort100_dist}
 	}
-	\subfigure[PT frequency on INC13]{
-		\includegraphics[scale=0.43]{sodb10_INC13_0_dist.eps}
-		\label{fig:s10_inc13_dist}
-	}	
-	\subfigure[PT frequency on INC13]{
-		\includegraphics[scale=0.43]{sodb12_INC13_0_dist.eps}
-		\label{fig:s12_inc13_dist}
+	\subfigure[PT frequency on SORT200 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{s9_sort200_dist.eps}
+		\label{fig:s9_sort200_dist}
 	}
-	\caption{PT Histograms on INC13~\label{fig:dm_2}}
+	\subfigure[PT frequency on SORT400 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{s9_sort400_dist.eps}
+		\label{fig:s9_sort400_dist}
+	}
+	\subfigure[PT frequency on SORT800 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{s9_sort800_dist.eps}
+		\label{fig:s9_sort800_dist}
+	}
+	\caption{PT Histograms of SORT100 ... SORT800 on {\tt sodb9}~\label{fig:new_s9_sort1}}
 \end{figure}
 
 \newpage
-\clearpage
+\pagebreak
 
-\begin{figure}[h]
-	\centering
-	\subfigure[PT frequency on INC17.2]{
-		\includegraphics[scale=0.43]{sodb8_INC17_2_dist.eps}
-		\label{fig:s8_inc17_2_dist}
-	}	
-	\subfigure[PT frequency on INC17.2]{
-		\includegraphics[scale=0.43]{sodb9_INC17_2_dist.eps}
-		\label{fig:s9_inc17_2_dist}
-	}
-	\subfigure[PT frequency on INC17.2]{
-		\includegraphics[scale=0.43]{sodb10_INC17_2_dist.eps}
-		\label{fig:s10_inc17_2_dist}
-	}	
-	\subfigure[PT frequency on INC17.2]{
-		\includegraphics[scale=0.43]{sodb12_INC17_2_dist.eps}
-		\label{fig:s12_inc17_2_dist}
-	}
-	\caption{PT Histograms on INC17.2~\label{fig:dm_3}}
-\end{figure}
-
-\newpage
-\clearpage
-
-\subsubsection{Investigation of Daemons' Influence on Program Time Distribution Regarding Machine Dependence~\label{sec:daemon}} 
-
-For the same task length, or INC16, 
-I examined in each of the four runs a few iterations at which more than three daemons (except INC and proc monitor processes) that had positive PT were captured.  
-From Table~\ref{fig:daemon}, I suspect that PT distribution seems most likely to be affected by two facts: {\it how longer the same daemon ran than usual}, and {\it how many different daemon processes appeared and how long it ran}.
-
-\begin{table}[htp!]
-\centering
-{
- \begin{tabular}{|p{1.5cm}|p{2cm}|p{12.5cm}|} \hline
-Machine Name & Iteration \# & Process Name (id, PT(msec))\\ \hline
-{\tt sodb8}  & 174 & {\tt java} ({\tt 2349}, 15), {\tt java} ({\tt 2335}, 2),  {\tt md127\_raid1} ({\tt 457}, 1), {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
- 					& 278 & {\tt java} ({\tt 2877}, 16), {\tt java} ({\tt 2335}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-			  &  486 & {\tt java} ({\tt 3190}, 21), {\tt java} ({\tt 2335}, 2),  {\tt md127\_raid1} ({\tt 457}, 1), {\tt kslowd000} ({\tt 166}, 1)\\ \cline{2-3}
-				  &  526 & {\tt md127\_raid1} ({\tt 457}, 1), {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1), {\tt jbd2/md127-8} ({\tt 470}, 1)\\ \cline{2-3}
-				  &  555 & {\tt java} ({\tt 3815}, 8), {\tt java} ({\tt 2335}, 2), {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1)\\ \hline
-{\tt sodb9}  & 105 & {\tt java} ({\tt 6634}, 16), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 175 & {\tt java} ({\tt 6942}, 7), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 245 & {\tt java} ({\tt 7259}, 6), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 280 & {\tt java} ({\tt 7365}, 3), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 350 & {\tt java} ({\tt 7577}, 3), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 420 & {\tt java} ({\tt 7683}, 3), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-				  & 490 & {\tt java} ({\tt 7894}, 4), {\tt java} ({\tt 6621}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \hline
-{\tt sodb10}  & 105 & {\tt java} ({\tt 28394}, 14), {\tt java} ({\tt 28381}, 2),  {\tt kslowd000} ({\tt 166}, 1), {\tt kslowd001} ({\tt 167}, 1) \\ \cline{2-3}
-					 & 314 & {\tt java} ({\tt 28702}, 18), {\tt java} ({\tt 28381}, 2),  {\tt md127\_raid1} ({\tt 455}, 1),  {\tt kslowd001} ({\tt 167}, 1) \\ \hline
- {\tt sodb12}  & 280 &  {\tt kslowd001} ({\tt 167}, 154),  {\tt kslowd000} ({\tt 166}, 150), {\tt java} ({\tt 14820}, 37), {\tt java} ({\tt 14807}, 2) \\ \cline{2-3}
-	& 311 &  {\tt kslowd000} ({\tt 166}, 154),  {\tt kslowd001} ({\tt 167}, 153), {\tt java} ({\tt 14807}, 2), {\tt java} ({\tt 15653}, 1), {\tt khugepaged} ({\tt 30}, 1)\\ \cline{2-3}		& 373 &  {\tt kslowd000} ({\tt 166}, 154),  {\tt kslowd001} ({\tt 167}, 152), {\tt java} ({\tt 14807}, 2), {\tt java} ({\tt 15747}, 2)\\ \cline{2-3}
-& 435 &  {\tt kslowd000} ({\tt 166}, 154),  {\tt kslowd001} ({\tt 167}, 153), {\tt java} ({\tt 15934}, 6), {\tt java} ({\tt 14807}, 2)\\ \cline{2-3}
-& 466 &  {\tt kslowd000} ({\tt 166}, 152), {\tt java} ({\tt 16121}, 6), {\tt java} ({\tt 14807}, 2), {\tt kblockd/0} ({\tt 16}, 1)\\ \cline{2-3}
- \hline
- \end{tabular}
-  }
- \caption{Some daemon processes captured across different machines~\label{fig:daemon}}
-\end{table}
-
-\newpage
-\clearpage
+\section{Appendix}
 
 \subsection{One-to-One Comparison between An Insertion Sort \& A Corresponding INC Programs~\label{sec:sort}} 
 This section compares program time histograms 
@@ -245,53 +171,6 @@ we perform a match on an SORT program and its corresponding INC program.
 	}
 	\caption{PT Histogram Comparison III~\label{fig:sort3}}
 \end{figure}
-
-\clearpage
-\pagebreak
-
-\section{Histograms of the Execution Times on Real-World Programs~\label{sec:real-world}} 
-This section shows histograms for runs on 
-different real-world programs with varying input sizes.  
-%We run three kinds of programs: {\it nested for-loop}, {\it insertion sort} and {\it matrix multiplication}.  
-In addition to the insertion sort program, we use another kind of program---{\it matrix multiplication}.
-For these programs, we varied their input sizes by 2{\small $\times$} while trying some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. We then exhibit different kinds of histograms in the subsequent sections.
-
-\clearpage
-\pagebreak
-
-\subsection{Insertion Sort on {\tt sodb9}~\label{sec:new_ins_sort}} 
-This section shows a series of histograms of an insertion sorting program that 
-sorts the elements of a given array in non-decreasing order. 
-The program repeatedly runs 300 times for a given input size. 
-Note that each sort program over a specific input size is termed SORT{\it x}: 
-for instance, SORT100 indicates the insertion sort program over 100K elements. 
-(This experiment was performed on {\tt sodb9}.)
-
-\begin{figure}[htp!]
-	\centering
-	\subfigure[PT frequency on SORT100 on {\tt sodb9}]{
-		\includegraphics[scale=0.43]{s9_sort100_dist.eps}
-		\label{fig:s9_sort100_dist}
-	}
-	\subfigure[PT frequency on SORT200 on {\tt sodb9}]{
-		\includegraphics[scale=0.43]{s9_sort200_dist.eps}
-		\label{fig:s9_sort200_dist}
-	}
-	\subfigure[PT frequency on SORT400 on {\tt sodb9}]{
-		\includegraphics[scale=0.43]{s9_sort400_dist.eps}
-		\label{fig:s9_sort400_dist}
-	}
-	\subfigure[PT frequency on SORT800 on {\tt sodb9}]{
-		\includegraphics[scale=0.43]{s9_sort800_dist.eps}
-		\label{fig:s9_sort800_dist}
-	}
-	\caption{PT Histograms of SORT100 ... SORT800 on {\tt sodb9}~\label{fig:new_s9_sort1}}
-\end{figure}
-
-\newpage
-\pagebreak
-
-\section{Appendix}
 
 \subsection{Insertion Sort on {\tt sodb8}~\label{sec:add_new}} 
 This section shows a series of histograms of an insertion sorting program that 

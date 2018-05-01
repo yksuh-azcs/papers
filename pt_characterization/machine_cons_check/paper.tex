@@ -25,6 +25,9 @@
 
 \author{
 Young-Kyoon Suh\\
+Data-Intensive Systems Laboratory\\
+School of Computer Science and Engineering\\
+Kyungpook National University\\
 }
 \maketitle
 
@@ -32,41 +35,46 @@ Young-Kyoon Suh\\
 In this work we do a check to see if the result on the same experiment is different 
 on different nodes, each with the same machine specification.
 
-\section{Experiment Notes}
-We provide a short description of our experimental runs. 
-In these experiments we used four nodes ({\tt sodb8}, {\tt sodb9}, {\tt sodb10}, and {\tt sodb12} ) 
-in the same cluster. 
+\section{Preliminary Experiments}
+
+We provide a short description of our preliminary experimental runs. 
+
+\paragraph{Experimental Notes:} In our experiments 
+we used four nodes ({\tt sodb8}, {\tt sodb9}, {\tt sodb10}, and {\tt sodb12} ) in the same cluster. 
+A short summary of the experiments is exhibited in Table~\ref{tab:exp_notes}.
 
 %% done
 \begin{table}[h]
 \begin{center}
-\begin{tabular}{|p{2cm}|p{3cm}|p{6cm}|p{4cm}|} \hline
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
 Machine & Task Length & Description & Time Length\\ \hline
-{\tt sodb8} &  INC1$\sim$INC128 & Runs of 300 samples & 2017-02-09 $\sim$ 2017-02-10\\ \hline
-{\tt sodb9} &  INC1$\sim$INC128 & Runs of 300 samples & 2017-02-09 $\sim$ 2017-02-10\\ \hline
-{\tt sodb10} & INC1$\sim$INC128 & Runs of 300 samples & 2017-02-09 $\sim$ 2017-02-10\\ \hline
-{\tt sodb12} & INC1$\sim$INC128 & Runs of 300 samples & 2017-02-09 $\sim$ 2017-02-10\\ \hline
+{\tt sodb8} (plugged into \hbox{bottom} {\em left} power strip) & INC1$\sim$INC128 & Runs of 300 samples & 2017-02-09 $\sim$ 2017-02-10\\ \hline
+{\tt sodb9}  (plugged into \hbox{bottom} {\em left} power strip)  &  INC1$\sim$INC128 & Runs of 300 samples & 2017-02-09 $\sim$ 2017-02-10\\ \hline
+{\tt sodb10}  (plugged into \hbox{bottom} {\em left} power strip)  & INC1$\sim$INC128 & Runs of 300 samples & 2017-02-09 $\sim$ 2017-02-10\\ \hline
+{\tt sodb12}  (plugged into \hbox{bottom} {\em left} power strip)  & INC1$\sim$INC128 & Runs of 300 samples & 2017-02-09 $\sim$ 2017-02-10\\ \hline
 \end{tabular}
 \end{center}
 \vspace{-.2in}
 \caption{Detailed description of INC data used for histograms\label{tab:exp_notes}}
 \end{table}
 
+\clearpage
+\newpage
 \paragraph{Measurement Quality Across the SoDB Nodes:} 
 Fig.~\ref{fig:machine_comp} shows 
 the standard deviation and relative error of 
 elapsed time (ET) and process time (PT) on the different SoDB nodes 
 as the task length of INC increases. 
 
-\begin{figure}[t]
+\begin{figure}[h]
 	\centering
 	\subfigure[Standard Deviation - ET]{
 		\includegraphics[scale=0.6]{overall/machine_et_std.eps}
-        \label{fig:pt_std}
+        \label{fig:et_std}
     }
     \subfigure[Relative Error - ET]{
         \includegraphics[scale=0.6]{overall/machine_et_re.eps}
-        \label{fig:pt_re}
+        \label{fig:et_re}
     }
 	\subfigure[Standard Deviation - PT]{
 		\includegraphics[scale=0.6]{overall/machine_pt_std.eps}
@@ -80,7 +88,7 @@ as the task length of INC increases.
     \label{fig:machine_comp}
 \end{figure}
 
-\newpage
+%\newpage
 
 Each of the following sections exhibits histograms of ET and PT 
 over increasing INC's task lengths on each individual node. 
@@ -89,6 +97,7 @@ over increasing INC's task lengths on each individual node.
 \input{sodb9/res.tex}
 \input{sodb10/res.tex}
 \input{sodb12/res.tex}
+\input{post_exp.tex}
 
 \newpage
 
