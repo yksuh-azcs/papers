@@ -64,6 +64,26 @@ different real-world programs with varying input sizes.
 In addition to the insertion sort program, we use another kind of program---{\it matrix multiplication}.
 For these programs, we varied their input sizes by 2{\small $\times$} while trying some intermediate sizes increased by $\sqrt{2}$ and measured execution times of the programs over each input size. We then exhibit different kinds of histograms in the subsequent sections.
 
+\paragraph{Experimental Notes:} In the experiments 
+we also used four nodes ({\tt sodb8}, {\tt sodb9}, {\tt sodb10}, and {\tt sodb12} ) in the same cluster. 
+A short summary of the experiments is shown in Table~\ref{tab:exp_notes}.
+
+%% done
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
+Machine & Task Length & Description & Time Length\\ \hline
+%{\tt sodb8}  (plugged into {\em bottom left} power strip) & SORT100, SORT200, SORT400, SORT800 & Runs of 300 samples & 2018-??-?? $\sim$2018-??-??\\ \hline
+{\tt sodb9}  (plugged into {\em the upper left} power strip) & SORT100, SORT200, SORT400, SORT800 & Runs of 300 samples & 2018-04-09 $\sim$2018-04-12\\ \hline
+{\tt sodb10} (plugged into {\em the upper left} power strip)  & MATC1K, MATC2K, MATC4K, MATC8K & Runs of 300 samples & 2018-03-02 $\sim$2018-03-12 \\ \hline
+{\tt sodb12} (plugged into {\em the upper left} power strip) & MATR1K, MATR2K, MATR4K, MATR8K& Runs of 300 samples & 2018-03-02 $\sim$2018-03-12 \\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Detailed description of INC data used for histograms\label{tab:exp_notes}}
+\end{table}
+
+
 \clearpage
 \pagebreak
 
@@ -73,7 +93,7 @@ sorts the elements of a given array in non-decreasing order.
 The program repeatedly runs 300 times for a given input size. 
 Note that each sort program over a specific input size is termed SORT{\it x}: 
 for instance, SORT100 indicates the insertion sort program over 100K elements. 
-(This experiment was performed on {\tt sodb9}.)
+This experiment was performed on {\tt sodb9} plugged into {\em the upper left} power strip.
 
 \begin{figure}[htp!]
 	\centering
@@ -120,7 +140,7 @@ elements in a row (and a column).
 Figure~\ref{fig:matc} shows a series of 
 histograms of the execution times measured on 
 the same matrix multiplication program in column major 
-as the input sizes grows. The program was run on {\tt sodb10}.
+as the input sizes grows. The program was run on {\tt sodb10} plugged into {\em the upper left} power strip.
 
 %\begin{figure}[h]
 %	\centering
@@ -214,7 +234,7 @@ as the input sizes grows. The program was run on {\tt sodb10}.
 Figure~\ref{fig:matc} shows a series of 
 histograms of the execution times measured on 
 the same matrix multiplication program in row major as the input sizes grows. 
-The program was run on {\tt sodb12}.
+The program was run on {\tt sodb12} plugged into {\em the upper left} power strip.
 
 %\begin{figure}[h]
 %	\centering
@@ -313,7 +333,7 @@ The input size for the program
 varies from 100,000 to 1,160,000 integer elements, which are randomly generated. 
 Note that each sort program over a specific input size is termed SORT{\it x}: 
 for instance, SORT100 indicates the insertion sort program over 100K elements. 
-This experiment was performed on {\tt sodb8}.
+This experiment was performed on {\tt sodb8} plugged into {\em bottom left} power strip.
 
 \begin{figure}[h]
 	\centering
@@ -370,7 +390,9 @@ This experiment was performed on {\tt sodb8}.
 \subsection{One-to-One Comparison between An Insertion Sort \& A Corresponding INC Programs~\label{sec:sort}} 
 This section compares program time histograms 
 of an insertion sort and a nested-for-loop programs (termed INC) with different input sizes. The insertion sort program sorts the elements of a given array in non-decreasing order.  The program repeatedly runs 300 times for a given input size. The input size for the program varies from 144K to 344K integer elements, which are randomly generated. Note that each sort program over a specific input size is termed SORT{\it x}: for instance, SORT100 indicates the insertion sort program over 100K elements. An INC program's task length is correspondingly determined by the program time of an SORT program. In Figures~\ref{fig:sort1},~\ref{fig:sort2}, and~\ref{fig:sort3} 
-we perform a match on an SORT program and its corresponding INC program.
+we perform a match on an SORT program and its corresponding INC program. 
+{\tt sodb8} was plugged into {\em bottom left} power strip 
+while {\tt sodb10} plugged into {\em the upper left} power strip. 
 
 %
 %Figures~\ref{fig:sort1} and ~\ref{fig:sort2} exhibit 

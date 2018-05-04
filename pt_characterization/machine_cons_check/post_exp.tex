@@ -15,10 +15,10 @@ A short summary of the experiments is shown in Table~\ref{tab:exp_notes2}.
 \begin{center}
 \begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
 Machine & Task Length & Description & Time Length\\ \hline
-{\tt sodb8} (plugged into \hbox{bottom} {\em left} power strip) &  INC16, INC13, and INC17.2 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
-{\tt sodb9}  (plugged into \hbox{bottom} {\em left} power strip)  &  IINC16, INC13, and INC17.2 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
-{\tt sodb10}  (plugged into \hbox{bottom} {\em left} power strip)  & INC16, INC13, and INC17.2 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
-{\tt sodb12}  (plugged into \hbox{bottom} {\em left} power strip)  & INC16, INC13, and INC17.2 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
+{\tt sodb8} (plugged into {\em bottom left} power strip) &  INC16, INC13, and INC17.2 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
+{\tt sodb9}  (plugged into {\em the upper left} power strip) &  IINC16, INC13, and INC17.2 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
+{\tt sodb10} (plugged into {\em the upper left} power strip)  & INC16, INC13, and INC17.2 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
+{\tt sodb12} (plugged into {\em the upper left} power strip) & INC16, INC13, and INC17.2 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
 \end{tabular}
 \end{center}
 \vspace{-.2in}
@@ -101,6 +101,76 @@ Figures~\ref{fig:dm_1}, ~\ref{fig:dm_2}, and ~\ref{fig:dm_3} display the process
 		\label{fig:s12_inc17_2_dist}
 	}
 	\caption{PT Histograms on INC17.2~\label{fig:dm_3}}
+\end{figure}
+
+\newpage
+\clearpage
+
+\subsection{Intra-Machine Homogeneity~\label{sec:intra_machine}} 
+
+A short description of the runs we used for this experiment are exhibited in Table~\ref{tab:exp_notes3}.
+
+%\paragraph{Experimental Notes:} In the experiments 
+%we used only {\tt sodb9}. A short summary of the experiments is shown in Table~\ref{tab:exp_notes3}.
+%\vspace{-.3in}
+%% done
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
+Machine & Task Length & Description & Time Length\\ \hline
+{\tt sodb9}  (plugged into {\em the upper left} power strip) &  INC1$\sim$INC128 & Runs of 1,000 samples & 2018-04-28 $\sim$2018-04-30\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Detailed description of INC data used for histograms\label{tab:exp_notes3}}
+\end{table}
+
+%\newpage
+%\clearpage
+
+\begin{figure}[H]
+	\centering
+	\subfigure[PT frequency on INC1 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s9_INC1_dist.eps}
+		\label{fig:s9_inc1_dist}
+	}
+	\subfigure[PT frequency on INC2 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s9_INC2_dist.eps}
+		\label{fig:s9_inc2_dist}
+	}
+	\subfigure[PT frequency on INC4 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s9_INC4_dist.eps}
+		\label{fig:s9_inc4_dist}
+	}
+	\subfigure[PT frequency on INC8 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s9_INC8_dist.eps}
+		\label{fig:s9_inc8_dist}
+	}
+	\caption{PT Histograms on INC1$\sim$INC8\label{fig:new_data1}}
+\end{figure}
+
+\newpage
+\clearpage
+
+\begin{figure}[h]
+	\centering
+	\subfigure[PT frequency on INC16 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s9_INC16_dist.eps}
+		\label{fig:s9_inc16_dist2}
+	}
+	\subfigure[PT frequency on INC32 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s9_INC32_dist.eps}
+		\label{fig:s9_inc32_dist}
+	}
+	\subfigure[PT frequency on INC64 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s9_INC64_dist.eps}
+		\label{fig:s9_inc64_dist}
+	}
+	\subfigure[PT frequency on INC128 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s9_INC128_dist.eps}
+		\label{fig:s9_inc128_dist}
+	}
+	\caption{PT Histograms on INC16$\sim$INC128\label{fig:new_data2}}
 \end{figure}
 
 \newpage
