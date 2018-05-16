@@ -175,6 +175,37 @@ Machine & Task Length & Description & Time Length\\ \hline
 
 \newpage
 \clearpage
+\subsection{Power Strip Influence~\label{sec:sodb8}} 
+
+A short description of the runs we used for this experiment are exhibited in Table~\ref{tab:exp_notes4}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
+Machine & Task Length & Description & Time Length\\ \hline
+{\tt sodb8}  (plugged into {\em bottom left} power strip) &  INC13 & Runs of 1,000 samples & 2018-03-17 $\sim$2018-03-18\\ \hline
+{\tt sodb8}  (plugged into {\em the upper left} power strip) &  INC13 & Runs of 1,000 samples & 2018-04-28 $\sim$2018-04-30\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Detailed description of INC data used for histograms\label{tab:exp_notes4}}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\subfigure[PT frequency on INC13 on {\tt sodb8}  (plugged into {\em bottom left} power strip) (copied from Fig.~\ref{fig:s8_inc13_dist})]{
+		\includegraphics[scale=0.43]{newer_exp/sodb8_INC13_0_dist.eps}
+		\label{fig:s8_inc13_dist_before}
+	}
+	\subfigure[PT frequency on INC13 on {\tt sodb8}  (plugged into {\em the upper left} power strip)]{
+		\includegraphics[scale=0.43]{new_INC_data_s9/s8_INC13_dist.eps}
+		\label{fig:s8_inc13_dist_after}
+	}
+	\caption{PT Histograms on INC13 on {\tt sodb8} Before and After Power Strip Relocation\label{fig:power_strip}}
+\end{figure}
+
+\newpage
+\clearpage
 
 \subsection{Investigation of Daemons' Influence on Program Time Distribution Regarding Machine Dependence~\label{sec:daemon_impact}} 
 
