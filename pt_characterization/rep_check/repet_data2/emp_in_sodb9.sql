@@ -21,7 +21,9 @@ CREATE TABLE S9_2_INC_RUN_PROC_INFO AS
 	-- sodb9
 	-- 			1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096
 	--and arr.algrunid IN (18140,18160,18180,18200,18220,18240,18260,18280,18300,18320,18400,17980,17940)
-	and arr.algrunid IN (18420,18440,18460,18480,18500,18520,18540,18560,18580,18600,18620,18640,18100,18120)
+	--and arr.algrunid IN (18420,18440,18460,18480,18500,18520,18540,18560,18580,18600,18620,18640,18100,18120)
+	and arr.algrunid IN (18420,18440,18460,18480,18500,18520,18540,18560,18580,18600,18620,18640,18100,18120, 18840, 18880, 
+19180, 19200, 19220, 19240, 19260, 19280, 19300, 19320, 19060, 19340, 19360, 19380,19100,19120,19140)
 	order by iternum, pt desc;
 ALTER TABLE S9_2_INC_RUN_PROC_INFO ADD PRIMARY KEY (algrunid, iternum, procid,processname);
 
@@ -62,6 +64,23 @@ EXP_RUN_TIME  NUMTRIALS     AVG_ET     STD_ET	  AVG_PT     STD_PT
 
 8 rows selected.
 
+DROP TABLE S9_2_INC_RUN_Stat2 CASCADE CONSTRAINTS;
+CREATE TABLE S9_2_INC_RUN_Stat2 AS
+	SELECT t0.exp_run_time, 
+	       t0.pt, 
+	       count(t0.iternum) as freq
+	FROM S9_2_INC_RUN_PROC_INFO t0,  S9_2_INC_RUN_Stat t1
+	WHERE t0.processname = 'incr_work' 
+	and t0.exp_run_time = t1.exp_run_time 
+	and t0.pt >= avg_pt-2*std_pt and t0.pt <= avg_pt+2*std_pt 
+	GROUP BY t0.algrunid, t0.exp_run_time, t0.pt 
+	ORDER BY exp_run_time asc, pt asc;
+ALTER TABLE S9_2_INC_RUN_Stat2 ADD PRIMARY KEY (exp_run_time, pt);
+
+select exp_run_time, pt, freq 
+from S9_2_INC_RUN_Stat2
+
+-- 
 --column PROCESSNAME format a15
 DROP TABLE S9_2_INC_RUN_CUTOFF_Info CASCADE CONSTRAINTS;
 CREATE TABLE S9_2_INC_RUN_CUTOFF_Info AS
