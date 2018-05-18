@@ -50,6 +50,22 @@ CREATE TABLE S8_INC_RUN_Stat AS
 ALTER TABLE S8_INC_RUN_Stat ADD PRIMARY KEY (algrunid, exp_run_time);
 -- select exp_run_time, numTrials, avg_et, std_et, avg_pt, std_pt from S8_INC_RUN_Stat
 
+DROP TABLE S8_INC_RUN_Stat2 CASCADE CONSTRAINTS;
+CREATE TABLE S8_INC_RUN_Stat2 AS
+	SELECT t0.exp_run_time, 
+	       t0.pt, 
+	       count(t0.iternum) as freq
+	FROM S8_INC_RUN_PROC_INFO t0, S8_INC_RUN_Stat t1
+	WHERE t0.processname = 'incr_work' 
+	and t0.exp_run_time = t1.exp_run_time 
+	and t0.pt >= avg_pt-2*std_pt and t0.pt <= avg_pt+2*std_pt 
+	GROUP BY t0.algrunid, t0.exp_run_time, t0.pt 
+	ORDER BY exp_run_time asc, pt asc;
+ALTER TABLE S8_INC_RUN_Stat2 ADD PRIMARY KEY (exp_run_time, pt);
+
+select exp_run_time, pt, freq 
+from S8_INC_RUN_Stat2
+
 EXP_RUN_TIME  NUMTRIALS     AVG_ET     STD_ET	  AVG_PT     STD_PT
 ------------ ---------- ---------- ---------- ---------- ----------
 	   1	    300    1002.58	  1.2	 1002.46	1.2
