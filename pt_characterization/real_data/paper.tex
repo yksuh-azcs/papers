@@ -26,10 +26,10 @@
 \title{Characterizing Execution Times on Realistic Programs}
 
 \author{
+Young-Kyoon Suh,\\
 Data \& Knowledge Engineering Laboratory,\\
 School of Computer Science and Engineering, \\
-Kyungpook National University,\\
-Young-Kyoon Suh\\
+Kyungpook National University\\
 }
 \maketitle
 
@@ -333,7 +333,18 @@ The input size for the program
 varies from 100,000 to 1,160,000 integer elements, which are randomly generated. 
 Note that each sort program over a specific input size is termed SORT{\it x}: 
 for instance, SORT100 indicates the insertion sort program over 100K elements. 
-This experiment was performed on {\tt sodb8} \underline{plugged into {\em bottom left}} power strip.
+%This experiment was performed on {\tt sodb8} \underline{plugged into {\em bottom left}} power strip.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
+Machine & Task Length & Description & Time Length\\ \hline
+{\tt sodb8}  (plugged into the {\em bottom left} power strip) & SORT100 ... SORT2320 & Runs of 300 samples & 2018-03-02 $\sim$2018-03-10\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Detailed description of INC data used for the subsequent histograms\label{tab:exp_notes1}}
+\end{table}
 
 \begin{figure}[h]
 	\centering
@@ -391,8 +402,20 @@ This experiment was performed on {\tt sodb8} \underline{plugged into {\em bottom
 This section compares program time histograms 
 of an insertion sort and a nested-for-loop programs (termed INC) with different input sizes. The insertion sort program sorts the elements of a given array in non-decreasing order.  The program repeatedly runs 300 times for a given input size. The input size for the program varies from 144K to 344K integer elements, which are randomly generated. Note that each sort program over a specific input size is termed SORT{\it x}: for instance, SORT100 indicates the insertion sort program over 100K elements. An INC program's task length is correspondingly determined by the program time of an SORT program. In Figures~\ref{fig:sort1},~\ref{fig:sort2}, and~\ref{fig:sort3} 
 we perform a match on an SORT program and its corresponding INC program. 
-\underline{{\tt sodb8}} was plugged into \underline{{\em bottom left} power strip} 
-while \underline{{\tt sodb10}} plugged into \underline{{\em the upper left} power strip}. 
+%\underline{{\tt sodb8}} was plugged into \underline{{\em bottom left} power strip} 
+%while \underline{{\tt sodb10}} plugged into \underline{{\em the upper left} power strip}. 
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
+Machine & Task Length & Description & Time Length\\ \hline
+{\tt sodb8}  (plugged into the {\em bottom left} power strip) & SORT144 ... SORT344 & Runs of 300 samples & 2018-03-09 $\sim$2018-03-17\\ \hline
+{\tt sodb10}  (plugged into the {\em upper left} power strip) & INC8.8 ... INC51.5 & Runs of 300 samples & 2018-03-18 $\sim$2018-03-18\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Detailed description of INC data used for the subsequent histograms\label{tab:exp_notes2}}
+\end{table}
 
 %
 %Figures~\ref{fig:sort1} and ~\ref{fig:sort2} exhibit 
