@@ -271,3 +271,98 @@ INC8     & 8022  & proc\_monitor  & 196   & 198   & 196.07        & .37   & 29\\
 \caption{Daemons observed from the INC8 run~\label{tab:inc8_daemons}}
 \end{table}
 
+\clearpage
+\newpage
+
+\subsubsection{Analysis on Some Outliers Found from INC16 and INC64 on {\tt sodb9}}
+In this section we investigate what happened about some outlying samples on INC16 and INC64 
+shown in Figures~\ref{fig:inc16_r2_hist_v5} and~\ref{fig:inc64_r2_hist_v5}.
+
+%Regarding INC16, we looked into detailed information of processes that were 
+%captured at some executions corresponding to the two bins of 16,041 (frequency = 3) 
+%and 16,050 (frequency = 1) msecs in PT. 
+Regarding INC16, we looked into detailed information of processes that were 
+captured at one execution corresponding to the bin of 16,050 (frequency = 1) msec in PT. 
+For the purpose of comparison, we also explored processes captured 
+at the second-highest bin of 16,041 msec in PT. 
+
+Table~\ref{tab:inc16_daemons} shows the overall information of the captured processes at the two bins. 
+As indicated by the table, there were 
+some infrequent daemon processes such as {\tt sshd}, {\tt grep}, {\tt md0\_raid1}, {\tt cifsd}, running for some time 
+when the INC16 program was run.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|} \hline
+Iteration number &  Process ID & Process Name  & PT (in msec)\\ \hline
+77 (, 209, or 569) & 10185 & {\tt incr\_work} (=INC16) & 16,041 \\ \hline
+& 28525 & {\tt proc\_monitor} & 196 \\ \hline
+& 167 & {\tt kslowd001} &  1 \\ \hline
+& 166 & {\tt kslowd000} &  1 \\ \hline \hline 
+703 & 10185 & {\tt incr\_work} (=INC16) & 16,050 \\ \hline
+& 28525 & {\tt proc\_monitor} & 196 \\ \hline
+& 12322 & {\tt sshd} & 14 \\ \hline
+& 12313 & {\tt sshd}  & 13 \\ \hline
+& 12324 & {\tt grep}  &  6 \\ \hline
+& 472 & {\tt md0\_raid1} &  2 \\ \hline
+& 12314 & {\tt sshd}  &  2 \\ \hline
+& 12315 & {\tt grep}  &  2 \\ \hline
+& 12319 & {\tt grep}  &  1 \\ \hline
+& 167 & {\tt kslowd001} &  1 \\ \hline
+& 12323 & {\tt sshd}  &  1 \\ \hline
+& 166 & {\tt kslowd000} &  1 \\ \hline
+& 12328 & {\tt grep}  &  1 \\ \hline
+& 1925 & {\tt cifsd} &  1 \\ \hline 
+\hline
+\end{tabular}
+\end{center}
+\caption{Daemons observed at the second-rightmost and rightmost bins in Figure~\ref{fig:inc16_r2_hist_v5}~\label{tab:inc16_daemons}}
+\end{table}
+
+Regarding INC64, we looked into detailed information of processes that were 
+captured at one execution corresponding to the bin of 64,151 (frequency = 1) msec in PT. 
+For the purpose of comparison, we also explored processes captured 
+at the second-highest bin of 16,041 msec in PT. 
+
+Table~\ref{tab:inc64_daemons} shows the overall information of the captured processes at the two bins. 
+As indicated by the table, there were also 
+the same kind of infrequent daemon processes such as {\tt sshd}, {\tt grep}, {\tt md0\_raid1} as well as 
+{\tt java} running for some time when the INC64 program was run. 
+%In particular, we may not able to avoid hosting java for the longer INCs 
+%as it appears by all means java ran due to any reason including GC 
+%during such INCs' execution for some time. 
+It is conjectured that for a longer INC program, it is more frequent to have {\tt java} with some positive time in PT. 
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|} \hline
+Iteration number &  Process ID & Process Name  & PT (in msec)\\ \hline
+795 (, 125, or 236) & 16256 & {\tt incr\_work} (=INC64) & 16,142 \\ \hline
+	& 28525 & {\tt proc\_monitor} & 198 \\ \hline
+	& 167 & {\tt kslowd001} &  4 \\ \hline
+	& 166 & {\tt kslowd000} &  3 \\ \hline 
+(125) & (472) & ({\tt md0\_raid1}) & (2) \\ \hline
+    & 16246 & {\tt java} &  2 \\ \hline 
+\hline 
+759 & 16256 & {\tt incr\_work} (=INC64) & 64,151 \\ \hline
+& 28525 & {\tt proc\_monitor} & 198 \\ \hline
+& 19320 & {\tt sshd} & 13 \\ \hline
+& 19329 & {\tt sshd}  & 12 \\ \hline
+& 19331 & {\tt grep}  &  5 \\ \hline
+& 19322 & {\tt grep}  &  5 \\ \hline
+& 167 & {\tt kslowd001} & 3\\ \hline
+& 166 & {\tt kslowd000} &  3 \\ \hline
+& 16246 & {\tt java} &  2 \\ \hline
+& 2067 & {\tt sshd}  &  2 \\ \hline
+& 19335 & {\tt grep}  &  1 \\ \hline
+& 19330 & {\tt sshd}  &  1 \\ \hline
+& 472 & {\tt md0\_raid1} &  1 \\ \hline
+& 19326 & {\tt grep}  &  1 \\ \hline
+\hline
+\end{tabular}
+\end{center}
+\caption{Daemons observed at the second-rightmost and rightmost bins in Figure~\ref{fig:inc64_r2_hist_v5}~\label{tab:inc64_daemons}}
+\end{table}
+
+\clearpage
+\newpage

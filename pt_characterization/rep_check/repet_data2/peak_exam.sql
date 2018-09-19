@@ -1,3 +1,75 @@
+-- INC64's outlier analysis
+SELECT proc.procid,
+    proc.processname as procname,
+    (proc.utime+proc.stime)/1000 as pt 
+FROM AZDBLab_NewAlgRun2 ar, 
+     AZDBLab_NewAlgRunResult2 arr, 
+     AZDBLab_ProcInfo2 proc
+WHERE 
+ar.algrunid = arr.algrunid
+and arr.algrunid = proc.algrunid
+and arr.datanum = proc.DATANUM
+and arr.iternum = proc.iternum 
+and arr.iternum IN (125,236,795)
+and (proc.utime+proc.stime) > 0
+--and proc.processname = 'incr_work'
+and arr.algrunid IN (18560) 
+order by pt desc;
+
+
+SELECT proc.procid,
+    proc.processname as procname,
+    (proc.utime+proc.stime)/1000 as pt 
+FROM AZDBLab_NewAlgRun2 ar, 
+     AZDBLab_NewAlgRunResult2 arr, 
+     AZDBLab_ProcInfo2 proc
+WHERE 
+ar.algrunid = arr.algrunid
+and arr.algrunid = proc.algrunid
+and arr.datanum = proc.DATANUM
+and arr.iternum = proc.iternum 
+and arr.iternum = 759
+and (proc.utime+proc.stime) > 0
+--and proc.processname = 'incr_work'
+and arr.algrunid IN (18560) 
+order by pt desc;
+
+
+-- INC16's outlier analysis
+SELECT arr.iternum, proc.procid,
+    proc.processname as procname,
+    (proc.utime+proc.stime)/1000 as pt 
+FROM AZDBLab_NewAlgRun2 ar, 
+     AZDBLab_NewAlgRunResult2 arr, 
+     AZDBLab_ProcInfo2 proc
+WHERE 
+ar.algrunid = arr.algrunid
+and arr.algrunid = proc.algrunid
+and arr.datanum = proc.DATANUM
+and arr.iternum = proc.iternum 
+and arr.iternum IN (77, 209, 569)
+and (proc.utime+proc.stime) > 0
+--and proc.processname = 'incr_work'
+and arr.algrunid IN (18520) 
+order by iternum asc, pt desc;
+
+SELECT proc.procid,
+    proc.processname as procname,
+    (proc.utime+proc.stime)/1000 as pt 
+FROM AZDBLab_NewAlgRun2 ar, 
+     AZDBLab_NewAlgRunResult2 arr, 
+     AZDBLab_ProcInfo2 proc
+WHERE 
+ar.algrunid = arr.algrunid
+and arr.algrunid = proc.algrunid
+and arr.datanum = proc.DATANUM
+and arr.iternum = proc.iternum 
+and arr.iternum = 703
+and (proc.utime+proc.stime) > 0
+--and proc.processname = 'incr_work'
+and arr.algrunid IN (18520) 
+order by pt desc;
+
 -- INC8 in repeatability test 2
 
 DROP TABLE INC8_r2_INFO CASCADE CONSTRAINTS;
