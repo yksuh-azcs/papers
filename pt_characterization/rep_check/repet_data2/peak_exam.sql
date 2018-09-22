@@ -1,5 +1,6 @@
 -- INC64's outlier analysis
-SELECT proc.procid,
+SELECT arr.iternum, 
+proc.procid,
     proc.processname as procname,
     (proc.utime+proc.stime)/1000 as pt 
 FROM AZDBLab_NewAlgRun2 ar, 
@@ -14,7 +15,7 @@ and arr.iternum IN (125,236,795)
 and (proc.utime+proc.stime) > 0
 --and proc.processname = 'incr_work'
 and arr.algrunid IN (18560) 
-order by pt desc;
+order by iternum, pt desc;
 
 
 SELECT proc.procid,
