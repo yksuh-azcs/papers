@@ -1,3 +1,13 @@
+#total <- merge(h$breaks,h$counts,by=c("BIN","BIN Frequency"))
+#total <- rbind(h$breaks, h$counts) 
+#test <- matrix(192,1,length(h$breaks))
+test <- matrix(192,length(h$breaks),1)
+#test <- data.frame(test)
+#test <- c(192,1:length(h$breaks)) 
+#test <- 192
+total <- paste(test,sep = "\t",h$breaks,h$counts)
+write.table(total, file="data.txt", quote=F, row.names=F)
+
 ### sodb9
 numSamples <- 1000
 x = read.csv(file="1_sec.dat",head=TRUE,sep="\t")
