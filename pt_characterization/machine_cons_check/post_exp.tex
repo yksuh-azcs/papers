@@ -211,7 +211,7 @@ Machine & Task Length & Description & Time Length\\ \hline
 
 For the same task length, or INC16, 
 I examined in each of the four runs a few iterations at which more than three daemons (except INC and proc monitor processes) that had positive PT were captured.  
-From Table~\ref{fig:daemon}, I suspect that PT distribution seems most likely to be affected by two facts: {\it how longer the same daemon ran than usual}, and {\it how many different daemon processes appeared and how long it ran}.
+From Table~\ref{tab:daemon}, I suspect that PT distribution seems most likely to be affected by two facts: {\it how longer the same daemon ran than usual}, and {\it how many different daemon processes appeared and how long it ran}.
 
 \begin{table}[htp!]
 \centering
@@ -239,5 +239,35 @@ Machine Name & Iteration \# & Process Name (id, PT(msec))\\ \hline
  \hline
  \end{tabular}
   }
- \caption{Some daemon processes captured across different machines~\label{fig:daemon}}
+ \caption{Some daemon processes captured across different machines~\label{tab:daemon}}
+\end{table}
+
+Similarly, we looked at the data from INC16 on {\tt sodb12}. 
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
+Machine & Task Length & Description & Time Length\\ \hline
+{\tt sodb12}  (plugged into the {\em upper right} power strip) &  INC128 & Runs of 1,000 samples & 2017-02-09$\sim$2017-02-10\\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Detailed description of INC128 data\label{tab:exp_notes5}}
+\end{table}
+
+
+Table~\ref{tab:daemon2} shows a list of daemon processes observed at some iterations for which more than three daemons revealed positive PT while the INC16 program was run.
+\begin{table}[htp!]
+\centering
+{
+ \begin{tabular}{|p{1.5cm}|p{2cm}|p{12.5cm}|} \hline
+Machine Name & Iteration \# & Process Name (id, PT(msec))\\ \hline
+ {\tt sodb12}  & 33 & {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 32627}, 3), {\tt java} ({\tt 304}, 1), {\tt md0\_raid1} ({\tt 484}, 1) \\ \cline{2-3}
+					  & 138  & {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 734}, 1), {\tt java} ({\tt 32627}, 3), {\tt md0\_raid1} ({\tt 484}, 1)  \\ \cline{2-3}
+					  & 181 & {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 908}, 1), {\tt java} ({\tt 32627}, 3), {\tt jbd2/md0-8} ({\tt 497}, 1) \\ \cline{2-3}
+				     & 228 &  {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 1099}, 1), {\tt java} ({\tt 32627}, 3), {\tt md0\_raid1} ({\tt 484}, 1)\\ \cline{2-3}
+ \hline
+ \end{tabular}
+  }
+ \caption{Some daemon processes captured across different machines~\label{tab:daemon2}}
 \end{table}
