@@ -242,7 +242,7 @@ Machine Name & Iteration \# & Process Name (id, PT(msec))\\ \hline
  \caption{Some daemon processes captured across different machines~\label{tab:daemon}}
 \end{table}
 
-Similarly, we looked at the data from INC16 on {\tt sodb12}. 
+Similarly, we looked at the data from INC128 on {\tt sodb12}. 
 
 \begin{table}[h]
 \begin{center}
@@ -252,22 +252,64 @@ Machine & Task Length & Description & Time Length\\ \hline
 \end{tabular}
 \end{center}
 \vspace{-.2in}
-\caption{Detailed description of INC128 data\label{tab:exp_notes5}}
+\caption{Detailed description of the INC128 data\label{tab:exp_notes5}}
 \end{table}
 
 
-Table~\ref{tab:daemon2} shows a list of daemon processes observed at some iterations for which more than three daemons revealed positive PT while the INC16 program was run.
+Table~\ref{tab:daemon2} shows a list of daemon processes observed at some iterations for which more than three daemons revealed positive PT while the INC128 program was run.
 \begin{table}[htp!]
 \centering
 {
  \begin{tabular}{|p{1.5cm}|p{2cm}|p{12.5cm}|} \hline
 Machine Name & Iteration \# & Process Name (id, PT(msec))\\ \hline
- {\tt sodb12}  & 33 & {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 32627}, 3), {\tt java} ({\tt 304}, 1), {\tt md0\_raid1} ({\tt 484}, 1) \\ \cline{2-3}
+ {\tt sodb12}  & 33 & {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 304}, 1), {\tt java} ({\tt 32627}, 3), {\tt md0\_raid1} ({\tt 484}, 1) \\ \cline{2-3}
 					  & 138  & {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 734}, 1), {\tt java} ({\tt 32627}, 3), {\tt md0\_raid1} ({\tt 484}, 1)  \\ \cline{2-3}
 					  & 181 & {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 908}, 1), {\tt java} ({\tt 32627}, 3), {\tt jbd2/md0-8} ({\tt 497}, 1) \\ \cline{2-3}
 				     & 228 &  {\tt flush-9:0} ({\tt 25187}, 1), {\tt java} ({\tt 1099}, 1), {\tt java} ({\tt 32627}, 3), {\tt md0\_raid1} ({\tt 484}, 1)\\ \cline{2-3}
  \hline
  \end{tabular}
   }
- \caption{Some daemon processes captured across different machines~\label{tab:daemon2}}
+ \caption{Some daemon processes captured at some iterations of INC128~\label{tab:daemon2}}
+\end{table}
+
+Table~\ref{tab:exp_notes6} gives a background description of what environment 
+was set for running the MATR8K program.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{4cm}|} \hline
+Machine & Task Length & Description & Time Length\\ \hline
+{\tt sodb12} (plugged into {\em the upper right} power strip) & MATR8K& Runs of 300 samples & 2018-03-02 $\sim$2018-03-12 \\ \hline
+\end{tabular}
+\end{center}
+\vspace{-.2in}
+\caption{Detailed description of the MATR8K data\label{tab:exp_notes6}}
+\end{table}
+
+Table~\ref{tab:daemon3} shows a list of daemon processes 
+observed at some iterations for which a number of daemons revealed positive PT while the MATR8K program was run.
+\begin{table}[htp!]
+\centering
+{ %{\tt bash} ({\tt 17403}, 1), {\tt bash} ({\tt 17400}, 7),  
+ \begin{tabular}{|p{1.5cm}|p{2cm}|p{12.5cm}|} \hline
+Machine Name & Iteration \# & Process Name (id, PT(msec))\\ \hline
+ {\tt sodb12}  & 
+ 36 & ({\tt MATR8K} ({\tt 17244}, 2183274),{\tt proc\_monitor} ({\tt 14166}, 200)), 
+ {\tt kslowd001} ({\tt 167}, 16959),  {\tt kslowd000} ({\tt 166}, 16707), 
+ {\tt md0\_raid1 } ({\tt 482}, 19),  {\tt sshd} ({\tt 17398}, 18), {\tt bash}  ({\tt 17400}, 7),  
+ {\tt flush-9:0} ({\tt 718}, 3), {\tt java} ({\tt 17234}, 2), {\tt kblockd/0} ({\tt 16}, 2), 
+ {\tt grep} ({\tt 17406}, 1), {\tt sshd} ({\tt 17399}, 1), 
+ {\tt events/0} ({\tt 7}, 1), {\tt bash} ({\tt 17403}, 1))\\ \cline{2-3} 
+&  119 & ({\tt MATR8K} ({\tt 17244}, 2183217),{\tt proc\_monitor} ({\tt 14166}, 204))
+ {\tt kslowd001} ({\tt 167}, 16784),  {\tt kslowd000} ({\tt 166}, 16839), 
+ {\tt md0\_raid1 } ({\tt 482}, 16),  {\tt  jbd2/md0-8} ({\tt 495}, 13), 
+ {\tt sshd} ({\tt 17773}, 7), {\tt sshd} ({\tt 17771}, 7), 
+ {\tt kblockd/0} ({\tt 16}, 4),  {\tt events/0} ({\tt 7}, 3), 
+ {\tt flush-9:0} ({\tt 718}, 3), {\tt java} ({\tt 17234}, 2), 
+ {\tt sshd} ({\tt 17772}, 2),  {\tt sshd} ({\tt 2148}, 1), 
+ {\tt java} ({\tt 17768}, 2), {\tt sshd} ({\tt 17774}, 1)\\ \cline{2-3}
+ \hline
+ \end{tabular}
+  }
+ \caption{Some daemon processes captured at some iterations of MATR8K~\label{tab:daemon3}}
 \end{table}
