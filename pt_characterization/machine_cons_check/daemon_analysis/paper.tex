@@ -1,0 +1,76 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+ \usepackage{auto-pst-pdf}
+\usepackage{graphicx}
+%\usepackage{arydshln}
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage{epstopdf}
+\fi
+\usepackage{multirow}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{url}
+\usepackage{color}
+\usepackage{subfigure}
+
+%\newcommand\solidrule[1][1cm]{\rule[0.5ex]{#1}{.4pt}}
+%\newcommand\dashedrule{\mbox{%
+%  \solidrule[2mm]\hspace{2mm}\solidrule[2mm]\hspace{2mm}\solidrule[2mm]}}
+  
+%\usepackage{hyperref}
+
+\begin{document}
+\title{Daemon Analysis across Different Machines}
+
+\author{
+Young-Kyoon Suh\\
+Data \& Knowledge Engineering Laboratory\\
+School of Computer Science and Engineering\\
+Kyungpook National University\\
+}
+\maketitle
+
+\section{Investigation on Some Daemons' Appearance Across Machines} 
+
+\begin{table}[htp!]
+\centering
+{\small
+ \begin{tabular}{|l|l|l|l|l||l|l|l|} \hline
+ Task & Total & Process & Machine & Min (ms) & Max (ms) & Avg (ms) & \# of Iters\\ \hline
+ INC1 &  1,000 & kslowd000 & sodb8 & 1 & 1 & 1 & 19 \\ \hline
+ &   &  & sodb9 & 1 & 1 & 1 & 15 \\ \hline
+ &   &  & sodb10 & 1 & 1 & 1 & 19 \\ \hline 
+ \hline
+  &  & kslowd001 & sodb8 & 1 & 1 & 1 & 15 \\ \hline
+ &   &  & sodb9 & 1 & 1 & 1 & 18 \\ \hline
+ &   &  & sodb10 & 1 & 1 & 1 & 15 \\ \hline 
+ %&   &  & sodb12 & 1 & 1 & 1 & 19 \\ \hline 
+%  \hline
+ \end{tabular}
+  }
+ \caption{Daemon statistics on the INC1 data across machines~\label{tab:inc1}}
+\end{table}
+
+\begin{table}[htp!]
+\centering
+{\small
+ \begin{tabular}{|l|l|l|l|l||l|l|l|} \hline
+ Task & Total & Process & Machine & Min (ms) & Max (ms) & Avg (ms) & \# of Iters\\ \hline
+ MAT8K & 300 & grep & sodb12 & 1 & 1 & 1 & 4 \\ \hline
+ \hline
+  &  & kslowd000  & sodb12 & 16540 & 17033 & 16780.43 & 300 \\ \hline
+ &  & kslowd000	& sodb10 & 102 & 107 & 103.33 & 300 \\ \hline 
+ \hline
+  &  & kslowd001  & sodb12 & 16541 & 17000 & 16777.18 & 300 \\ \hline
+  &  & kslowd001	& sodb10 & 102 & 108 & 103.27 & 300 \\ \hline 
+ \hline
+  &  & sshd  & sodb12 & 1 & 20 & 5.91 & 43 \\ \hline
+ &  & sshd & sodb10 & 1 & 8  &  4.17 & 42 \\ \hline 
+%   \hline
+ \end{tabular}
+  }
+ \caption{Daemon statistics on the MAT8K data across machines~\label{tab:mat8K}}
+\end{table}
+
+\end{document}
