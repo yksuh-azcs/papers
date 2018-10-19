@@ -1,0 +1,210 @@
+Young's file protocol_data.dat contains the lines
+
+8	8013	18
+8	8014	95
+8	8015	194
+8	8016	78
+8	8017	26
+8	8018	29
+8	8019	52
+8	8020	180
+8	8021	299
+8	8022	29
+
+The following is how they can be extracted, and then fitted by my
+program.
+
+First, a invoking a shell script 
+
+for i in 1 2 3 4 6 8 12 16 24 32 48 64 72 80 88 96 104 112 ; do awk \$1==\"$i\" < protocol_data.dat | awk '{for (i = 0; i < $3; i++) print $2}' > $i.dat; echo $i done; wc -l $i; done
+
+will create files 1.dat, 2.dat, 3.dat, etc.  Let's focus on 8.dat,
+which will contain the raw data for INC8 in terms of milliseconds.  It
+will contain 1000 lines (corresponding to the INC8 sample of size
+1000), and will look like this:
+
+8013
+8013
+...
+8022
+8022
+
+The current version of my program, `fit', can be executed in four ways
+on this (sorted) input.  One can type any of
+
+fit < 8.dat
+fit -b 2 8 1 1 0.4 < 8.dat 
+fit -n < 8.dat
+fit -p < 8.dat
+
+These produce, respectively:
+
+(1) A normal fit.
+
+(2) A `guided' binormal fit in which the initial starting value
+(`seed') for the 5-tuple mean1,mean2,sd1,sd2,scale1 is passed on the
+command line.
+
+(3) A lengthy sequence of binormal fits, in which the initial value
+5-tuple is automatically varied.  By default, up to 2^5 starts are
+used, and the results of each are reported.  Whether any starting
+point for the optimization reduces the discrepancy between the raw
+data and the fit, over the smallest discrepancy from the previous
+starts, is also reported.
+
+(4) The same as (3), but only the results coming from the `best'
+starting value are reported.  
+
+
+In all of (1),(2),(3),(4), histogram of the fit (the only one or the
+best one, as the case may be), accompanying a histogram of the raw
+data, is also generated.
+
+The following are the outputs of (1),(2),(4) and (3), in that order.
+The output of (3) is long.
+
+
+THE NORMAL FIT:
+
+rsm-a1$ fit < 8.dat
+Data: n = 1000, min = 8013, max = 8022, range = 9
+Statistics: mean = 5.191000, sd = 2.820013, g1 (i.e., skewness) = -0.329005
+
+Best normal fit: mean = 4.956289, sd = 4.685457
+Discrepancy = 0.069707  -- very long 
+
+Histograms (raw and fitted):
+
+	TIME	FREQ_RAW	FREQ_FITTED
+0	8013	0.018000	0.048624
+1	8014	0.095000	0.059509
+2	8015	0.194000	0.069608
+3	8016	0.078000	0.077815
+4	8017	0.026000	0.083138
+5	8018	0.029000	0.084893
+6	8019	0.052000	0.082847
+7	8020	0.180000	0.077270
+8	8021	0.299000	0.068879
+9	8022	0.029000	0.058680
+
+
+THE GUIDED BINORMAL FIT:
+
+rsm-a1$ fit -b 2 8 1 1 0.4 < 8.dat -- naked eye for the five parametric values of 2, 8, .., 0.4
+Data: n = 1000, min = 8013, max = 8022, range = 9
+Statistics: mean = 5.191000, sd = 2.820013, g1 (i.e., skewness) = -0.329005
+
+Optimization accomplished after pass 16:
+Initial parameter values: mean1 = 2.000000, mean2 = 8.000000, sd1 = 1.000000, sd2 = 1.000000, scale1 = 0.400000, scale2 = 0.600000
+Optimum parameter values: mean1 = 1.940553, mean2 = 7.793792, sd1 = 0.725265, sd2 = 0.739177, scale1 = 0.382319
+Discrepancy = 0.016379
+
+Histograms (raw and fitted):
+
+	TIME	FREQ_RAW	FREQ_FITTED
+0	8013	0.018000	0.008895
+1	8014	0.095000	0.094840
+2	8015	0.194000	0.193988
+3	8016	0.078000	0.078672
+4	8017	0.026000	0.006077
+5	8018	0.029000	0.000664
+6	8019	0.052000	0.023802
+7	8020	0.180000	0.186754
+8	8021	0.299000	0.299364
+9	8022	0.029000	0.100037
+
+
+THE BEST (over 2^5 starting points) BINORMAL FIT:
+
+rsm-a1$ fit -p  < 8.dat -- best starting point for hill climbing 
+Data: n = 1000, min = 8013, max = 8022, range = 9
+Statistics: mean = 5.191000, sd = 2.820013, g1 (i.e., skewness) = -0.329005
+
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 6.000000, sd2 = 6.000000, scale1 = 0.666667 --- 32 starting point
+Optimum parameter values: mean1 = 2.022183, mean2 = 7.774511, sd1 = 0.819682, sd2 = 0.669115, scale1 = 0.424087 -- little different from the guided normal 
+Discrepancy = 0.015723
+
+Histograms (raw and fitted):
+
+	TIME	FREQ_RAW	FREQ_FITTED
+0	8013	0.018000	0.013037
+1	8014	0.095000	0.097619
+2	8015	0.194000	0.194008
+3	8016	0.078000	0.104025
+4	8017	0.026000	0.014825
+5	8018	0.029000	0.000734
+6	8019	0.052000	0.015925
+7	8020	0.180000	0.177851
+8	8021	0.299000	0.299554
+9	8022	0.029000	0.078965
+
+
+THE ENTIRE SEQUENCE (from up to 2^5 starting points) OF BINORMAL FITS:
+
+rsm-a1$ fit -n  < 8.dat 
+Data: n = 1000, min = 8013, max = 8022, range = 9
+Statistics: mean = 5.191000, sd = 2.820013, g1 (i.e., skewness) = -0.329005
+
+Optimization accomplished after pass 77: --- how many iterations before the peak reach
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 3.000000, sd2 = 3.000000, scale1 = 0.333333
+Optimum parameter values: mean1 = 1.895643, mean2 = 8.213237, sd1 = 0.614751, sd2 = 6.168925, scale1 = 0.288607
+Discrepancy = 0.044074
+Bettered the discrepancy!
+
+Optimization accomplished after pass 129:
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 3.000000, sd2 = 3.000000, scale1 = 0.666667
+Optimum parameter values: mean1 = 2.022183, mean2 = 7.774511, sd1 = 0.819682, sd2 = 0.669115, scale1 = 0.424087
+Discrepancy = 0.015723
+Bettered the discrepancy!
+
+Optimization accomplished after pass 44:
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 3.000000, sd2 = 6.000000, scale1 = 0.333333
+Optimum parameter values: mean1 = 1.880655, mean2 = 6.799007, sd1 = 0.574951, sd2 = 5.610992, scale1 = 0.260888
+Discrepancy = 0.044626
+
+Optimization accomplished after pass 108:
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 3.000000, sd2 = 6.000000, scale1 = 0.666667
+Optimum parameter values: mean1 = 1.898914, mean2 = 8.912485, sd1 = 0.628361, sd2 = 6.274329, scale1 = 0.299443
+Discrepancy = 0.043847
+
+Optimization accomplished after pass 39:
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 6.000000, sd2 = 3.000000, scale1 = 0.333333
+Optimum parameter values: mean1 = 2.042056, mean2 = 1.913785, sd1 = 5.187116, sd2 = 4.918762, scale1 = 0.295145
+Discrepancy = 0.067008
+
+Optimization accomplished after pass 198:
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 6.000000, sd2 = 3.000000, scale1 = 0.666667
+Optimum parameter values: mean1 = 4.833339, mean2 = 4.607935, sd1 = 2.265342, sd2 = 1.302689, scale1 = 2.296907
+Discrepancy = 0.040457
+
+Optimization accomplished after pass 101:
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 6.000000, sd2 = 6.000000, scale1 = 0.333333
+Optimum parameter values: mean1 = 1.881796, mean2 = 6.863308, sd1 = 0.577079, sd2 = 5.653583, scale1 = 0.262322
+Discrepancy = 0.044599
+
+Optimization accomplished after pass 29:
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 6.000000, sd2 = 6.000000, scale1 = 0.666667
+Optimum parameter values: mean1 = 1.640865, mean2 = 5.266592, sd1 = 4.227211, sd2 = 7.340409, scale1 = 0.696402
+Discrepancy = 0.066721
+
+-- best: into the very exact path in hill-climbing ...
+-- big hill & small hill
+-- 2 out of 7
+Initial parameter values: mean1 = 3.000000, mean2 = 6.000000, sd1 = 6.000000, sd2 = 6.000000, scale1 = 0.666667
+Optimum parameter values: mean1 = 2.022183, mean2 = 7.774511, sd1 = 0.819682, sd2 = 0.669115, scale1 = 0.424087
+Discrepancy = 0.015723
+
+Histograms (raw and fitted):
+
+	TIME	FREQ_RAW	FREQ_FITTED
+0	8013	0.018000	0.013037
+1	8014	0.095000	0.097619
+2	8015	0.194000	0.194008
+3	8016	0.078000	0.104025
+4	8017	0.026000	0.014825
+5	8018	0.029000	0.000734
+6	8019	0.052000	0.015925
+7	8020	0.180000	0.177851
+8	8021	0.299000	0.299554
+9	8022	0.029000	0.078965
+
