@@ -1,5 +1,6 @@
 ### sodb9
 
+
 ### INC9
 numSamples <- 1000
 x = read.csv(file="INC9_sec.dat",head=TRUE,sep="\t")
@@ -144,6 +145,253 @@ xlab='PT (ms)', ylab=expression('Frequency'))
 axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
+#######################################################################################################
+###INC17
+numSamples <- 1000 
+INC_Num <- 17
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+###INC18
+INC_Num <- 18
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+###INC19
+INC_Num <- 19
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+###INC20
+INC_Num <- 20
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+INC_Num <- 21
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+INC_Num <- 22
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+INC_Num <- 23
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+###INC24
+INC_Num <- 24
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+###INC74
+INC_Num <- 74
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+INC_Num <- 76
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+INC_Num <- 78
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+INC_Num <- 82
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+INC_Num <- 84
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+INC_Num <- 86
+filename <- paste(INC_Num, "_sec.dat", sep="")
+x = read.csv(file=filename,head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+#x_up = mean(x$PRTIME) + 2*sd(x$PRTIME);
+#x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME);
+#x <- subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up);
+binsize=1
+xmin <-min(x$PRTIME)
+xmax <-max(x$PRTIME)
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+1,1),plot=F)
+nrow(x)
+h
+y <- cbind(INC_Num,floor(h$mids),h$counts)
+write.table(y, file = "summary.txt", append = TRUE, col.names = FALSE, quote = FALSE, row.names = FALSE, sep = "\t")
+
+#######################################################################################################
 ###INC1
 numSamples <- 1000
 x = read.csv(file="1_sec.dat",head=TRUE,sep="\t")
