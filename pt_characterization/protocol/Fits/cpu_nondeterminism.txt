@@ -1,0 +1,5 @@
+https://stackoverflow.com/questions/43707877/un-deterministic-cpu-behavior-and-reasoning-about-physical-execution-duratio
+
+https://stackoverflow.com/questions/39948937/deterministic-execution-time-on-x86-64
+
+https://stackoverflow.com/questions/18220928/processor-instruction-cycle-execution-time
