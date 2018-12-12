@@ -1,3 +1,20 @@
+SELECT arr.algrunid  as runID,
+       proc.DATANUM as INC_NUM,
+       proc.iternum,
+       arr.runtime as METIME,
+       (proc.utime+proc.stime)/1000 as prtime
+FROM AZDBLab_NewAlgRun2 ar, AZDBLab_NewAlgRunResult2 arr, AZDBLab_ProcInfo2 proc
+WHERE 
+    ar.algrunid = arr.algrunid
+and arr.algrunid = proc.algrunid
+and arr.datanum = proc.DATANUM
+and arr.iternum = proc.iternum 
+and proc.processname in ('incr_work')
+and (proc.utime+proc.stime) > 0
+and arr.algrunid IN (25461)
+order by INC_NUM asc, iternum asc
+
+
 -- INC108
 column proc_name format a15;
 SELECT --arr.algrunid,
