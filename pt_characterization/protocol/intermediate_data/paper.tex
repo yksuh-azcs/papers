@@ -29,17 +29,16 @@ Young-Kyoon Suh\\
 \maketitle
 
 \section{Description}
-In this document we discuss characteristics of INC runs in sequence. 
+In this document we study the characteristics of INC runs that are executed in sequence. 
 
-There are two big subjects included in the document.
-Specifically, the first subject relates running a series of INCs in a batch, pausing the run, and then resuming 
-the run, rather than repeating the same INC multiple times. 
-That is, INC1, ..., INC16384 are consecutively run as a batch, and 
-then the entire batch run sleeps for an hour, and then 
-another batch run of INC1, ..., INC16384 begins, stops, and resumes, and so forth.
+Broadly speaking, there are two {\em subjects} included in the document.
+The first subject, which is discussed in Section 1, involves {\it i}) running as a {\em batch} a series of INCs with increasing task length and {\it ii}) pausing the batch run. This entire batch run including the pause continues until the specified number of iterations, say 30, is specified. More specifically, INC1, ..., INC16384 are consecutively run as a batch, and 
+then the entire batch run sleeps for an hour, and then another batch run begins and stops, and again the new batch run resumes. This type of batch run is distinct from repeatedly running the same INC with a single task length.
 
-The second subject concerns breaking up 
-a whole run of 1000 samples into 200 samples, thereby yielding five different histograms. 
+The second subject, which is discussed in Section 2, iconcerns dividing 
+a single run of 1000 samples on INC16 into five consecutive subruns of 200 samples.  
+For each subrun, we examine their respective PT (program time) histograms 
+and see if the histograms look similar to each other. 
 
 \subsection{Experiment Notes}
 Table~\ref{tab:exp_notes} provides a short description of our experimental runs, 
@@ -51,7 +50,7 @@ on which the following histograms are based.
 \begin{tabular}{|p{2cm}|p{3cm}|p{6cm}|p{4cm}|} \hline
 Machine & Task Length (sec) & Description & Experiment Period\\ \hline
 {\tt sodb9} &  INC16 & Each run with 1,000 samples & 2017-03-02 $\sim$ 2017-03-07\\ \hline
-{\tt sodb9} &  INC1~INC16384 & One run in which each INC has 30 samples & 2018-11-17 $\sim$ 2018-12-02\\ \hline
+{\tt sodb9} &  INC1$\sim$INC16384 & One run in which each INC has 30 samples & 2018-11-17 $\sim$ 2018-12-02\\ \hline
 \end{tabular}
 \end{center}
 \vspace{-.2in}
@@ -162,7 +161,7 @@ Machine & Task Length (sec) & Description & Experiment Period\\ \hline
 		\includegraphics[scale=0.43]{16_sec_pt_hist0_4.eps}
 		\label{fig:inc16-4}
 	}
-	\caption{PT Histograms of INC16-1$~$INC16-4~\label{fig:inc16_hist1}}
+	\caption{PT Histograms of INC16-1$\sim$INC16-4~\label{fig:inc16_hist1}}
 \end{figure}
 
 \begin{figure}[H]
