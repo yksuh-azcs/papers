@@ -118,6 +118,246 @@ xlab='PT (ms)', ylab=expression('Frequency'))
 axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
 dev.off()
 
+numSamples <- 30
+x = read.csv(file="32_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("32_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <-10
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC32', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="64_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("64_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <-6
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC64', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="128_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("128_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <-6
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC128', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="256_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("256_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 8
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC256', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="512_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("512_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 8
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC512', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="1024_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("1024_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 4
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC1024', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="2048_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("2048_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 4
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC2048', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="4096_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("4096_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 4
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC4096', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="8192_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples) 
+x$PRTIME <- round(x$PRTIME,1)
+setEPS()
+postscript("8192_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 4
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC8192', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
+
+numSamples <- 30
+x = read.csv(file="16384_sec.dat",head=TRUE,sep="\t")
+x <- subset(x, x$ITERNUM <= numSamples)
+setEPS()
+postscript("16384_sec_pt_hist.eps")
+binsize=1
+x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+xmin <-min(x$PRTIME)
+xmin
+xmax <-max(x$PRTIME)
+xmax
+nbins <- ceiling((xmax-xmin) / binsize)
+h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F)
+ymax <- max(h$counts)
+ymax <- ceiling(ymax/100)*100
+ymax <- 4
+plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", main='PT frequency on INC16384', 
+sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), 
+xlab='PT (ms)', ylab=expression('Frequency'))
+axis(side=1,at=h$mids,labels=seq(xmin,xmax,1))
+dev.off()
 ###############################################################################################
 
 numSamples <- 1000
