@@ -32,13 +32,13 @@ Young-Kyoon Suh\\
 In this document we study the characteristics of INC runs that are executed in sequence. 
 
 Broadly speaking, there are two {\em subjects} included in the document.
-The first subject, which is discussed in Section 1, involves {\it i}) running as a {\em batch} a series of INCs with increasing task length and {\it ii}) pausing the batch run. This entire batch run including the pause continues until the specified number of iterations, say 30, is specified. More specifically, INC1, ..., INC16384 are consecutively run as a batch, and 
+The first subject, which is discussed in Section~2, involves an experiment of {\it i}) running as a {\em batch} a series of INCs with increasing task length and {\it ii}) pausing the batch run. This entire batch run including the pause continues until the specified number of iterations, say 30, is specified. More specifically, INC1, ..., INC16384 are consecutively run as a batch, and 
 then the entire batch run sleeps for an hour, and then another batch run begins and stops, and again the new batch run resumes. This type of batch run is distinct from repeatedly running the same INC with a single task length.
 
-The second subject, which is discussed in Section 2, iconcerns dividing 
-a single run of 1000 samples on INC16 into five consecutive subruns of 200 samples.  
+The second subject, which is discussed in Section~3, concerns dividing 
+the 1000 samples of an INC16 run into five consecutive subruns of 200 samples.  
 For each subrun, we examine their respective PT (program time) histograms 
-and see if the histograms look similar to each other. 
+and check to see if the histograms look similar to each other. 
 
 \subsection{Experiment Notes}
 Table~\ref{tab:exp_notes} provides a short description of our experimental runs, 
