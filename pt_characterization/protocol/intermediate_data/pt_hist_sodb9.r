@@ -405,6 +405,7 @@ y <- cbind(tl,floor(h$mids),h$counts)
 y
 write.table(y, file=fileName, append = TRUE, row.names = FALSE, col.names = FALSE, sep = "\t")
 
+###INC25
 task_len <- 25 
 fraction <- 0
 dataFileName <- paste("INC",task_len,".",fraction,".dat",sep="")
@@ -596,6 +597,74 @@ y
 write.table(y, file=fileName, append = TRUE, row.names = FALSE, col.names = FALSE, sep = "\t")
 
 
+###INC50 
+numSamples <- 1000
+fileName <- paste("interm_inc_hist_bin_count2.txt",sep="") 
+for (task_len in c(50,52,54,56,58,60,62)){
+	fraction <- 0
+	dataFileName <- paste("INC",task_len,".",fraction,".dat",sep="")
+	x = read.csv(file=dataFileName,head=TRUE,sep="\t")
+	x <- subset(x, x$ITERNUM <= numSamples)
+	setEPS() 
+	histFileName <- paste(task_len,"_",fraction,"_sec_pt_hist.eps",sep="")
+	postscript(histFileName)
+	binsize=1
+	x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+	x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+	#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+	xmin <-min(x$PRTIME)
+	xmin
+	xmax <-max(x$PRTIME)
+	xmax
+	nbins <- ceiling((xmax-xmin) / binsize)
+	h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F) 
+	tl <- h$counts  
+	c <- 0
+	for (v in tl) {
+	    c <- c+1
+	    tl[c:1] <- task_len
+	}
+	y <- cbind(tl,floor(h$mids),h$counts) 
+	y
+	if(task_len == 50){
+	write.table(y, file=fileName, row.names = FALSE, col.names = c('INC Number', 'Bin Number', 'Counts'), sep = "\t")
+	}else{
+		write.table(y, file=fileName, append = TRUE, row.names = FALSE, col.names = FALSE, sep = "\t")
+	}
+}
+###INC65-71 
+for (task_len in c(65,66,67,68,69,70,71)){
+	fraction <- 0
+	dataFileName <- paste("INC",task_len,".",fraction,".dat",sep="")
+	x = read.csv(file=dataFileName,head=TRUE,sep="\t")
+	x <- subset(x, x$ITERNUM <= numSamples)
+	setEPS() 
+	histFileName <- paste(task_len,"_",fraction,"_sec_pt_hist.eps",sep="")
+	postscript(histFileName)
+	binsize=1
+	x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+	x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+	#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+	xmin <-min(x$PRTIME)
+	xmin
+	xmax <-max(x$PRTIME)
+	xmax
+	nbins <- ceiling((xmax-xmin) / binsize)
+	h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F) 
+	tl <- h$counts  
+	c <- 0
+	for (v in tl) {
+	    c <- c+1
+	    tl[c:1] <- task_len
+	}
+	y <- cbind(tl,floor(h$mids),h$counts) 
+	y
+	#if(task_len == 50){
+	#write.table(y, file=fileName, row.names = FALSE, col.names = c('INC Number', 'Bin Number', 'Counts'), sep = "\t")
+	#}else{
+		write.table(y, file=fileName, append = TRUE, row.names = FALSE, col.names = FALSE, sep = "\t")
+	#}
+}
 
 ######
 numSamples <- 30
