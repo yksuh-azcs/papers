@@ -14,8 +14,12 @@ on which the following histograms are based.
 \begin{tabular}{|p{3cm}|p{2cm}|p{3cm}|p{4cm}|p{3cm}|} \hline
 Machine & Task Length (sec) & Description & Experiment Period & Relevant \linebreak Histograms\\ \hline
 {\tt sodb9} (plugged into {\em the upper left} power strip)  &  INC1$\sim$INC64 & 1000 samples, each & 2017-03-02 $\sim$ 2017-03-04 & Figs.~\ref{fig:s9_r1_et_hist1},~\ref{fig:s9_r1_et_hist2},~\ref{fig:s9_r1_pt_hist1}, and~\ref{fig:s9_r1_pt_hist2}\\ \hline
+
+{\tt sodb9} (plugged into {\em the upper left} power strip) &  INC19, INC20, INC21.125, INC60, INC62, INC224 & 1000 samples, each, applied by EMPv4 & 2017-05-31, 2018-12-03, 2019-03-04 $\sim$ 2019-03-14 & Figs.~\ref{fig:s9_r1_pt_hist2},~\ref{fig:s9_r1_pt_hist2-2}, and~\ref{fig:inc224_v4}\\ \hline
+
 {\tt sodb9} (plugged into {\em the upper left} power strip)  &  INC128$\sim$ INC1024 & 300 samples, each & 2017-03-04 $\sim$ 2017-03-11 & 
-Figs.~\ref{fig:s9_r1_et_hist3} and~\ref{fig:s9_r1_pt_hist3}\\ \hline
+Figs.~\ref{fig:s9_r1_et_hist3},~\ref{fig:s9_r1_pt_hist3}, and~\ref{fig:s9_r1_pt_hist4}\\ \hline
+
 {\tt sodb10} (plugged into {\em the upper left} power strip)  & INC2048 & 300 samples & 2017-03-02 $\sim$ 2017-03-09 & Figs.~\ref{fig:inc2048_r1_et_hist_v5} and~\ref{fig:inc2048_r1_hist_v5}\\ \hline
 {\tt sodb12} (plugged into {\em the upper right} power strip)  & INC4096 & 300 samples & 2017-02-13 $\sim$ 2017-02-27 & Figs.~\ref{fig:inc4096_r1_et_hist_v5} and~\ref{fig:inc4096_r1_hist_v5}\\ \hline
 \end{tabular}
@@ -134,22 +138,52 @@ Figs.~\ref{fig:s9_r1_et_hist3} and~\ref{fig:s9_r1_pt_hist3}\\ \hline
 		\includegraphics[scale=0.43]{repet_data1/16_sec_pt_hist_v5.eps}
 		\label{fig:inc16_r1_hist_v5}
 	}
+	\subfigure[PT frequency on INC19 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{repet_data1/19_sec_pt_hist.eps}
+		\label{fig:inc19_hist_v4}
+	}
+	\subfigure[PT frequency on INC20 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{repet_data1/20_sec_pt_hist.eps}
+		\label{fig:inc20_hist_v4}
+	}
+	\subfigure[PT frequency on INC21.125 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{repet_data1/21_125_sec_pt_hist.eps}
+		\label{fig:inc21_125_hist_v4}
+	}
+	\caption{PT Histograms of INC16 ... INC21.125\label{fig:s9_r1_pt_hist2}}
+\end{figure}
+
+\begin{figure}[hp!]
+	\centering
 	\subfigure[PT frequency on INC32 on {\tt sodb9}]{
 		\includegraphics[scale=0.43]{repet_data1/32_sec_pt_hist_v5.eps}
 		\label{fig:inc32_r1_hist_v5}
+	}
+	\subfigure[PT frequency on INC60 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{repet_data1/60_0_sec_pt_hist.eps}
+		\label{fig:inc60_hist_v4}
+	}
+	\subfigure[PT frequency on INC62 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{repet_data1/62_0_sec_pt_hist.eps}
+		\label{fig:inc62_hist_v4}
 	}
 	\subfigure[PT frequency on INC64 on {\tt sodb9}]{
 		\includegraphics[scale=0.43]{repet_data1/64_sec_pt_hist_v5.eps}
 		\label{fig:inc64_r1_hist_v5}
 	}
-	\caption{PT Histograms of INC16 ... INC64\label{fig:s9_r1_pt_hist2}}
+	\caption{PT Histograms of INC32 ... INC64\label{fig:s9_r1_pt_hist2-2}}
 \end{figure}
+
 
 \begin{figure}[hp!]
 	\centering
 	\subfigure[PT frequency on INC128 on {\tt sodb9}]{
 		\includegraphics[scale=0.43]{repet_data1/128_sec_pt_hist_v5.eps}
 		\label{fig:inc128_r1_hist_v5}
+	}
+	\subfigure[PT frequency on INC224 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{repet_data1/224_sec_pt_hist.eps}
+		\label{fig:inc224_v4}
 	}
 	\subfigure[PT frequency on INC256 on {\tt sodb9}]{
 		\includegraphics[scale=0.43]{repet_data1/256_sec_pt_hist_v5.eps}
@@ -159,15 +193,15 @@ Figs.~\ref{fig:s9_r1_et_hist3} and~\ref{fig:s9_r1_pt_hist3}\\ \hline
 		\includegraphics[scale=0.43]{repet_data1/512_sec_pt_hist_v5.eps}
 		\label{fig:inc512_r1_hist_v5}
 	}
-	\subfigure[PT frequency on INC1024 on {\tt sodb9}]{
-		\includegraphics[scale=0.43]{repet_data1/1024_sec_pt_hist_v5.eps}
-		\label{fig:inc1024_r1_hist_v5}
-	}
 	\caption{PT Histograms of INC256 ... INC1024~\label{fig:s9_r1_pt_hist3}}
 \end{figure}
 
 \begin{figure}[t]
 	\centering
+	\subfigure[PT frequency on INC1024 on {\tt sodb9}]{
+		\includegraphics[scale=0.43]{repet_data1/1024_sec_pt_hist_v5.eps}
+		\label{fig:inc1024_r1_hist_v5}
+	}
 	\subfigure[PT frequency on INC2048 on {\tt sodb10}]{
 		\includegraphics[scale=0.43]{repet_data1/2048_sec_pt_hist_v5.eps}
 		\label{fig:inc2048_r1_hist_v5}
@@ -176,7 +210,7 @@ Figs.~\ref{fig:s9_r1_et_hist3} and~\ref{fig:s9_r1_pt_hist3}\\ \hline
 		\includegraphics[scale=0.43]{repet_data1/4096_sec_pt_hist_v5.eps}
 		\label{fig:inc4096_r1_hist_v5}
 	}
-	\caption{PT Histograms of INC2048 and INC4096~\label{fig:s9_r1_pt_hist4}}
+	\caption{PT Histograms of INC1024 ... INC4096~\label{fig:s9_r1_pt_hist4}}
 \end{figure}
 
 \clearpage
