@@ -12,7 +12,7 @@ set output 'fit-1.eps'
 #set key at 6.8,-0.22
 #set format y "%.4f"
 #set xrange [3:14]
-set xrange [1:12]
+set xrange [1:64]
 #set yrange [-0.30:0.30]
 set yrange [-4:14]
 #set xlabel "{/Times-Bold-Italic Generation}" font "Times-Roman, 18"
@@ -25,6 +25,7 @@ set style line 3 lt 1 lw 1 pt 147
 #plot "FITS.txt" using 1:($2) title "Not suboptimal" with linespoint ls 1,\
 #     "FITS.txt" using 1:($3) title "Weighted (Net benefit)" with linespoint ls 2,\
 #     "FITS.txt" using 1:($4) title "Suboptimal" with linespoint ls 3
-plot "FITS.txt" using 1:($2) title "Mean 1" with linespoint ls 1
-set term X11; replot;
+plot "FITS.txt" using 1:($6) title "Mean 1" with linespoint ls 1
+     "FITS.txt" using 1:($6) title "Mean 1" with linespoint ls 1
+set terminal qt; replot;
 
