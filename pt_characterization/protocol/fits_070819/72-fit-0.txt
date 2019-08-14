@@ -1,0 +1,40 @@
+ORIGINAL ALGORITHM: The starting point for the greedy algorithm, in
+the five-dimensional parameter space for the binormal fit, was supplied
+by the user: it was (mean,mean2,sd1,sd2,scale1)=(3, 9, 1, 1, 0.7),
+with means relative to the minimum of the dataset.
+
+----------------------------------------------------------------------
+
+Data: n = 999, min = 72144, max = 72164, range = 20
+Statistics: mean = 8.950951, sd = 3.166805, g1 (i.e., skewness) = 0.116334
+
+Optimization accomplished after pass 61:
+Initial parameter values: mean1 = 3.000000, mean2 = 9.000000, sd1 = 1.000000, sd2 = 1.000000, scale1 = 0.700000, scale2 = 0.300000
+Optimum parameter values: mean1 = 6.258206, mean2 = 11.724330, sd1 = 1.242524, sd2 = 1.559168, scale1 = 0.505880, scale2 = 0.494120
+Discrepancy = 0.005670
+
+Histograms (raw and fitted):
+
+	TIME	FREQ_RAW	FREQ_FITTED
+0	72144	0.001001	0.000001
+1	72145	0.000000	0.000032
+2	72146	0.004004	0.000597
+3	72147	0.015015	0.006034
+4	72148	0.028028	0.032893
+5	72149	0.089089	0.096936
+6	72150	0.153153	0.154906
+7	72151	0.137137	0.135410
+8	72152	0.070070	0.070667
+9	72153	0.044044	0.044086
+10	72154	0.072072	0.070422
+11	72155	0.098098	0.111542
+12	72156	0.135135	0.122313
+13	72157	0.091091	0.090348
+14	72158	0.047047	0.044890
+15	72159	0.008008	0.014995
+16	72160	0.003003	0.003366
+17	72161	0.002002	0.000507
+18	72162	0.001001	0.000051
+19	72163	0.000000	0.000003
+20	72164	0.001001	0.000000
+

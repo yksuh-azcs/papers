@@ -1,0 +1,162 @@
+NEW ALGORITHM: The starting point for the greedy algorithm, in the
+five-dimensional parameter space for the binormal fit, was not chosen
+by the user, but rather, was iterated over.
+
+Number of starting points for (mean1,mean2,sd1,sd2,scale1): 3,3,2,2,2.
+24 starting points in all.
+
+----------------------------------------------------------------------
+
+Data: n = 999, min = 72144, max = 72164, range = 20
+Statistics: mean = 8.950951, sd = 3.166805, g1 (i.e., skewness) = 0.116334
+
+Optimization accomplished after pass 32:
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 7.559500, mean2 = 9.602736, sd1 = 3.020524, sd2 = 3.226717, scale1 = 0.240202, scale2 = 0.759798
+Discrepancy = 0.053055
+Bettered the discrepancy!
+
+Optimization accomplished after pass 104:
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 6.162213, mean2 = 11.608506, sd1 = 1.155912, sd2 = 1.666842, scale1 = 0.483563, scale2 = 0.516437
+Discrepancy = 0.008741
+Bettered the discrepancy!
+
+Optimization accomplished after pass 29:
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 6.666667, sd2 = 13.333333, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 7.687276, mean2 = 9.696414, sd1 = 3.071656, sd2 = 3.207099, scale1 = 0.290399, scale2 = 0.709601
+Discrepancy = 0.053093
+
+Optimization accomplished after pass 200:
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 6.666667, sd2 = 13.333333, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.114674, mean2 = 8.421480, sd1 = 3.298729, sd2 = 6.199269, scale1 = 0.999100, scale2 = 0.000900
+Discrepancy = 0.053429
+
+Optimization accomplished after pass 55:
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 13.333333, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 7.625223, mean2 = 9.326694, sd1 = 3.074643, sd2 = 3.274443, scale1 = 0.125979, scale2 = 0.874021
+Discrepancy = 0.053250
+
+Optimization accomplished after pass 30:
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 13.333333, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 8.056781, mean2 = 9.580541, sd1 = 3.235897, sd2 = 3.219385, scale1 = 0.306236, scale2 = 0.693764
+Discrepancy = 0.053316
+
+Optimization accomplished after pass 52:
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 13.333333, sd2 = 13.333333, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 7.840296, mean2 = 9.370843, sd1 = 3.193156, sd2 = 3.261177, scale1 = 0.168332, scale2 = 0.831668
+Discrepancy = 0.053313
+
+Optimization accomplished after pass 200:
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 13.333333, sd2 = 13.333333, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.111867, mean2 = 9.102331, sd1 = 3.298229, sd2 = 4.721546, scale1 = 0.999735, scale2 = 0.000265
+Discrepancy = 0.053377
+
+Optimization accomplished after pass 103:
+Initial parameter values: mean1 = 5.000000, mean2 = 15.000000, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 5.808361, mean2 = 10.178703, sd1 = 0.863879, sd2 = 2.891692, scale1 = 0.274748, scale2 = 0.725252
+Discrepancy = 0.028977
+
+Optimization accomplished after pass 30:
+Initial parameter values: mean1 = 5.000000, mean2 = 15.000000, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 8.721643, mean2 = 9.829205, sd1 = 3.268845, sd2 = 3.236190, scale1 = 0.645859, scale2 = 0.354141
+Discrepancy = 0.053334
+
+Optimization accomplished after pass 28:
+Initial parameter values: mean1 = 5.000000, mean2 = 15.000000, sd1 = 6.666667, sd2 = 13.333333, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 7.858129, mean2 = 9.768667, sd1 = 3.155659, sd2 = 3.178331, scale1 = 0.342488, scale2 = 0.657512
+Discrepancy = 0.053180
+
+Optimization accomplished after pass 200:
+Initial parameter values: mean1 = 5.000000, mean2 = 15.000000, sd1 = 6.666667, sd2 = 13.333333, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.114655, mean2 = 10.710377, sd1 = 3.298732, sd2 = 6.286694, scale1 = 0.999111, scale2 = 0.000889
+Discrepancy = 0.053444
+
+Optimization accomplished after pass 59:
+Initial parameter values: mean1 = 5.000000, mean2 = 15.000000, sd1 = 13.333333, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 7.616943, mean2 = 9.367358, sd1 = 3.056002, sd2 = 3.270933, scale1 = 0.145480, scale2 = 0.854520
+Discrepancy = 0.053219
+
+Optimization accomplished after pass 35:
+Initial parameter values: mean1 = 5.000000, mean2 = 15.000000, sd1 = 13.333333, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 7.873381, mean2 = 9.836840, sd1 = 3.108929, sd2 = 3.187233, scale1 = 0.368457, scale2 = 0.631543
+Discrepancy = 0.053121
+
+Optimization accomplished after pass 50:
+Initial parameter values: mean1 = 5.000000, mean2 = 15.000000, sd1 = 13.333333, sd2 = 13.333333, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 7.855835, mean2 = 9.384365, sd1 = 3.202697, sd2 = 3.257851, scale1 = 0.177137, scale2 = 0.822863
+Discrepancy = 0.053317
+
+Optimization accomplished after pass 200:
+Initial parameter values: mean1 = 5.000000, mean2 = 15.000000, sd1 = 13.333333, sd2 = 13.333333, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.112122, mean2 = 9.815341, sd1 = 3.298315, sd2 = 5.524379, scale1 = 0.999816, scale2 = 0.000184
+Discrepancy = 0.053379
+
+Optimization accomplished after pass 54:
+Initial parameter values: mean1 = 10.000000, mean2 = 15.000000, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 8.997318, mean2 = 9.165194, sd1 = 3.324879, sd2 = 3.288596, scale1 = 0.309963, scale2 = 0.690037
+Discrepancy = 0.053365
+
+Optimization accomplished after pass 185:
+Initial parameter values: mean1 = 10.000000, mean2 = 15.000000, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.116838, mean2 = 8.717365, sd1 = 3.299066, sd2 = 3.422570, scale1 = 0.990106, scale2 = 0.009894
+Discrepancy = 0.053365
+
+Optimization accomplished after pass 28:
+Initial parameter values: mean1 = 10.000000, mean2 = 15.000000, sd1 = 6.666667, sd2 = 13.333333, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 8.826301, mean2 = 9.376397, sd1 = 3.294495, sd2 = 3.285105, scale1 = 0.477843, scale2 = 0.522157
+Discrepancy = 0.053358
+
+Optimization accomplished after pass 200:
+Initial parameter values: mean1 = 10.000000, mean2 = 15.000000, sd1 = 6.666667, sd2 = 13.333333, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.117166, mean2 = 10.510036, sd1 = 3.295832, sd2 = 6.596607, scale1 = 0.999245, scale2 = 0.000755
+Discrepancy = 0.053445
+
+Optimization accomplished after pass 34:
+Initial parameter values: mean1 = 10.000000, mean2 = 15.000000, sd1 = 13.333333, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 9.022027, mean2 = 9.135999, sd1 = 3.418698, sd2 = 3.271401, scale1 = 0.199578, scale2 = 0.800422
+Discrepancy = 0.053411
+
+Optimization accomplished after pass 29:
+Initial parameter values: mean1 = 10.000000, mean2 = 15.000000, sd1 = 13.333333, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.159124, mean2 = 9.063048, sd1 = 3.291728, sd2 = 3.311050, scale1 = 0.526599, scale2 = 0.473401
+Discrepancy = 0.053362
+
+Optimization accomplished after pass 41:
+Initial parameter values: mean1 = 10.000000, mean2 = 15.000000, sd1 = 13.333333, sd2 = 13.333333, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 9.011608, mean2 = 9.143416, sd1 = 3.384295, sd2 = 3.274598, scale1 = 0.232536, scale2 = 0.767464
+Discrepancy = 0.053394
+
+Optimization accomplished after pass 200:
+Initial parameter values: mean1 = 10.000000, mean2 = 15.000000, sd1 = 13.333333, sd2 = 13.333333, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.114568, mean2 = 9.816480, sd1 = 3.298691, sd2 = 6.106086, scale1 = 0.999960, scale2 = 0.000040
+Discrepancy = 0.053372
+
+Initial parameter values: mean1 = 5.000000, mean2 = 10.000000, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 6.162213, mean2 = 11.608506, sd1 = 1.155912, sd2 = 1.666842, scale1 = 0.483563, scale2 = 0.516437
+Discrepancy = 0.008741
+
+Histograms (raw and fitted):
+
+	TIME	FREQ_RAW	FREQ_FITTED
+0	72144	0.001001	0.000000
+1	72145	0.000000	0.000013
+2	72146	0.004004	0.000357
+3	72147	0.015015	0.004756
+4	72148	0.028028	0.031082
+5	72149	0.089089	0.100297
+6	72150	0.153153	0.160638
+7	72151	0.137137	0.129875
+8	72152	0.070070	0.062256
+9	72153	0.044044	0.046427
+10	72154	0.072072	0.077843
+11	72155	0.098098	0.113678
+12	72156	0.135135	0.118492
+13	72157	0.091091	0.087207
+14	72158	0.047047	0.045296
+15	72159	0.008008	0.016600
+16	72160	0.003003	0.004291
+17	72161	0.002002	0.000782
+18	72162	0.001001	0.000100
+19	72163	0.000000	0.000009
+20	72164	0.001001	0.000001

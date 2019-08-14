@@ -1,0 +1,83 @@
+NEW ALGORITHM: The starting point for the greedy algorithm, in the
+five-dimensional parameter space for the binormal fit, was not chosen
+by the user, but rather, was iterated over.
+
+Number of starting points for (mean1,mean2,sd1,sd2,scale1): 2,2,2,2,2.
+8 starting points in all.
+
+----------------------------------------------------------------------
+
+Data: n = 999, min = 72144, max = 72164, range = 20
+Statistics: mean = 8.950951, sd = 3.166805, g1 (i.e., skewness) = 0.116334
+
+Optimization accomplished after pass 24:
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 8.121469, mean2 = 9.522925, sd1 = 3.265723, sd2 = 3.226824, scale1 = 0.291932, scale2 = 0.708068
+Discrepancy = 0.053349
+Bettered the discrepancy!
+
+Optimization accomplished after pass 39:
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.084867, mean2 = 9.259398, sd1 = 3.278953, sd2 = 3.405733, scale1 = 0.832677, scale2 = 0.167323
+Discrepancy = 0.053401
+
+Optimization accomplished after pass 24:
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 6.666667, sd2 = 13.333333, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 8.502073, mean2 = 9.520706, sd1 = 3.288063, sd2 = 3.246079, scale1 = 0.399546, scale2 = 0.600454
+Discrepancy = 0.053350
+
+Optimization accomplished after pass 200:
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 6.666667, sd2 = 13.333333, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.112623, mean2 = 9.752426, sd1 = 3.299049, sd2 = 6.504709, scale1 = 0.999206, scale2 = 0.000794
+Discrepancy = 0.053429
+
+Optimization accomplished after pass 43:
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 13.333333, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 8.341296, mean2 = 9.277054, sd1 = 3.344334, sd2 = 3.268129, scale1 = 0.175250, scale2 = 0.824750
+Discrepancy = 0.053391
+
+Optimization accomplished after pass 26:
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 13.333333, sd2 = 6.666667, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 8.656323, mean2 = 9.482548, sd1 = 3.291741, sd2 = 3.261802, scale1 = 0.446507, scale2 = 0.553493
+Discrepancy = 0.053352
+
+Optimization accomplished after pass 41:
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 13.333333, sd2 = 13.333333, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 8.482668, mean2 = 9.265572, sd1 = 3.390935, sd2 = 3.261448, scale1 = 0.194419, scale2 = 0.805581
+Discrepancy = 0.053417
+
+Optimization accomplished after pass 200:
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 13.333333, sd2 = 13.333333, scale1 = 0.666667, scale2 = 0.333333
+Optimum parameter values: mean1 = 9.109972, mean2 = 9.897316, sd1 = 3.298566, sd2 = 5.602673, scale1 = 0.999893, scale2 = 0.000107
+Discrepancy = 0.053381
+
+----------------------------------------------------------------------
+
+Initial parameter values: mean1 = 6.666667, mean2 = 13.333333, sd1 = 6.666667, sd2 = 6.666667, scale1 = 0.333333, scale2 = 0.666667
+Optimum parameter values: mean1 = 8.121469, mean2 = 9.522925, sd1 = 3.265723, sd2 = 3.226824, scale1 = 0.291932, scale2 = 0.708068
+Discrepancy = 0.053349
+
+Histograms (raw and fitted):
+
+	TIME	FREQ_RAW	FREQ_FITTED
+0	72144	0.001001	0.002811
+1	72145	0.000000	0.006090
+2	72146	0.004004	0.012078
+3	72147	0.015015	0.021924
+4	72148	0.028028	0.036416
+5	72149	0.089089	0.055334
+6	72150	0.153153	0.076887
+7	72151	0.137137	0.097663
+8	72152	0.070070	0.113360
+9	72153	0.044044	0.120191
+10	72154	0.072072	0.116359
+11	72155	0.098098	0.102822
+12	72156	0.135135	0.082904
+13	72157	0.091091	0.060970
+14	72158	0.047047	0.040886
+15	72159	0.008008	0.024993
+16	72160	0.003003	0.013923
+17	72161	0.002002	0.007067
+18	72162	0.001001	0.003267
+19	72163	0.000000	0.001376
+20	72164	0.001001	0.000527

@@ -1,3 +1,120 @@
+###### INC118-123
+numSamples <- 1000
+task_len <- 118
+fileName <- paste("inc",task_len,"-",task_len+2,"_hist_bin_count.txt",sep="") 
+fraction <- 0 
+count <- -1
+for (task_len in c(118,119,120,121,122,123)){
+	count <- count+1
+	fraction <- 0
+	dataFileName <- paste("INC",task_len,".",fraction,".dat",sep="")
+	INC_label <- paste(task_len,".",fraction,sep="")
+	histFileName <- paste(task_len,"_sec_pt_hist.eps",sep="")
+	print(dataFileName)
+	x = read.csv(file=dataFileName,head=TRUE,sep="\t") 
+	x <- subset(x, x$ITERNUM <= numSamples)
+	setEPS() 
+	postscript(histFileName)
+	binsize=1
+	x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+	x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+	#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+	xmin <-min(x$PRTIME)
+	xmin
+	xmax <-max(x$PRTIME)
+	xmax
+	nbins <- ceiling((xmax-xmin) / binsize)
+	h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F) 
+	ymax <- max(h$counts)
+	ymax <- ceiling(ymax/100)*100 
+	#ymax <- 600 
+	plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", 
+	main=paste("PT frequency on INC",INC_label,sep=""), 
+	sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), xlab='PT (ms)', ylab=expression('Frequency'))
+	axis(side=1,at=h$mids,labels=seq(min(h$breaks),max(h$breaks)-1,binsize))
+	dev.off()
+	tl <- h$counts  
+	c <- 0
+	for (v in tl) {
+	    c <- c+1 
+	    tl[c:1] <- task_len
+	}
+	y <- cbind(tl,floor(h$mids),h$counts) 
+	y
+	if(task_len == 118){
+		write.table(y, file=fileName, row.names = FALSE, col.names = c('INC Number', 'Bin Number', 'Counts'), sep = "\t")
+	}else{
+		write.table(y, file=fileName, append = TRUE, row.names = FALSE, col.names = FALSE, sep = "\t")
+	}
+}
+
+
+
+
+###### INC60~INC61
+numSamples <- 1000
+task_len <- 60
+fileName <- paste("inc",task_len,"-",task_len+1,"_hist_bin_count.txt",sep="") 
+for (fraction in c(0,125,25,375,5,625,75,875)){
+	INC_label <- paste(task_len,".",fraction,sep="")
+	dataFileName <- paste("INC",task_len,".",fraction,".dat",sep="")
+	if(fraction == 25 || fraction == 75){
+		adj_fraction <- fraction*10
+		histFileName <- paste(task_len,"_",adj_fraction,"_sec_pt_hist.eps",sep="")
+	}else if (fraction == 5){
+		adj_fraction <- fraction*100
+		histFileName <- paste(task_len,"_",adj_fraction,"_sec_pt_hist.eps",sep="")
+	}else{
+		histFileName <- paste(task_len,"_",fraction,"_sec_pt_hist.eps",sep="")
+	}
+	x = read.csv(file=dataFileName,head=TRUE,sep="\t")
+	x <- subset(x, x$ITERNUM <= numSamples)
+	setEPS() 
+	postscript(histFileName)
+	binsize=1
+	x_up = mean(x$PRTIME) + 2*sd(x$PRTIME)
+	x_dn = mean(x$PRTIME) - 2*sd(x$PRTIME)
+	#x = subset(x, x$PRTIME >= x_dn & x$PRTIME <= x_up)
+	xmin <-min(x$PRTIME)
+	xmin
+	xmax <-max(x$PRTIME)
+	xmax
+	nbins <- ceiling((xmax-xmin) / binsize)
+	h = hist(x$PRTIME, right=F, breaks=seq(xmin,xmax+binsize,binsize),plot=F) 
+	ymax <- max(h$counts)
+	ymax <- ceiling(ymax/100)*100 
+	ymax <- 600 
+	plot(h, xaxt="n",axes = TRUE,freq=TRUE,ylim=c(0,ymax), col="green", 
+	main=paste("PT frequency on INC",INC_label,sep=""), 
+	sub=paste("(n=",nrow(x),", bin_size=",binsize,"ms)",sep=""), xlab='PT (ms)', ylab=expression('Frequency'))
+	axis(side=1,at=h$mids,labels=seq(min(h$breaks),max(h$breaks)-1,binsize))
+	dev.off()
+	tl <- h$counts  
+	c <- 0
+	for (v in tl) {
+	    c <- c+1 
+	    if(fraction == 25 || fraction == 75){
+	   	tl[c:1] <- task_len+fraction/100
+	    }else if (fraction == 5){
+		tl[c:1] <- task_len+fraction/10
+	    }else if (fraction == 0 || fraction == 1000){
+		tl[c:1] <- task_len
+	    }
+	    else{
+		tl[c:1] <- task_len+fraction/1000
+	    }
+	}
+	y <- cbind(tl,floor(h$mids),h$counts) 
+	y
+	if(fraction == 0){
+		write.table(y, file=fileName, row.names = FALSE, col.names = c('INC Number', 'Bin Number', 'Counts'), sep = "\t")
+	}else{
+		write.table(y, file=fileName, append = TRUE, row.names = FALSE, col.names = FALSE, sep = "\t")
+	}
+}
+
+
+
 ###### INC8192
 numSamples <- 300
 task_len <- 8192
